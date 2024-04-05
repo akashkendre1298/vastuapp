@@ -22,19 +22,22 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import LoginPage from './pages/Login/Login';
-import AppRoutes from './AppRoutes';
+import SignupPage from './pages/SignUp/SignUp';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const AppRoutes: React.FC = () => (
   <IonApp>
   <IonReactRouter>
     <IonRouterOutlet>
-      {/* <Route exact path="/"> 
+      <Route exact path="/"> 
         <LoginPage />
-      </Route> */}
-      <Route path="/">
-      <AppRoutes/>
+      </Route>
+      <Route exact path="/signup"> 
+        <SignupPage/>
+      </Route>
+      <Route exact path="/home"> 
+      <Home/>
       </Route>
       {/* <Route path="/">
         {isLoggedIn ? <Home /> : <Redirect to="/login" />} 
@@ -44,4 +47,4 @@ const App: React.FC = () => (
 </IonApp>
 );
 
-export default App;
+export default AppRoutes;

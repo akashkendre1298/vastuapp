@@ -1,0 +1,57 @@
+.signupdiv-for-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.signup-logo{
+    width: 100px;
+    height: 100px;
+}
+.signup-page{
+    height: 100vh;
+    background-image: linear-gradient(to bottom, #00004D, #fff);
+    padding: 30px;
+}
+.signup-heading{
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 10px;
+
+    /* color: #fff; */
+    /* text-align: center; */
+}
+.para-after-signup-heading{
+    font-size: 15px;
+    font-weight: 400;
+    /* color: #fff; */
+    /* text-align: center; */
+}
+.input-div{
+    background: transparent;
+}
+.input-signup{
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 100%; /* Adjust width as needed */
+    color: black;
+}
+.label-signup{
+    /* color: black; */
+    margin-right: 10px;
+}
+
+.signUp-button{
+    color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 50px;
+  width: 150px;
+  background-color: #00004D;
+}
