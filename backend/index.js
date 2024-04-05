@@ -35,8 +35,8 @@ const followup = require("./routes/followupRoute");
 const addnewclient = require("./routes/addNewClientRoute");
 
 // Define API paths
-apiRouter.use("/signup", signup);
-apiRouter.use("/login", login);
+apiRouter.use("/admin/signup", signup);
+apiRouter.use("/admin/login", login);
 apiRouter.use("/resetpass", forgetpass);
 apiRouter.use("/logout", logout);
 apiRouter.use("/executiveinfo", executiveinfo);

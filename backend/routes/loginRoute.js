@@ -1,17 +1,13 @@
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const Signup = require("../models/signupModel");
-const Executive = require("../models/executiveModel");
-// const checkUserAuth = require("../middlewares/auth-middleware");
+const Signup = require("../models/signupModel");
 
 const router = express.Router();
 
-// Middleware to check user authentication
-// router.use(checkUserAuth);
-
 // Login route
 router.post("/", async (req, res) => {
+  // Changed route path to /login
   try {
     const { email, password } = req.body;
 
@@ -19,7 +15,7 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
-    const existingUser = await Executive.findOne({ email });
+    const existingUser = await Signup.findOne({ email }); // Changed to Signup
 
     if (!existingUser) {
       console.error("User not found for email:", email);
@@ -42,6 +38,15 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const users = await Signup.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
