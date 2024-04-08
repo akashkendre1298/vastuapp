@@ -23,7 +23,10 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import LoginPage from './pages/Login/Login';
 import SignupPage from './pages/SignUp/SignUp';
-import AddExecutive from './pages/AddExecutive/AddExecutive';
+import AddExecutive from './pages/Executive/AddExecutive';
+import Client from './pages/Client/Client';
+import ViewExecutive from './pages/Executive/ViewExecutive';
+import ExecutiveDetails from './pages/Executive/ExecutiveDetails';
 
 setupIonicReact();
 
@@ -42,6 +45,19 @@ const AppRoutes: React.FC = () => (
       </Route>
       <Route exact path="/executive">
         <AddExecutive/>
+      </Route>
+      <Route exact path="/viewexecutive">
+        <ViewExecutive/>
+      </Route>
+      {/* <Route
+          exact
+          path="/executive/:id" 
+          component={ExecutiveDetails}
+        >
+          </Route> */}
+
+      <Route exact path="/client">
+        <Client/>
       </Route>
       {/* <Route path="/">
         {isLoggedIn ? <Home /> : <Redirect to="/login" />} 

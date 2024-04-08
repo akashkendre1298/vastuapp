@@ -1,56 +1,64 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"; // Import useHistory hook for navigation
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonButton,
   IonPage,
   IonImg,
-  IonItem,
-  IonInput,
-  IonContent,
 } from "@ionic/react";
 import "./SignUp.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 
 const SignupPage = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
+  const [phonenumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // State variable for success message
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const history = useHistory(); // Initialize useHistory
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const userData = {
+      firstname,
+      lastname,
+      email,
+      phonenumber,
+      password,
+    };
+
     try {
-      const response = await fetch('http://localhost:8888/api/admin/signup', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8888/api/admin/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          contactNumber,
-          password
-        })
+        body: JSON.stringify(userData),
       });
 
       if (response.ok) {
-        console.log('User registered successfully');
-        // Clear form fields after successful registration (optional)
+        console.log("User signed up successfully");
+        // Clear form fields after successful signup
         setFirstName("");
         setLastName("");
         setEmail("");
-        setContactNumber("");
+        setPhoneNumber("");
         setPassword("");
+        setSuccessMessage("User signed up successfully. Redirecting to login...");
+        setTimeout(() => {
+          setSuccessMessage("");
+          history.push("/"); // Redirect to login page
+        }, 3000); // Redirect after 3 seconds
       } else {
-        console.error('Failed to register user');
+      
+        setError("Failed to sign up user. Please try again.");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
+     
+      setError("Network error. Please check your internet connection.");
     }
   };
 
@@ -75,18 +83,18 @@ const SignupPage = () => {
               type="text"
               placeholder="First Name"
               className="input-signup"
-              value={firstName}
+              value={firstname}
               onChange={(e) => setFirstName(e.target.value)}
             />
-            <label htmlFor="lastName" className="label-signup">
+            <label htmlFor="lastname" className="label-signup">
               Last Name
             </label>
             <input
               type="text"
-              id="lastName"
+              id="lastname"
               placeholder="Last Name"
               className="input-signup"
-              value={lastName}
+              value={lastname}
               onChange={(e) => setLastName(e.target.value)}
             />
             <label htmlFor="email" className="label-signup">
@@ -100,16 +108,16 @@ const SignupPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label htmlFor="contactNumber" className="label-signup">
+            <label htmlFor="phonenumber" className="label-signup">
               Contact Number
             </label>
             <input
               type="tel"
-              id="contactNumber"
+              id="phonenumber"
               placeholder="Phone number"
               className="input-signup"
-              value={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              value={phonenumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <label htmlFor="password" className="label-signup">
               Password
@@ -121,10 +129,12 @@ const SignupPage = () => {
               className="input-signup"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
+            />{" "}
           </div>
+          {error && <div className="error-message">{error}</div>}
+          {successMessage && <div className="success-message">{successMessage}</div>}
           <div>
-            <button onClick={handleSubmit} className="signUp-button">
+            <button className="signUp-button" onClick={handleSubmit}>
               Create Account
             </button>
           </div>
