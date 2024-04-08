@@ -32,7 +32,7 @@ const addmeeting = require("./routes/addMeetingRoute");
 const addcases = require("./routes/addCaseRoutes");
 const exelogin = require("./routes/exeloginRoute");
 const followup = require("./routes/followupRoute");
-const addnewclient = require("./routes/addNewClientRoute");
+// const addnewclient = require("./routes/addNewClientRoute");
 
 // Define API paths
 apiRouter.use("/admin/signup", signup);
@@ -47,7 +47,7 @@ apiRouter.use("/meetings", addmeeting);
 apiRouter.use("/cases", addcases);
 apiRouter.use("/exe", exelogin);
 apiRouter.use("/followup", followup);
-apiRouter.use("/addnewclient", addnewclient);
+// apiRouter.use("/addnewclient", addnewclient);
 
 // Connect to MongoDB
 mongoose
