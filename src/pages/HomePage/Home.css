@@ -77,4 +77,8 @@
     border-radius: 10px; /* Rounded corners for button */
     font-weight: bold; /* Bold button text */
   }
-  
+  .home-nav-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }

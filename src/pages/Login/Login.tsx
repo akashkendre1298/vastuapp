@@ -10,6 +10,7 @@ import {
   IonLabel,
   IonButton,
 } from "@ionic/react";
+import logo from "../../Assets/pandit_shivkumar_logo.png"
 
 class LoginPage extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class LoginPage extends React.Component {
         </IonHeader> */}
         {/* Logo centered horizontally */}
         <div className="login-logo-div">
-          <IonImg src="path/to/your/logo.png" className="login-logo" />
+          <IonImg src={logo} className="login-logo" />
         </div>
         <div className="login-title">
           <p>Login</p>

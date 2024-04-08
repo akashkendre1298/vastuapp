@@ -4,7 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router';
 
 import { playCircle, radio, library, search } from 'ionicons/icons';
-import Home from '../Home';
+import Home from '../../pages/HomePage/Home';
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
 
 

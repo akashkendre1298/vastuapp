@@ -8,8 +8,10 @@ import {
   IonImg,
   IonItem,
   IonInput,
+  IonContent,
 } from "@ionic/react";
 import "./SignUp.css";
+import logo from "../../Assets/pandit_shivkumar_logo.png";
 
 const SignupPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -18,25 +20,38 @@ const SignupPage = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    // Implement your signup logic here
-    // e.g., send data to a backend API
-    console.log("Signup submitted:", {
-      firstName,
-      lastName,
-      email,
-      contactNumber,
-      password,
-    });
+    try {
+      const response = await fetch('http://localhost:8888/api/admin/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          contactNumber,
+          password
+        })
+      });
 
-    // Clear htmlhtmlForm fields after submission (optional)
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setContactNumber("");
-    setPassword("");
+      if (response.ok) {
+        console.log('User registered successfully');
+        // Clear form fields after successful registration (optional)
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setContactNumber("");
+        setPassword("");
+      } else {
+        console.error('Failed to register user');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -44,7 +59,7 @@ const SignupPage = () => {
       <IonPage>
         <div className="signup-page">
           <div className="signupdiv-htmlhtmlFor-logo">
-            <IonImg src="" className="signup-logo"></IonImg>
+            <IonImg src={logo} className="signup-logo"></IonImg>
           </div>
           <div className="signup-heading">
             <p>Sign Up</p>
@@ -60,6 +75,8 @@ const SignupPage = () => {
               type="text"
               placeholder="First Name"
               className="input-signup"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
             <label htmlFor="lastName" className="label-signup">
               Last Name
@@ -69,6 +86,8 @@ const SignupPage = () => {
               id="lastName"
               placeholder="Last Name"
               className="input-signup"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
             <label htmlFor="email" className="label-signup">
               Email Address
@@ -78,6 +97,8 @@ const SignupPage = () => {
               id="email"
               placeholder="Enter your email"
               className="input-signup"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <label htmlFor="contactNumber" className="label-signup">
               Contact Number
@@ -87,6 +108,8 @@ const SignupPage = () => {
               id="contactNumber"
               placeholder="Phone number"
               className="input-signup"
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
             />
             <label htmlFor="password" className="label-signup">
               Password
@@ -96,12 +119,14 @@ const SignupPage = () => {
               id="password"
               placeholder="Create password"
               className="input-signup"
-            />{" "}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div>
-          <button  className="signUp-button">
-          Create Account
-        </button>
+            <button onClick={handleSubmit} className="signUp-button">
+              Create Account
+            </button>
           </div>
         </div>
       </IonPage>

@@ -1,7 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import Home from './pages/HomePage/Home';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,6 +23,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import LoginPage from './pages/Login/Login';
 import SignupPage from './pages/SignUp/SignUp';
+import AddExecutive from './pages/AddExecutive/AddExecutive';
 
 setupIonicReact();
 
@@ -38,6 +39,9 @@ const AppRoutes: React.FC = () => (
       </Route>
       <Route exact path="/home"> 
       <Home/>
+      </Route>
+      <Route exact path="/executive">
+        <AddExecutive/>
       </Route>
       {/* <Route path="/">
         {isLoggedIn ? <Home /> : <Redirect to="/login" />} 
