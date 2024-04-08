@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonRouterLink } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonRouterLink, IonSearchbar, IonBackButton, IonButtons, IonImg } from '@ionic/react';
+import "./ViewExecutive.css"
+import logo from "../../Assets/pandit_shivkumar_logo.png"
 
 const ViewExecutive = () => {
   const [executives, setExecutives] = useState([]);
@@ -28,17 +30,31 @@ const ViewExecutive = () => {
   };
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Executives</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+    <IonPage >
+ <IonHeader>
+    <IonToolbar style={{ color: "#00004D" }}>
+      <IonButtons slot="start">
+        <IonBackButton defaultHref="#" />
+      </IonButtons>
 
-      <IonContent>
+      {/* <IonTitle>Executives</IonTitle> */}
+
+      <IonButtons slot="end">
+        <IonImg src={logo} alt="App Logo" />
+      </IonButtons>
+    </IonToolbar>
+
+    <IonToolbar color="primary">
+      <IonTitle>Executives</IonTitle>
+    </IonToolbar>
+  </IonHeader>
+
+      <IonContent className='view-executive-page'>
+
+      <IonSearchbar></IonSearchbar>
         <IonList lines="full">
           {executives.map((executive, index) => (
-            <IonItem key={index} button onClick={() => logExecutiveData(executive)}>
+            <IonItem key={index} button detail={true} >
               <IonRouterLink routerLink={`/executive/${executive._id}`}>
                 <IonLabel>
                   <h2>{executive.firstName}</h2>

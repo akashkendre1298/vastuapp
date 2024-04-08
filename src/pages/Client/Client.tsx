@@ -10,7 +10,8 @@ const Client = () => {
     email: '',
     phoneNumber: '',
     address: '',
-    city: ''
+    city: '',
+    feedback:"",
 
   });
 
@@ -32,7 +33,7 @@ const Client = () => {
       });
 
       if (response.ok) {
-        console.log('Executive added successfully');
+        console.log('Client added successfully');
         // Clear form after successful submission
         setFormData({
           firstName: '',
@@ -40,11 +41,12 @@ const Client = () => {
           email: '',
           phoneNumber: '',
           address: '',
-          city: ''
+          city: '',
+          feedback:"",
         
         });
       } else {
-        console.error('Failed to add executive');
+        console.error('Failed to add client');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -69,7 +71,7 @@ const Client = () => {
           <IonCol>
               <IonCardHeader className="add-executive-card-header">
                 <IonCardTitle>
-                  Add Executive
+                  Add Client
                 </IonCardTitle>
               </IonCardHeader>
               <IonCardContent className="add-executive-card-content">
@@ -130,6 +132,15 @@ const Client = () => {
                       onIonChange={handleChange}
                     />
                   </IonItem>
+                  <IonItem className="add-executive-item">
+                    <IonLabel position="stacked">feedback</IonLabel>
+                    <IonInput 
+                      className="add-executive-input" 
+                      name="feedback"
+                      value={formData.feedback}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
                   {/* <IonItem className="add-executive-item">
                     <IonLabel position="stacked">Password</IonLabel>
                     <IonInput 
@@ -142,7 +153,7 @@ const Client = () => {
                   </IonItem> */}
                   {/* <IonButton type="submit"  className="add-executive-button">Add</IonButton> */}
 
-                  <button className='add-executive-button'>Add Executive </button>
+                  <button className='add-executive-button'>Add Client </button>
                 </form>
               </IonCardContent>
           </IonCol>

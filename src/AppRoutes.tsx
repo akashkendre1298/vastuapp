@@ -27,6 +27,7 @@ import AddExecutive from './pages/Executive/AddExecutive';
 import Client from './pages/Client/Client';
 import ViewExecutive from './pages/Executive/ViewExecutive';
 import ExecutiveDetails from './pages/Executive/ExecutiveDetails';
+import AddCasePage from './pages/Cases/AddCases';
 
 setupIonicReact();
 
@@ -58,6 +59,10 @@ const AppRoutes: React.FC = () => (
 
       <Route exact path="/client">
         <Client/>
+      </Route>
+
+      <Route exact path="/cases">
+        <AddCasePage/>
       </Route>
       {/* <Route path="/">
         {isLoggedIn ? <Home /> : <Redirect to="/login" />} 
