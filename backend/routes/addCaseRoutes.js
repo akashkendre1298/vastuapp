@@ -116,4 +116,21 @@ router.get("/byClientId/:clientId", async (req, res) => {
   }
 });
 
+router.get("/byExecutiveId/:executiveId", async (req, res) => {
+  try {
+    const executiveId = req.params.executiveId;
+
+    // Find cases with the specified executive ID in the database
+    const casesByExecutiveId = await newCase.find({
+      executiveID: executiveId,
+    });
+
+    res.status(200).json({ data: casesByExecutiveId });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving cases", error: error.message });
+  }
+});
+
 module.exports = router;
