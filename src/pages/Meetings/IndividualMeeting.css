@@ -1,0 +1,22 @@
+.individualMeeting {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .content {
+    padding: 20px;
+  }
+  
+  ion-title {
+    font-size: 1.5rem;
+  }
+  
+  ion-button[slot="start"] {
+    margin-right: auto;
+  }
+  
+  ion-button[slot="end"] {
+    margin-left: auto;
+  }
+  

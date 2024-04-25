@@ -1,0 +1,30 @@
+/* Page container */
+.page-container {
+    padding: 10px;
+  }
+  
+  /* Search bar */
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  /* Executive section */
+  .executive-section {
+    margin-bottom: 10px;
+  }
+  
+  /* List item */
+  .list-item {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Client name */
+  .client-name {
+    font-weight: bold;
+  }
+  
+  /* Client executive */
+  .client-executive {
+    color: #666;
+  }
+  

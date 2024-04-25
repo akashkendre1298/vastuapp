@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonItem, IonLabel, IonInput, IonFooter, IonToolbar, IonBackButton, IonButtons, IonImg } from '@ionic/react';
+import { IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonItem, IonLabel, IonInput, IonFooter, IonToolbar, IonBackButton, IonButtons, IonImg, IonPage } from '@ionic/react';
 import "./Client.css"
 import logo from "../../Assets/pandit_shivkumar_logo.png"
 import BottomTabs from '../../components/BottomTabs/BottomTabs';
@@ -55,6 +55,7 @@ const Client = () => {
 
   return (
     <>
+    <IonPage>
   <IonToolbar style={{color:"#00004D"}}> <IonButtons slot="start">
       <IonBackButton defaultHref="#"></IonBackButton>
     </IonButtons>
@@ -76,27 +77,40 @@ const Client = () => {
               </IonCardHeader>
               <IonCardContent className="add-executive-card-content">
                 <form onSubmit={handleSubmit}>
-                  <IonItem className="add-executive-item">
+
+
+                  <div style={{paddingBottom:"10px"}} style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">First Name</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item" style={{border:"1px solid black",marginBottom:"25px"}}>
+                    <IonInput placeholder='firstName' 
                       className="add-executive-input" 
                       name="firstName"
                       value={formData.firstName}
                       onIonChange={handleChange}
                     />
                   </IonItem>
-                  <IonItem className="add-executive-item">
+                  
+                  <div style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">Last Name</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput placeholder='lastName' 
                       className="add-executive-input" 
                       name="lastName"
                       value={formData.lastName}
                       onIonChange={handleChange}
                     />
                   </IonItem>
-                  <IonItem className="add-executive-item">
+
+                  <div style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">Email Address</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput placeholder='email' 
                       type="email" 
                       className="add-executive-input" 
                       name="email"
@@ -104,9 +118,13 @@ const Client = () => {
                       onIonChange={handleChange}
                     />
                   </IonItem>
-                  <IonItem className="add-executive-item">
+
+                  <div style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">Contact Number</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput placeholder='phoneNumber' 
                       type="tel" 
                       className="add-executive-input" 
                       name="phoneNumber"
@@ -114,27 +132,40 @@ const Client = () => {
                       onIonChange={handleChange}
                     />
                   </IonItem>
-                  <IonItem className="add-executive-item">
+
+                  <div style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">Location</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput placeholder='address' 
                       className="add-executive-input" 
                       name="address"
                       value={formData.address}
                       onIonChange={handleChange}
                     />
                   </IonItem>
-                  <IonItem className="add-executive-item">
+
+                  <div style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">City</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput placeholder='city' 
                       className="add-executive-input" 
                       name="city"
                       value={formData.city}
                       onIonChange={handleChange}
                     />
                   </IonItem>
-                  <IonItem className="add-executive-item">
+
+
+                  <div style={{paddingBottom:"10px"}}>
+
                     <IonLabel position="stacked">feedback</IonLabel>
-                    <IonInput 
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput placeholder='feedback' 
                       className="add-executive-input" 
                       name="feedback"
                       value={formData.feedback}
@@ -143,7 +174,7 @@ const Client = () => {
                   </IonItem>
                   {/* <IonItem className="add-executive-item">
                     <IonLabel position="stacked">Password</IonLabel>
-                    <IonInput 
+                    <IonInput placeholder='' 
                       type="password" 
                       className="add-executive-input" 
                       name="password"
@@ -159,10 +190,14 @@ const Client = () => {
           </IonCol>
         </IonRow>
       </IonGrid>
-      <IonFooter>
-       <BottomTabs/>
-      </IonFooter>
+      
     </IonContent>
+    <IonFooter>
+        <IonToolbar>
+        <BottomTabs/>
+        </IonToolbar>
+      </IonFooter>
+    </IonPage>
     </>
   );
 };

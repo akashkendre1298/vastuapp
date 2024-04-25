@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonButton, IonBackButton, IonButtons, IonImg } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonButton, IonBackButton, IonButtons, IonImg, IonFooter } from '@ionic/react';
 import logo from "../../Assets/pandit_shivkumar_logo.png"
+import BottomTabs from '../../components/BottomTabs/BottomTabs';
 
 const AddCasePage = () => {
   const [caseName, setCaseName] = useState('');
@@ -19,7 +20,7 @@ const AddCasePage = () => {
           }
           const data = await response.json(); // Parse the JSON response
           setClients(data.data); // Access the 'data' key to get the array of clients
-          console.log('Clients:', data.data); // Log the fetched client data
+          // console.log('Clients:', data.data); // Log the fetched client data
         } catch (error) {
           console.error('Error fetching clients:', error);
           setClients([]); // Initialize clients state as empty array
@@ -33,7 +34,7 @@ const AddCasePage = () => {
         }
         const data = await response.json(); // Parse the JSON response
         setExecutives(data);
-        console.log('Executives:', data); // Log the fetched executive data
+        // console.log('Executives:', data); // Log the fetched executive data
       } catch (error) {
         console.error('Error fetching executives:', error);
         setExecutives([]); // Initialize executives state as empty array
@@ -110,37 +111,91 @@ const AddCasePage = () => {
       <IonTitle>Case</IonTitle>
     </IonToolbar>
   </IonHeader>
-      <IonContent>
-        <IonItem>
+      <IonContent className="add-executive" style={{ paddingTop: '20px', height: '100vh' }}>
+
+      <div style={{paddingBottom:"10px"}}>
+
           <IonLabel position="floating">Case Name</IonLabel>
+</div>
+        <IonItem className="add-executive-item">
           <IonInput value={caseName} onIonChange={(e) => setCaseName(e.detail.value)}></IonInput>
         </IonItem>
 
-        <IonItem>
+        <div style={{paddingBottom:"10px"}}>
+
           <IonLabel position="floating">Client Name</IonLabel>
-          <IonSelect value={selectedClient} onIonChange={(e) => setSelectedClient(e.detail.value)}>
+</div>
+
+        <IonItem className="add-executive-item">
+          <IonSelect value={selectedClient} onIonChange={(e) => setSelectedClient(e.detail.value)} placeholder='Client Name'  interface="popover">
             {clients.map(client => (
               <IonSelectOption key={client._id} value={client._id}>{client.firstName}</IonSelectOption>
             ))}
           </IonSelect>
+
+{/* <IonSelect
+            value={selectedClient}
+           
+            onIonChange={(e) =>
+              setSelectedClient(e.detail.value)}
+            interface="popover"
+          >
+           {clients.map(client => (
+              <IonSelectOption key={client._id} value={client._id}>{client.firstName}</IonSelectOption>
+            ))}
+          </IonSelect> */}
         </IonItem>
 
-        <IonItem>
+
+        <div style={{paddingBottom:"10px"}}>
+
           <IonLabel position="floating">Executive Name</IonLabel>
-          <IonSelect value={selectedExecutive} onIonChange={(e) => setSelectedExecutive(e.detail.value)}>
+</div>
+        <IonItem className="add-executive-item">
+        <IonLabel position="floating"></IonLabel>
+
+          <IonSelect value={selectedExecutive} onIonChange={(e) => setSelectedExecutive(e.detail.value)} placeholder='Executive Name'  interface="popover">
             {executives.map(executive => (
               <IonSelectOption key={executive._id} value={executive._id}>{executive.firstName}</IonSelectOption>
             ))}
           </IonSelect>
+          {/* <IonSelect
+            value={selectedExecutive}
+           
+            onIonChange={(e) =>
+              setSelectedExecutive(e.detail.value)}
+            interface="popover"
+          >
+            {executives.map(executive => (
+              <IonSelectOption key={executive._id} value={executive._id}>{executive.firstName}</IonSelectOption>
+            ))}
+          </IonSelect> */}
+        </IonItem>
+        <div style={{paddingBottom:"10px"}}>
+
+          <IonLabel position='floating'>Add Image</IonLabel>
+</div>
+
+        <IonItem className="add-executive-item">
+          <br />
+          <input type="file" accept="image/*" />
         </IonItem>
 
-        <IonItem>
+        <div style={{paddingBottom:"10px"}}>
+
           <IonLabel position="stacked">Issue</IonLabel>
+</div>
+        <IonItem className="add-executive-item">
           <IonTextarea value={issue} onIonChange={(e) => setIssue(e.detail.value)} placeholder='Write Issue'></IonTextarea>
         </IonItem>
 
         <IonButton expand="full" onClick={handleAddCase}>Add Case</IonButton>
       </IonContent>
+      <IonFooter>
+        <IonToolbar>
+        <BottomTabs/>
+        </IonToolbar>
+      </IonFooter>
     </IonPage>
   );
 };

@@ -32,7 +32,7 @@ const LoginPage =()=> {
       if (response.ok) {
         console.log("User logged in successfully");
         // Redirect the user to the dashboard or home page
-        window.location.href = "/home"; // Example redirect
+        window.location.href = "/home";
       } else {
         console.error("Failed to log in");
         setError("Invalid email or password. Please try again.");

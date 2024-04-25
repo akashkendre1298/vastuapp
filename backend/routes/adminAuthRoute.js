@@ -1,5 +1,5 @@
 const express = require("express");
-const adminSignup = require("../models/adminAuthModel");
+const adminSignup = require("../models/loginModel");
 const bcryptjs = require("bcryptjs"); // Changed import to bcryptjs
 const jwt = require("jsonwebtoken");
 

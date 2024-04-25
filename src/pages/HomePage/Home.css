@@ -1,4 +1,13 @@
-/* Page */
+
+
+
+ion-card {
+  --background: #596fa3;
+  --color: #ffffff;
+}
+ion-card-title {
+  --color: #ffffff;
+}
 .main-menu {
     background-color: #f4f4f4; /* Light gray background */
     min-height: 100vh; /* Set minimum height for full viewport */

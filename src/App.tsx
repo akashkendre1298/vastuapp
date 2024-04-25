@@ -23,7 +23,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import LoginPage from './pages/Login/Login';
 import AppRoutes from './AppRoutes';
-
+import "./App.css"
 setupIonicReact();
 
 const App: React.FC = () => (

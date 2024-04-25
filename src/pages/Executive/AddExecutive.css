@@ -9,3 +9,9 @@
     background-color: #00004D;
     margin-top: 20px;
 }
+
+.add-executive-item{
+    border: 1px solid black;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}

@@ -1,0 +1,17 @@
+.profile-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-section {
+    margin-bottom: 20px;
+  }
+  
+  .profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  

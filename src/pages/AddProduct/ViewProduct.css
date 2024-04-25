@@ -1,0 +1,19 @@
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .custom-table th, .custom-table td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+  
+  .custom-table th {
+    text-align: left;
+  }
+  .btn-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }

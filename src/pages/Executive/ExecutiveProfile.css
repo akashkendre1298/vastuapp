@@ -1,0 +1,40 @@
+
+  
+  .profile-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px; /* Add padding top */
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px; /* Add padding top */
+  }
+  
+  .padded-top {
+    padding-top: 20px; /* Add custom class for additional padding */
+  }
+  .profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px; /* Add padding top */
+  }
+  
+  .profile-icon {
+    font-size: 100px; /* Adjust icon size */
+  }
+  
+  .profile-name {
+    font-size: 24px; /* Adjust name font size */
+  }
+  .view-client-button{
+    width: 120px;
+    height: 40px ;
+    border-radius: 50px;
+    background-color: #00004D;
+    color: white;
+  }

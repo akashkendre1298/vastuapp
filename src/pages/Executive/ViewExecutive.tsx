@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonRouterLink, IonSearchbar, IonBackButton, IonButtons, IonImg } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonRouterLink, IonSearchbar, IonBackButton, IonButtons, IonImg, IonFooter } from '@ionic/react';
 import "./ViewExecutive.css"
 import logo from "../../Assets/pandit_shivkumar_logo.png"
+import BottomTabs from '../../components/BottomTabs/BottomTabs';
 
 const ViewExecutive = () => {
   const [executives, setExecutives] = useState([]);
@@ -51,12 +52,20 @@ const ViewExecutive = () => {
 
       <IonContent className='view-executive-page'>
 
-      <IonSearchbar></IonSearchbar>
-        <IonList lines="full">
+<div className='search-div'>
+  <div style={{width:"60%"}}>
+      <IonSearchbar className="custom"></IonSearchbar>
+      
+  </div>
+
+</div>
+<div >
+
+        <IonList inset={true} >
           {executives.map((executive, index) => (
-            <IonItem key={index} button detail={true} >
-              <IonRouterLink routerLink={`/executive/${executive._id}`}>
-                <IonLabel>
+            <IonItem key={index} button detail={true}  style={{border:"1px solid black",marginBottom:"25px"}}>
+              <IonRouterLink routerLink={`/individualclients`}>
+                <IonLabel  style={{padding:"10px"}}>
                   <h2>{executive.firstName}</h2>
                   <p>{executive.phoneNumber}</p>
                 </IonLabel>
@@ -64,9 +73,15 @@ const ViewExecutive = () => {
             </IonItem>
           ))}
         </IonList>
+</div>
         {/* Add Executive button */}
         <IonButton routerLink="/executive">Add Executive</IonButton>
       </IonContent>
+      <IonFooter>
+        <IonToolbar>
+        <BottomTabs/>
+        </IonToolbar>
+      </IonFooter>
     </IonPage>
   );
 };
