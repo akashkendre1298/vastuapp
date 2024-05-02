@@ -1,34 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonTextarea, IonButton, IonBackButton, IonButtons, IonImg, IonFooter } from '@ionic/react';
-import logo from "../../Assets/pandit_shivkumar_logo.png"
-import BottomTabs from '../../components/BottomTabs/BottomTabs';
+import React, { useState, useEffect } from "react";
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonButton,
+  IonBackButton,
+  IonButtons,
+  IonImg,
+  IonFooter,
+} from "@ionic/react";
+import logo from "../../Assets/pandit_shivkumar_logo.png";
+import BottomTabs from "../../components/BottomTabs/BottomTabs";
 
 const AddCasePage = () => {
-  const [caseName, setCaseName] = useState('');
+  const [caseName, setCaseName] = useState("");
   const [clients, setClients] = useState([]);
-  const [selectedClient, setSelectedClient] = useState('');
+  const [selectedClient, setSelectedClient] = useState("");
   const [executives, setExecutives] = useState([]);
-  const [selectedExecutive, setSelectedExecutive] = useState('');
-  const [issue, setIssue] = useState('');
-  
+  const [selectedExecutive, setSelectedExecutive] = useState("");
+  const [issue, setIssue] = useState("");
+
   useEffect(() => {
     const fetchClients = async () => {
-        try {
-          const response = await fetch('http://localhost:8888/api/clients');
-          if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.status}`);
-          }
-          const data = await response.json(); // Parse the JSON response
-          setClients(data.data); // Access the 'data' key to get the array of clients
-          // console.log('Clients:', data.data); // Log the fetched client data
-        } catch (error) {
-          console.error('Error fetching clients:', error);
-          setClients([]); // Initialize clients state as empty array
+      try {
+        const response = await fetch("http://localhost:8888/api/clients");
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
         }
-      };
+        const data = await response.json(); // Parse the JSON response
+        setClients(data.data); // Access the 'data' key to get the array of clients
+        // console.log('Clients:', data.data); // Log the fetched client data
+      } catch (error) {
+        console.error("Error fetching clients:", error);
+        setClients([]); // Initialize clients state as empty array
+      }
+    };
     const fetchExecutives = async () => {
       try {
-        const response = await fetch('http://localhost:8888/api/executives');
+        const response = await fetch("http://localhost:8888/api/executives");
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
@@ -36,34 +53,38 @@ const AddCasePage = () => {
         setExecutives(data);
         // console.log('Executives:', data); // Log the fetched executive data
       } catch (error) {
-        console.error('Error fetching executives:', error);
+        console.error("Error fetching executives:", error);
         setExecutives([]); // Initialize executives state as empty array
       }
     };
-  
+
     fetchClients();
     fetchExecutives();
   }, []);
-  
+
   const handleAddCase = async () => {
     try {
       // Get the selected client and executive names
-      const selectedClientName = clients.find(client => client._id === selectedClient)?.firstName;
-      const selectedExecutiveName = executives.find(executive => executive._id === selectedExecutive)?.firstName;
-  
-      console.log('Data to be sent:', {
+      const selectedClientName = clients.find(
+        (client) => client._id === selectedClient
+      )?.firstName;
+      const selectedExecutiveName = executives.find(
+        (executive) => executive._id === selectedExecutive
+      )?.firstName;
+
+      console.log("Data to be sent:", {
         caseLabel: caseName,
         client: selectedClientName,
         client_id: selectedClient, // Assuming client_id is the ID of the selected client
         executive: selectedExecutiveName,
         executiveID: selectedExecutive, // Assuming executiveID is the ID of the selected executive
-        issues: issue
+        issues: issue,
       });
-  
-      const response = await fetch('http://localhost:8888/api/cases', {
-        method: 'POST',
+
+      const response = await fetch("http://localhost:8888/api/cases", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           caseLabel: caseName,
@@ -71,69 +92,78 @@ const AddCasePage = () => {
           client_id: selectedClient, // Assuming client_id is the ID of the selected client
           executive: selectedExecutiveName,
           executiveID: selectedExecutive, // Assuming executiveID is the ID of the selected executive
-          issues: issue
-        })
+          issues: issue,
+        }),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.status}`);
       }
-  
+
       const responseData = await response.json();
-      console.log('Response from server:', responseData);
-  
+      console.log("Response from server:", responseData);
+
       // Case added successfully
-      console.log('Case added successfully');
+      console.log("Case added successfully");
       // You can redirect or show a success message here
     } catch (error) {
-      console.error('Error adding case:', error);
+      console.error("Error adding case:", error);
       // Handle errors appropriately (e.g., display an error message to the user)
     }
   };
-  
 
   return (
     <IonPage>
-       <IonHeader>
-    <IonToolbar style={{ color: "#00004D" }}>
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="#" />
-      </IonButtons>
+      <IonHeader>
+        <IonToolbar style={{ color: "#00004D" }}>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="#" />
+          </IonButtons>
 
-      {/* <IonTitle>Executives</IonTitle> */}
+          {/* <IonTitle>Executives</IonTitle> */}
 
-      <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" />
-      </IonButtons>
-    </IonToolbar>
+          <IonButtons slot="end">
+            <IonImg src={logo} alt="App Logo" />
+          </IonButtons>
+        </IonToolbar>
 
-    <IonToolbar color="primary">
-      <IonTitle>Case</IonTitle>
-    </IonToolbar>
-  </IonHeader>
-      <IonContent className="add-executive" style={{ paddingTop: '20px', height: '100vh' }}>
-
-      <div style={{paddingBottom:"10px"}}>
-
+        <IonToolbar color="primary">
+          <IonTitle>Case</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent
+        className="add-executive"
+        style={{ paddingTop: "20px", height: "100vh" }}
+      >
+        <div style={{ paddingBottom: "10px" }}>
           <IonLabel position="floating">Case Name</IonLabel>
-</div>
+        </div>
         <IonItem className="add-executive-item">
-          <IonInput value={caseName} onIonChange={(e) => setCaseName(e.detail.value)}></IonInput>
+          <IonInput
+            value={caseName}
+            onIonChange={(e) => setCaseName(e.detail.value)}
+          ></IonInput>
         </IonItem>
 
-        <div style={{paddingBottom:"10px"}}>
-
+        <div style={{ paddingBottom: "10px" }}>
           <IonLabel position="floating">Client Name</IonLabel>
-</div>
+        </div>
 
         <IonItem className="add-executive-item">
-          <IonSelect value={selectedClient} onIonChange={(e) => setSelectedClient(e.detail.value)} placeholder='Client Name'  interface="popover">
-            {clients.map(client => (
-              <IonSelectOption key={client._id} value={client._id}>{client.firstName}</IonSelectOption>
+          <IonSelect
+            value={selectedClient}
+            onIonChange={(e) => setSelectedClient(e.detail.value)}
+            placeholder="Client Name"
+            interface="popover"
+          >
+            {clients.map((client) => (
+              <IonSelectOption key={client._id} value={client._id}>
+                {client.firstName}
+              </IonSelectOption>
             ))}
           </IonSelect>
 
-{/* <IonSelect
+          {/* <IonSelect
             value={selectedClient}
            
             onIonChange={(e) =>
@@ -146,17 +176,22 @@ const AddCasePage = () => {
           </IonSelect> */}
         </IonItem>
 
-
-        <div style={{paddingBottom:"10px"}}>
-
+        <div style={{ paddingBottom: "10px" }}>
           <IonLabel position="floating">Executive Name</IonLabel>
-</div>
+        </div>
         <IonItem className="add-executive-item">
-        <IonLabel position="floating"></IonLabel>
+          <IonLabel position="floating"></IonLabel>
 
-          <IonSelect value={selectedExecutive} onIonChange={(e) => setSelectedExecutive(e.detail.value)} placeholder='Executive Name'  interface="popover">
-            {executives.map(executive => (
-              <IonSelectOption key={executive._id} value={executive._id}>{executive.firstName}</IonSelectOption>
+          <IonSelect
+            value={selectedExecutive}
+            onIonChange={(e) => setSelectedExecutive(e.detail.value)}
+            placeholder="Executive Name"
+            interface="popover"
+          >
+            {executives.map((executive) => (
+              <IonSelectOption key={executive._id} value={executive._id}>
+                {executive.firstName}
+              </IonSelectOption>
             ))}
           </IonSelect>
           {/* <IonSelect
@@ -171,31 +206,35 @@ const AddCasePage = () => {
             ))}
           </IonSelect> */}
         </IonItem>
-        <div style={{paddingBottom:"10px"}}>
-
-          <IonLabel position='floating'>Add Image</IonLabel>
-</div>
+        <div style={{ paddingBottom: "10px" }}>
+          <IonLabel position="floating">Add Image</IonLabel>
+        </div>
 
         <IonItem className="add-executive-item">
           <br />
           <input type="file" accept="image/*" />
         </IonItem>
 
-        <div style={{paddingBottom:"10px"}}>
-
+        <div style={{ paddingBottom: "10px" }}>
           <IonLabel position="stacked">Issue</IonLabel>
-</div>
+        </div>
         <IonItem className="add-executive-item">
-          <IonTextarea value={issue} onIonChange={(e) => setIssue(e.detail.value)} placeholder='Write Issue'></IonTextarea>
+          <IonTextarea
+            value={issue}
+            onIonChange={(e) => setIssue(e.detail.value)}
+            placeholder="Write Issue"
+          ></IonTextarea>
         </IonItem>
 
-        <IonButton expand="full" onClick={handleAddCase}>Add Case</IonButton>
+        <IonButton expand="full" onClick={handleAddCase}>
+          Add Case
+        </IonButton>
       </IonContent>
-      <IonFooter>
+      {/* <IonFooter>
         <IonToolbar>
-        <BottomTabs/>
+          <BottomTabs />
         </IonToolbar>
-      </IonFooter>
+      </IonFooter> */}
     </IonPage>
   );
 };

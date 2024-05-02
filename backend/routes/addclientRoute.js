@@ -196,7 +196,7 @@ router.patch("/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-});
+}); 
 
 // DELETE route to delete specific client by ID
 router.delete("/:id", async (req, res) => {

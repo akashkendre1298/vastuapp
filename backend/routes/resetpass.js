@@ -1,86 +1,104 @@
+// Import necessary modules
 const express = require("express");
+const bodyParser = require("body-parser");
+const Executive = require("../models/executiveModel");
+const bcrypt = require("bcrypt");
+
 const router = express.Router();
-const crypto = require("crypto");
-const nodemailer = require("nodemailer");
-const Signup = require("../models/signupModel");
 
-// Function to generate a random token
-const generateToken = () => {
-  return crypto.randomBytes(20).toString("hex");
-};
+// // PUT route to update password by user ID
+// router.put("/:userId", (req, res) => {
+//   const userId = req.params.userId;
+//   const { newPassword, confirmPassword } = req.body;
 
-// Nodemailer setup for sending emails
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "sourabhkhandale@gmail.com", // Your Gmail email address
-    pass: "Gmail@3991", // Your Gmail password
-  },
-});
+//   // Find the user in the database by ID
+//   Executive.findById(userId)
+//     .then((user) => {
+//       // If user not found, return error
+//       if (!user) {
+//         return res.status(404).json({ error: "User not found" });
+//       }
 
-// Route to handle forgot password request
-router.post("/forget", async (req, res) => {
+//       // Check if newPassword matches confirmPassword
+//       if (newPassword !== confirmPassword) {
+//         return res
+//           .status(400)
+//           .json({ error: "New password and confirm password do not match" });
+//       }
+
+//       // Update the password
+//       user.password = newPassword;
+
+//       // Save the updated user
+//       return user.save();
+//     })
+//     .then(() => {
+//       // Respond with success message
+//       res.json({ message: "Password updated successfully" });
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ error: "Error updating password" });
+//     });
+// });
+
+// router.patch("/", async (req, res) => {
+//   const { userId, currentPassword, newPassword } = req.body;
+//   try {
+//     const user = await Executive.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     const isMatch = await bcrypt.compare(currentPassword, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ message: "Incorrect password" });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+//     const updatedUser = await Executive.findByIdAndUpdate(
+//       userId,
+//       { password: hashedPassword },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedUser);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
+
+router.patch("/", async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
   try {
-    const { email } = req.body;
-
-    // Find user by email
-    const user = await Signup.findOne({ email });
+    const user = await Executive.findOne({ email });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "Please provide a valid email address" });
     }
 
-    // Generate reset token
-    const resetToken = generateToken();
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // Token expires in 1 hour
-    await user.save();
-
-    // Send email with reset link
-    const mailOptions = {
-      to: user.email,
-      from: "sourabhkhandale3991@email.com",
-      subject: "Password Reset",
-      text:
-        `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n` +
-        `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
-        `http://${req.headers.host}/reset-password/${resetToken}\n\n` +
-        `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
-    };
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).json({ message: "Password reset email sent" });
-  } catch (error) {
-    console.error("Error during forgot password:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// Route to handle password reset form submission
-router.post("/:token", async (req, res) => {
-  try {
-    const { token } = req.params;
-    const { newPassword } = req.body;
-
-    // Find user by reset token and check if it's expired
-    const user = await Signup.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() },
-    });
-    if (!user) {
-      return res.status(400).json({ error: "Invalid or expired token" });
+    // Check if the old password provided matches the stored password
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Incorrect old password" });
     }
 
-    // Update user's password and reset token fields
-    user.password = newPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    res.status(200).json({ message: "Password reset successful" });
+    // Update the user's password
+    const updatedUser = await Executive.findOneAndUpdate(
+      { email },
+      { password: hashedPassword },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Password updated successfully", user: updatedUser });
   } catch (error) {
-    console.error("Error during password reset:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
 module.exports = router;
+

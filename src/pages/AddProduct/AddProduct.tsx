@@ -24,22 +24,21 @@ const AddProduct = () => {
   return (
     <IonPage>
       <IonHeader>
-        
-<div style={{
-  backgroundColor:"#00004D"
-}}>
-  <ToolBar/>
-</div>
+        <div
+          style={{
+            backgroundColor: "#00004D",
+          }}
+        >
+          <ToolBar />
+        </div>
         <IonToolbar>
           <IonTitle>Add Product</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-
-      <div style={{paddingBottom:"10px"}}>
-      <IonLabel position="floating">Choose Case</IonLabel>
-
-</div>
+        <div style={{ paddingBottom: "10px" }}>
+          <IonLabel position="floating">Choose Case</IonLabel>
+        </div>
         <IonItem className="add-executive-item">
           <IonLabel position="floating"></IonLabel>
           <IonSelect interface="popover" placeholder="Choose Case">
@@ -51,34 +50,29 @@ const AddProduct = () => {
           </IonSelect>
         </IonItem>
 
-
-        <div style={{paddingBottom:"10px"}}>
-
+        <div style={{ paddingBottom: "10px" }}>
           <IonLabel position="stacked">Product Name</IonLabel>
-</div>
-
-<IonItem className="add-executive-item">
-                    <IonInput placeholder='Product Name' 
-                      className="add-executive-input" 
-                      name="ProductName"
-                     
-                    />
-                  </IonItem>
-
-        
-        <div style={{paddingBottom:"10px"}}>
-
-<IonLabel position="stacked">Category Name</IonLabel>
-</div>
-
+        </div>
 
         <IonItem className="add-executive-item">
-                    <IonInput placeholder='Category Name' 
-                      className="add-executive-input" 
-                      name="Category Name"
-                    
-                    />
-                  </IonItem>
+          <IonInput
+            placeholder="Product Name"
+            className="add-executive-input"
+            name="ProductName"
+          />
+        </IonItem>
+
+        <div style={{ paddingBottom: "10px" }}>
+          <IonLabel position="stacked">Category Name</IonLabel>
+        </div>
+
+        <IonItem className="add-executive-item">
+          <IonInput
+            placeholder="Category Name"
+            className="add-executive-input"
+            name="Category Name"
+          />
+        </IonItem>
 
         <IonItem>
           <IonCheckbox justify="space-between">Prority</IonCheckbox>
@@ -88,11 +82,7 @@ const AddProduct = () => {
           <button className="signUp-button">Save Product</button>
         </div>
       </IonContent>
-      <IonFooter>
-        <IonToolbar>
-          <BottomTabs />
-        </IonToolbar>
-      </IonFooter>
+    
     </IonPage>
   );
 };

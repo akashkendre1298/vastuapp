@@ -1,125 +1,126 @@
+import React, { useState, useEffect } from "react";
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonSearchbar,
   IonSelect,
   IonSelectOption,
   IonLabel,
   IonItem,
   IonButton,
-  IonIcon,
-  IonList,
+  IonImg,
   IonButtons,
   IonBackButton,
-  IonImg,
-  IonFooter,
 } from "@ionic/react";
-import React from "react";
-import { trash, checkmark } from 'ionicons/icons';
-import logo from "../../Assets/pandit_shivkumar_logo.png"
-
-import "./ViewProduct.css"
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
+import logo from "../../Assets/pandit_shivkumar_logo.png";
+import "./ViewProduct.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import { Link } from "react-router-dom";
 
 const ViewProduct = () => {
+  const [cases, setCases] = useState([]);
+  const [selectedCase, setSelectedCase] = useState(""); // Declare and initialize selectedCase
 
-    const data = [
-        {  product: 'Laptop', category: 'Electronics', priority: 'High', purchased: true, paymentStatus: 'Paid' },
-        {  product: 'Headphones', category: 'Electronics', priority: 'Medium', purchased: false, paymentStatus: 'Pending' },
-        {  product: 'Book', category: 'Books', priority: 'Low', purchased: true, paymentStatus: 'Paid' },
-        // Add more data as needed
-      ];
-    
+  useEffect(() => {
+    fetchCases();
+  }, []);
+
+  const fetchCases = async () => {
+    try {
+      const response = await fetch("http://localhost:8888/api/cases");
+      if (!response.ok) {
+        throw new Error("Failed to fetch cases");
+      }
+      const data = await response.json();
+      console.log("Fetched cases:", data); // Log the fetched data
+      setCases(data);
+    } catch (error) {
+      console.error("Error fetching cases:", error);
+    }
+  };
+
   return (
     <IonPage>
       <IonHeader>
-    <IonToolbar style={{ color: "#00004D" }}>
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="#" />
-      </IonButtons>
-
-      {/* <IonTitle>Executives</IonTitle> */}
-
-      <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" />
-      </IonButtons>
-    </IonToolbar>
-
-    <IonToolbar style={{ color: "#00004D" }} >
-      <IonTitle>Products</IonTitle>
-    </IonToolbar>
-  </IonHeader>
-      <IonContent className="ion-padding">
-       <div>
-        <SearchBar/>
-       </div>
-
-       <div style={{paddingBottom:"10px"}}>
-       <IonLabel position="floating">Choose Case</IonLabel>
-
-</div>
-        <IonItem style={{border:"1px solid black",marginBottom:"25px"}}>
-       <IonLabel position="floating"></IonLabel>
-
-          <IonSelect interface="popover" placeholder="Choose Case" > 
-            <IonSelectOption value="1">Option 1</IonSelectOption>
-            <IonSelectOption value="2">Option 2</IonSelectOption>
-            <IonSelectOption value="3">Option 3</IonSelectOption>
-            <IonSelectOption value="4">Option 4</IonSelectOption>
-            <IonSelectOption value="5">Option 5</IonSelectOption>
-          </IonSelect>
-        </IonItem>
-
-        <div  style={{ width: '100%', overflowX: 'auto', marginTop:"40px" }}>
-
-        <table className="custom-table">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Category</th>
-      <th>Priority</th>
-      <th>Purchased</th>
-      <th>Payment Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {data.map(item => (
-      <tr key={item.id}>
-        <td>{item.product}</td>
-        <td>{item.category}</td>
-        <td>{item.priority}</td>
-        <td>{item.purchased ? 'Yes' : 'No'}</td>
-        <td>{item.paymentStatus}</td>
-        <td>
-          <button>Delete</button>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
-      </div>
-
-
-<div className="btn-div">
-{/* 
-      <button className="signUp-button" >
-            Add Product
-            </button> */}
-              <IonButton routerLink="/product">Add Product</IonButton>
-</div>
-      
-      </IonContent>
-      <IonFooter>
-        <IonToolbar>
-        <BottomTabs/>
+        <IonToolbar style={{ color: "#00004D" }}>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="#" />
+          </IonButtons>
+          <IonButtons slot="end">
+            <IonImg src={logo} alt="App Logo" />
+          </IonButtons>
         </IonToolbar>
-      </IonFooter>
+        <IonToolbar style={{ color: "#00004D" }}>
+          <IonTitle>Products</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent className="ion-padding" style={{ backgroundColor: "gray" }}>
+        <div style={{ backgroundColor: "gray" }}>
+          <SearchBar />
+        </div>
+
+        <div style={{ paddingBottom: "10px", backgroundColor: "gray" }}>
+          <IonLabel position="floating">Choose Case</IonLabel>
+        </div>
+
+
+        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
+  <IonLabel position="floating">Choose Case</IonLabel>
+  <IonSelect
+    interface="popover"
+    placeholder="Choose Case"
+    value={selectedCase} // Bind value to selectedCase
+    onIonChange={(e) => {
+      setSelectedCase(e.detail.value);
+      const selectedCaseLabel = cases.find(
+        (caseItem) => caseItem._id === e.detail.value
+      ).caseLabel;
+      console.log("Selected case label:", selectedCaseLabel);
+    }} // Update selectedCase on change
+  >
+    {cases.map((caseItem) => (
+      <IonSelectOption key={caseItem._id} value={caseItem._id}>
+        {caseItem.caseLabel}
+      </IonSelectOption>
+    ))}
+  </IonSelect>
+</IonItem>
+
+
+      
+
+
+        <div
+          style={{
+            width: "100%",
+            overflowX: "auto",
+            marginTop: "40px",
+            backgroundColor: "gray",
+          }}
+        >
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Purchased</th>
+                <th>Payment Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>{/* Display products here */}</tbody>
+          </table>
+        </div>
+
+        <div className="btn-div">
+          <Link to="/bottomtabs/addproduct">
+            <IonButton>Add Product</IonButton>
+          </Link>
+        </div>
+      </IonContent>
     </IonPage>
   );
 };

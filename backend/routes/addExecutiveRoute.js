@@ -71,6 +71,8 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+
 // GET route to retrieve a specific executive
 router.get("/:id", async (req, res) => {
   try {

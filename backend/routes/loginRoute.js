@@ -1,7 +1,8 @@
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Signup = require("../models/signupModel");
+// const Signup = require("../models/signupModel");
+const Executive = require("../models/executiveModel");
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
-    const existingUser = await Signup.findOne({ email }); // Changed to Signup
+    const existingUser = await Executive.findOne({ email }); // Changed to Signup
 
     if (!existingUser) {
       console.error("User not found for email:", email);

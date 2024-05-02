@@ -20,12 +20,12 @@ const apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 // Handle routes here
-const signup = require("./routes/signupRoute");
-const login = require("./routes/loginRoute");
+// const signup = require("./routes/signupRoute");
+// const login = require("./routes/loginRoute");
 const adminsignup = require("./routes/adminAuthRoute");
 const adminlogin = require("./routes/adminAuthRoute");
 const forgetpass = require("./routes/resetpass");
-const executiveinfo = require("./routes/executiveRoute");
+// const executiveinfo = require("./routes/executiveRoute");
 const addclient = require("./routes/addclientRoute");
 const addexecutive = require("./routes/addExecutiveRoute");
 const addfeedback = require("./routes/addFeedbackRoute");
@@ -33,16 +33,18 @@ const addmeeting = require("./routes/addMeetingRoute");
 const addcases = require("./routes/addCaseRoutes");
 const exelogin = require("./routes/exeloginRoute");
 const followup = require("./routes/followupRoute");
-// const logout = require("./routes/logoutRoute");
-// const addnewclient = require("./routes/addNewClientRoute");
+const addnewclient = require("./routes/addNewClientRoute");
+const addProduct = require("./routes/addProductRoute");
+const updatepass = require("./routes/resetpass");
+const report = require("./routes/reportRoute")
 
 // Define API paths
 apiRouter.use("/admin/signup", adminsignup);
 apiRouter.use("/admin/login", adminlogin);
-apiRouter.use("/exe/signup", signup);
-apiRouter.use("/exe/login", login);
-apiRouter.use("/resetpass", forgetpass);
-apiRouter.use("/executiveinfo", executiveinfo);
+// apiRouter.use("/exe/signup", signup);
+// apiRouter.use("/exe/login", login);
+apiRouter.use("/exe/resetpass", forgetpass);
+// apiRouter.use("/executiveinfo", executiveinfo);
 apiRouter.use("/clients", addclient);
 apiRouter.use("/executives", addexecutive);
 apiRouter.use("/feedback", addfeedback);
@@ -50,8 +52,10 @@ apiRouter.use("/meetings", addmeeting);
 apiRouter.use("/cases", addcases);
 apiRouter.use("/exe", exelogin);
 apiRouter.use("/followup", followup);
-// apiRouter.use("/logout", logout);
 // apiRouter.use("/addnewclient", addnewclient);
+apiRouter.use("/addproduct", addProduct);
+apiRouter.use("/updatepasssword", updatepass);
+apiRouter.use("/reports", report);
 
 // Connect to MongoDB
 mongoose

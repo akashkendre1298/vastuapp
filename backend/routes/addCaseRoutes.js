@@ -41,6 +41,25 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+router.get("/status", async (req, res) => {
+ try {
+  
+  const allCases = await newCase.find();
+
+  const statusCounts = allCases.reduce((acc, curr) => {
+    acc[curr.status] = (acc[curr.status] || 0) + 1;
+    return acc;
+  }, { "On Hold": 0, "Ongoing": 0, "Completed": 0 });
+
+  res.status(200).json(statusCounts);
+  
+ } catch (error) {
+  res.status(500).json(error.message);
+  
+ }
+});
+
 router.patch("/:id", async (req, res) => {
   try {
     const caseId = req.params.id;
