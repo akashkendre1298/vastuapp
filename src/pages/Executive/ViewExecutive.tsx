@@ -44,8 +44,9 @@ const ViewExecutive = () => {
 
   // Function to log executive data when clicked
   const logExecutiveData = (executive) => {
-    console.log("Clicked Executive:", executive);
+    console.log("Clicked Executive ID:", executive.id);
   };
+  
 
   return (
     <>
@@ -82,8 +83,9 @@ const ViewExecutive = () => {
                   button
                   detail={true}
                   style={{ border: "1px solid black", marginBottom: "25px" }}
+                  onClick={() => logExecutiveData(executive)}
                 >
-                  <IonRouterLink routerLink={`/individualclients`}>
+                  <IonRouterLink routerLink={`/bottomtabs/individualclients/${executive.id}`}>
                     <IonLabel style={{ padding: "10px" }}>
                       <h2>{executive.firstName}</h2>
                       <p>{executive.phoneNumber}</p>

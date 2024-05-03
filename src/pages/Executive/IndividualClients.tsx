@@ -1,66 +1,34 @@
-import React, { useState } from 'react';
-import { IonPage, IonContent, IonHeader, IonToolbar, IonTitle, IonSearchbar, IonList, IonItem, IonLabel, IonFooter } from '@ionic/react';
-import "./IndividualClients.css"
-import BottomTabs from '../../components/BottomTabs/BottomTabs';
-
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const IndividualClients = () => {
-  const [searchText, setSearchText] = useState('');
-  // Assume client data is available as an array of objects
-  const clients = [
-    { id: 1, name: 'Client 1', executive: 'Abc client' },
-    { id: 2, name: 'Client 2', executive: 'Abc client' },
-    { id: 3, name: 'Client 3', executive: 'Abc client' },
-    // Add more client objects as needed
-  ];
+  const { executiveId } = useParams();
+  const [executive, setExecutive] = useState(null);
 
-  // Filter clients based on search text
-  const filteredClients = clients.filter(client =>
-    client.name.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  // Group clients by executive
-  const clientsByExecutive = {};
-  filteredClients.forEach(client => {
-    if (!clientsByExecutive[client.executive]) {
-      clientsByExecutive[client.executive] = [];
-    }
-    clientsByExecutive[client.executive].push(client);
-  });
+  useEffect(() => {
+    // Fetch executive details using executiveId
+    fetch(`http://localhost:8888/api/executives/${executiveId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming data contains the details of the executive
+        setExecutive(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching executive details:", error);
+      });
+  }, [executiveId]);
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Individual Clients</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className='ion-padding'>
-        <IonSearchbar value={searchText} onIonChange={e => setSearchText(e.detail.value)}></IonSearchbar>
-
-        {/* List of clients grouped by executive */}
-        {Object.keys(clientsByExecutive).map(executive => (
-          <div key={executive}>
-            <h3>{executive}</h3>
-            <IonList>
-              {clientsByExecutive[executive].map(client => (
-                <IonItem key={client.id}  button detail={true}>
-                  <IonLabel>{client.name}</IonLabel>
-                </IonItem>
-              ))}
-            </IonList>
-          </div>
-        ))}
-      </IonContent>
-  
-      <IonFooter>
-        <IonToolbar>
-        <BottomTabs/>
-        </IonToolbar>
-      </IonFooter>
-
-    </IonPage>
+    <div>
+      {executive && (
+        <>
+          <h1>Executive Details</h1>
+          <p>Name: {executive.firstName}</p>
+          <p>Phone Number: {executive.phoneNumber}</p>
+          {/* Other details */}
+        </>
+      )}
+    </div>
   );
 };
 

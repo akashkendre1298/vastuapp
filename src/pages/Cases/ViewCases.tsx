@@ -11,28 +11,34 @@ import {
 import { Link } from "react-router-dom";
 
 const ViewCasesPage = () => {
-  const [data, setData] = useState({}); // Initialize as an object
+  const [selectedCase, setSelectedCase] = useState("");
+  const [caseLabels, setCaseLabels] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:8888/api/cases");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    // Fetch case labels from API
+    fetch('http://localhost:8888/api/cases')
+      .then(response => response.json())
+      .then(data => {
+        if (data.data && Array.isArray(data.data)) {
+          // Extract caseLabels from each object in the data array
+          const labels = data.data.map(item => {
+            // console.log('Case Label:', item.caseLabel);
+            // console.log('Client ID:', item.client_id);
+            // console.log('ID:', item._id);
+            return item.caseLabel;
+          });
+          setCaseLabels(labels);
+        } else {
+          console.error('Error: Data is not in the expected format');
         }
-        const jsonData = await response.json();
-        console.log("Fetched cases:", jsonData); // Log fetched cases
-        setData(jsonData); // Update state with the fetched cases
-      } catch (error) {
-        console.error("Error fetching cases:", error);
-      }
-    };
-
-    fetchData();
+      })
+      .catch(error => {
+        console.error('Error fetching cases:', error);
+      });
   }, []);
 
   // Convert object values to an array
-  const dataArray = Object.values(data);
+  // const dataArray = Object.values(data);
 
   return (
     <IonPage>
@@ -41,7 +47,7 @@ const ViewCasesPage = () => {
         <IonSearchbar placeholder="Search Cases"></IonSearchbar>
 
         {/* List of Cases */}
-        <IonList>
+        {/* <IonList>
           {dataArray.length > 0 ? (
             dataArray.map((item, index) => (
               <IonItem key={index}>
@@ -56,7 +62,18 @@ const ViewCasesPage = () => {
               <IonLabel>No cases found</IonLabel>
             </IonItem>
           )}
-        </IonList>
+        </IonList> */}
+
+
+<IonList>
+  
+  {caseLabels.map((label, index) => (
+    <IonItem key={index} onClick={() => handleCaseSelection(label)}>
+      <IonLabel>{label}</IonLabel>
+    </IonItem>
+  ))}
+</IonList>
+
 
         {/* Add Case Button */}
         <Link to="/bottomtabs/addcases">

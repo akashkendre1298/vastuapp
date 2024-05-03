@@ -10,96 +10,100 @@ import {
   IonLabel,
   IonItem,
   IonButton,
-  IonImg,
-  IonButtons,
-  IonBackButton,
 } from "@ionic/react";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
+
 import "./ViewProduct.css";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 
 const ViewProduct = () => {
-  const [cases, setCases] = useState([]);
-  const [selectedCase, setSelectedCase] = useState(""); // Declare and initialize selectedCase
+  const [selectedCase, setSelectedCase] = useState("");
+  const [caseData, setCaseData] = useState([]);
+  const [selectedCaseData, setSelectedCaseData] = useState(null);
 
   useEffect(() => {
-    fetchCases();
+    // Fetch case data from API
+    fetch("http://localhost:8888/api/cases")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.data && Array.isArray(data.data)) {
+          // Set case data
+          setCaseData(data.data);
+        } else {
+          console.error("Error: Data is not in the expected format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cases:", error);
+      });
   }, []);
 
-  const fetchCases = async () => {
-    try {
-      const response = await fetch("http://localhost:8888/api/cases");
-      if (!response.ok) {
-        throw new Error("Failed to fetch cases");
-      }
-      const data = await response.json();
-      console.log("Fetched cases:", data); // Log the fetched data
-      setCases(data);
-    } catch (error) {
-      console.error("Error fetching cases:", error);
+  const fetchProductData = (clientId, caseId) => {
+    fetch(`http://localhost:8888/api/addproduct/${clientId}/${caseId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched product data:", data);
+        // Check if selectedCaseData is an array and not empty
+        if (Array.isArray(data) && data.length > 0) {
+          const firstItem = data[0]; // Get the first object from the array
+          console.log("Product Name:", firstItem.productName);
+          console.log("Product Category:", firstItem.productCategory);
+          // Log rest of the values
+          console.log("Other properties:", firstItem);
+          setSelectedCaseData(firstItem);
+        } else {
+          console.error("No product data found for the selected case");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  };
+
+  const handleCaseSelection = (selectedCaseLabel) => {
+    setSelectedCase(selectedCaseLabel);
+    const selectedCaseItem = caseData.find(
+      (item) => item.caseLabel === selectedCaseLabel
+    );
+    if (selectedCaseItem) {
+      const { client_id, _id } = selectedCaseItem;
+      console.log("Selected Case Label:", selectedCaseLabel);
+      console.log("Selected Client ID:", client_id);
+      console.log("Selected ID:", _id);
+      fetchProductData(client_id, _id);
     }
   };
+
+  // After the selectedCaseData is fetched, you can access productName and productCategory
+  console.log("Product Name:", selectedCaseData?.productName);
+  console.log("Product Category:", selectedCaseData?.productCategory);
+  console.log("Product purchesed:", selectedCaseData?.purchased);
+  console.log("Product priority:", selectedCaseData?.priority);
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="#" />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonTitle>Products</IonTitle>
+        <IonToolbar>
+          <IonTitle>View Product</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding" style={{ backgroundColor: "gray" }}>
-        <div style={{ backgroundColor: "gray" }}>
-          <SearchBar />
-        </div>
-
-        <div style={{ paddingBottom: "10px", backgroundColor: "gray" }}>
+      <IonContent>
+        <IonItem>
           <IonLabel position="floating">Choose Case</IonLabel>
-        </div>
+          <IonSelect
+            interface="popover"
+            placeholder="Choose Case"
+            value={selectedCase}
+            onIonChange={(e) => handleCaseSelection(e.detail.value)}
+          >
+            {caseData.map((item, index) => (
+              <IonSelectOption key={index} value={item.caseLabel}>
+                {item.caseLabel}
+              </IonSelectOption>
+            ))}
+          </IonSelect>
+        </IonItem>
 
-
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-  <IonLabel position="floating">Choose Case</IonLabel>
-  <IonSelect
-    interface="popover"
-    placeholder="Choose Case"
-    value={selectedCase} // Bind value to selectedCase
-    onIonChange={(e) => {
-      setSelectedCase(e.detail.value);
-      const selectedCaseLabel = cases.find(
-        (caseItem) => caseItem._id === e.detail.value
-      ).caseLabel;
-      console.log("Selected case label:", selectedCaseLabel);
-    }} // Update selectedCase on change
-  >
-    {cases.map((caseItem) => (
-      <IonSelectOption key={caseItem._id} value={caseItem._id}>
-        {caseItem.caseLabel}
-      </IonSelectOption>
-    ))}
-  </IonSelect>
-</IonItem>
-
-
-      
-
-
-        <div
-          style={{
-            width: "100%",
-            overflowX: "auto",
-            marginTop: "40px",
-            backgroundColor: "gray",
-          }}
-        >
+        <div className="table-container">
           <table className="custom-table">
             <thead>
               <tr>
@@ -111,16 +115,30 @@ const ViewProduct = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{/* Display products here */}</tbody>
+            <tbody>
+              {selectedCaseData && (
+                <tr>
+                  <td>{selectedCaseData.productName}</td>
+                  <td>{selectedCaseData.productCategory}</td>
+                  <td>{selectedCaseData.priority ? "true" : "false"}</td>
+                  <td>{selectedCaseData.purchased ? "true" : "false"}</td>
+
+                  <td>{selectedCaseData.paymentStatus}</td>
+                  <td>{selectedCaseData.action}</td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
-
-        <div className="btn-div">
-          <Link to="/bottomtabs/addproduct">
-            <IonButton>Add Product</IonButton>
-          </Link>
+        <div>
+         
+            <Link to="/bottomtabs/addproduct">
+              <IonButton>Add Product</IonButton>
+            </Link>
+         
         </div>
       </IonContent>
+
     </IonPage>
   );
 };
