@@ -37,48 +37,55 @@ const LoginPage = () => {
     }
   };
   return (
-    <IonPage className="login-page">
-      {/* <IonHeader>
-          <IonToolbar>
-            <IonTitle>Login</IonTitle>
-          </IonToolbar>
-        </IonHeader> */}
-      {/* Logo centered horizontally */}
-      <div className="login-logo-div">
-        <IonImg src={logo} className="login-logo" />
+  <IonPage className="login-page">
+    
+  <div className="login-container">
+    {/* Logo centered horizontally */}
+    <div className="login-logo-div">
+      <div>
+
+      <IonImg src={logo} className="login-logo" />
       </div>
-      <div className="login-title">
-        <p>Login</p>
-        <p className="para-after-login-title">Please sign in To continue</p>
-      </div>
-      {/* Login form elements */}
-      <IonLabel>Email</IonLabel>
+    </div>
+    <div className="login-title">
+      <p>Login</p>
+      <p className="para-after-login-title">Please sign in to continue</p>
+    </div>
+    {/* Login form elements */}
+    <div className="form-group">
+   
+
+      <label>Email &nbsp; &nbsp; &nbsp; &nbsp;</label>
+    
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="login-input"
       />
-      <IonLabel>Password</IonLabel>
-
+    </div>
+    <div className="form-group">
+      <label>Password</label>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className="login-input"
       />
-      {/* Forgot password and signup links */}
-      <a href="#" className="forgot-password">
-        Forgot Password?
-      </a>
-      <button onClick={handleSubmit} className="login-button">
-        Login
-      </button>
+    </div>
+    {/* Forgot password and signup links */}
+    <a href="#" className="forgot-password">
+      Forgot Password?
+    </a>
+    <button onClick={handleSubmit} className="login-button">
+      Login
+    </button>
+    <p className="signup-link">
+      Don't have an account? <a href="/signup">Sign Up</a>
+    </p>
+  </div>
+</IonPage>
 
-      <p className="signup-link">
-        Don't have an account? <a href="/signup">Sign Up</a>
-      </p>
-    </IonPage>
   );
 };
 
