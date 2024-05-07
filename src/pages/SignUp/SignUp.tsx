@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom"; // Import useHistory hook for navigation
-import {
-  IonPage,
-  IonImg,
-} from "@ionic/react";
+import { IonPage, IonImg } from "@ionic/react";
 import "./SignUp.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 
@@ -46,18 +43,19 @@ const SignupPage = () => {
         setEmail("");
         setPhoneNumber("");
         setPassword("");
-        setSuccessMessage("User signed up successfully. Redirecting to login...");
+        setSuccessMessage(
+          "User signed up successfully. Redirecting to login..."
+        );
         setTimeout(() => {
           setSuccessMessage("");
           history.push("/"); // Redirect to login page
         }, 3000); // Redirect after 3 seconds
       } else {
-      
         setError("Failed to sign up user. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
-     
+
       setError("Network error. Please check your internet connection.");
     }
   };
@@ -132,7 +130,9 @@ const SignupPage = () => {
             />{" "}
           </div>
           {error && <div className="error-message">{error}</div>}
-          {successMessage && <div className="success-message">{successMessage}</div>}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
           <div>
             <button className="signUp-button" onClick={handleSubmit}>
               Create Account
