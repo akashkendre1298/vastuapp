@@ -1,6 +1,10 @@
 .add-executive{
     background-color: aqua;
 }
+.back-button {
+    --color: white;
+  }
+  
 .add-executive-button{
     color: #fff;
     padding: 10px 20px;

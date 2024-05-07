@@ -76,7 +76,8 @@ const Client = () => {
         <IonToolbar style={{ color: "#00004D" }}>
           {" "}
           <IonButtons slot="start">
-            <IonBackButton defaultHref="#"></IonBackButton>
+           <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+
           </IonButtons>
           <IonButtons slot="end">
             <IonImg src={logo} alt="App Logo"></IonImg>

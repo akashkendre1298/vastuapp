@@ -46,7 +46,8 @@ const ProfilePage = () => {
       <IonHeader>
         <IonToolbar style={{ color: "#00004D" }}>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="#" />
+            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+
           </IonButtons>
 
           {/* <IonTitle>Executives</IonTitle> */}

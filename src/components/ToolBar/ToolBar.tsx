@@ -15,7 +15,8 @@ const ToolBar = () => {
   return (
     <IonToolbar>
       <IonButtons slot="start">
-        <IonBackButton defaultHref="#" />
+        <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+
       </IonButtons>
 
       <IonButtons slot="end">
