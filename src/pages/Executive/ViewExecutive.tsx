@@ -76,6 +76,7 @@ const ViewExecutive = () => {
             </div>
           </div>
           <div>
+          {executives.length > 0 && ( // Check if executives are available
             <IonList inset={true}>
               {executives.map((executive, index) => (
                 <IonItem
@@ -85,7 +86,7 @@ const ViewExecutive = () => {
                   style={{ border: "1px solid black", marginBottom: "25px" }}
                   onClick={() => logExecutiveData(executive)}
                 >
-                  <IonRouterLink routerLink={`/bottomtabs/individualclients/${executive.id}`}>
+                  <IonRouterLink routerLink={`/bottomtabs/individualclients/${executive._id}`}>
                     <IonLabel style={{ padding: "10px" }}>
                       <h2>{executive.firstName}</h2>
                       <p>{executive.phoneNumber}</p>
@@ -94,6 +95,7 @@ const ViewExecutive = () => {
                 </IonItem>
               ))}
             </IonList>
+          )}
           </div>
           {/* Add Executive button */}
           
