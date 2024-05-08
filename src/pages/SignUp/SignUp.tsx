@@ -140,8 +140,8 @@ const SignupPage = () => {
         </div>
         {error && <div className="error-message">{error}</div>}
         {successMessage && <div className="success-message">{successMessage}</div>}
-        <div>
-          <button className="signUp-button" onClick={handleSubmit}>
+        <div style={{display:"flex", justifyContent:"center"}}>
+          <button className="signUp-button signUp-button-signup " onClick={handleSubmit}>
             Create Account
           </button>
         </div>
