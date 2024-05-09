@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   IonContent,
   IonHeader,
@@ -6,29 +7,48 @@ import {
   IonToolbar,
   IonSelect,
   IonSelectOption,
-  IonLabel,
-  IonItem,
-  IonButton,
   IonButtons,
   IonBackButton,
   IonImg,
 } from "@ionic/react";
-import React from "react";
 import "./Revenue.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
 
 const Revenue = () => {
+  const [totalAmount, setTotalAmount] = useState(null);
+
+  useEffect(() => {
+    const fetchTotalAmount = async () => {
+      try {
+        const response = await fetch("http://localhost:8888/api/cases/");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        // Assuming 'totalAmount' is a property in the response data
+        if (data && data.totalAmount) {
+          setTotalAmount(data.totalAmount);
+        } else {
+          throw new Error("Total amount not found in response");
+        }
+      } catch (error) {
+        console.error("Error fetching total amount:", error);
+      }
+    };
+
+    fetchTotalAmount();
+  }, []);
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar style={{ color: "#00004D" }}>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-
+            <IonBackButton
+              defaultHref="#"
+              className="back-button"
+            ></IonBackButton>
           </IonButtons>
-
-          {/* <IonTitle>Executives</IonTitle> */}
 
           <IonButtons slot="end">
             <IonImg src={logo} alt="App Logo" />
@@ -40,14 +60,22 @@ const Revenue = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <div className="div-revenue-first-section">
+        <div className="total-revenue-div">
           <div>
             <p style={{ fontSize: "18px", fontWeight: "bold" }}>
               Total Revenue
             </p>
-            <p style={{ fontSize: "18px", fontWeight: "bold" }}>₹ 42000</p>
           </div>
           <div>
+            {totalAmount && (
+              <p style={{ fontSize: "18px", fontWeight: "bold" }}>
+                ₹ {totalAmount}
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="div-revenue-first-section">
+          {/* <div>
             <p>
               <IonSelect interface="popover">
                 <IonSelectOption value="1">This Month</IonSelectOption>
@@ -55,22 +83,8 @@ const Revenue = () => {
                 <IonSelectOption value="3">last year</IonSelectOption>
               </IonSelect>
             </p>
-          </div>
+          </div> */}
         </div>
-
-        <div className="div-revenue-first-section">
-          <div>
-            <p>Overview</p>
-          </div>
-          <div>
-            <IonSelect interface="popover">
-              <IonSelectOption value="1">This Month</IonSelectOption>
-              <IonSelectOption value="2">Last Weak</IonSelectOption>
-              <IonSelectOption value="3">last year</IonSelectOption>
-            </IonSelect>
-          </div>
-        </div>
-
         <div className="div-revenue-first-section">
           <div>
             <p>Nishant</p>
@@ -89,7 +103,6 @@ const Revenue = () => {
           </div>
         </div>
       </IonContent>
-      {/* <BottomTabs /> */}
     </IonPage>
   );
 };

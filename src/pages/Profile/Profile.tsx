@@ -4,89 +4,74 @@ import {
   IonContent,
   IonAvatar,
   IonLabel,
-  IonButton,
   IonHeader,
   IonToolbar,
   IonButtons,
   IonBackButton,
   IonImg,
   IonTitle,
-  IonFooter,
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
 
 const ProfilePage = () => {
-  const [adminData, setAdminData] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchAdminData = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/admin/login", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch admin data");
+        // Retrieve user email from local storage
+        const userEmail = localStorage.getItem("userEmail");
+        console.log(userEmail);
+        if (!userEmail) {
+          throw new Error("User email not found in local storage");
         }
-        const data = await response.json();
-        setAdminData(data);
-        console.log("Admin data:", data); // Log the fetched admin data
+
+        // Fetch user data from signup API using the email
+        const response = await fetch(`http://localhost:8888/api/admin?email=${userEmail}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const userData = await response.json();
+        // Check if user data is empty (email not found in signup API)
+        if (!userData) {
+          throw new Error("User data not found in signup API");
+        }
+
+        setUserData(userData);
+        console.log("User data:", userData);
       } catch (error) {
-        console.error("Error fetching admin data:", error);
+        console.error("Error fetching user data:", error);
+        setError("Failed to fetch user data");
       }
     };
 
-    fetchAdminData();
+    fetchUserData();
   }, []);
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-
-          </IonButtons>
-
-          {/* <IonTitle>Executives</IonTitle> */}
-
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
-
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonTitle>Profile</IonTitle>
-        </IonToolbar>
+        {/* Your header JSX */}
       </IonHeader>
       <IonContent className="ion-padding">
-        {adminData && (
+        {userData && (
           <>
             <IonAvatar style={{ margin: "0 auto" }}>
-              {/* <img src={adminData.profilePictureUrl} alt="Profile" /> */}
+              {/* <img src={userData.profilePictureUrl} alt="Profile" /> */}
             </IonAvatar>
             <IonLabel style={{ textAlign: "center", display: "block" }}>
-              {adminData.firstName} {adminData.lastName}
+              {userData.firstName} {userData.lastName}
             </IonLabel>
-            <IonLabel>Email: {adminData.email}</IonLabel>
-            <IonLabel>Contact Number: {adminData.phoneNumber}</IonLabel>
-            <IonLabel>Password: {adminData.password}</IonLabel>
+            <IonLabel>Email: {userData.email}</IonLabel>
+            <IonLabel>Contact Number: {userData.phoneNumber}</IonLabel>
+            <IonLabel>Password: {userData.password}</IonLabel>
           </>
         )}
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <IonButton color="primary" style={{ marginRight: "10px" }}>
-            Edit
-          </IonButton>
-          <IonButton color="danger">Delete</IonButton>
-        </div>
+        {error && <p className="error-message">{error}</p>}
+        {/* Edit and Delete buttons */}
       </IonContent>
-      {/* <IonFooter>
-        <IonToolbar>
-          <BottomTabs />
-        </IonToolbar>
-      </IonFooter> */}
     </IonPage>
   );
 };

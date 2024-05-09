@@ -7,19 +7,17 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const handleSubmit = async () => {
-    // Check if any field is empty
     if (!email || !password) {
       setError("Both email and password are required.");
       return;
     }
-
+  
     const userData = {
       email,
       password,
     };
-
+  
     try {
       const response = await fetch("http://localhost:8888/api/admin/login", {
         method: "POST",
@@ -28,9 +26,14 @@ const LoginPage = () => {
         },
         body: JSON.stringify(userData),
       });
-
+  
       if (response.ok) {
         console.log("User logged in successfully");
+        const responseData = await response.json();
+        // Save user data including email in local storage
+        localStorage.setItem("userData", JSON.stringify(responseData));
+        // Store the email separately in local storage
+        localStorage.setItem("userEmail", email);
         // Redirect the user to the dashboard or home page
         window.location.href = "/bottomtabs/home";
       } else {
@@ -42,6 +45,7 @@ const LoginPage = () => {
       setError("Network error. Please check your internet connection.");
     }
   };
+  
 
   return (
     <IonPage className="login-page">

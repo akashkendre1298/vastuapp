@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./IndividualClients.css"
+import { IonPage } from "@ionic/react";
 
 const IndividualClients = () => {
   const { executiveId } = useParams();
@@ -23,38 +25,69 @@ const IndividualClients = () => {
     fetch(`http://localhost:8888/api/cases/byExecutiveId/${executiveId}`)
       .then((response) => response.json())
       .then((data) => {
-        // Set the client count directly from the response
-        setClientCount(data.count);
-        setClients(data.clients);
+        if (data.data && Array.isArray(data.data)) {
+          // Extract caseLabels from each object in the data array
+          const labels = data.data.map((item) => {
+            return item.caseLabel;
+          });
+          // setCaseLabels(labels);
+          setClientCount(data.count);
+          setClients(data.clients);
+        } else {
+          console.error("Error: Data is not in the expected format");
+        }
       })
       .catch((error) => {
         console.error("Error fetching client details:", error);
       });
   }, [executiveId]);
 
+  const viewClients = () => {
+    window.location.href = `/clients/${executiveId}`;
+  };
+
   return (
+    <IonPage className="main-content-individualclient">
+
     <div>
     {executive && (
       <div>
-        <h1>Executive Details</h1>
-        <div>
-          <p>Name: {executive.firstName}</p>
-          <p>Phone Number: {executive.phoneNumber}</p>
+        <div  className="profile-details-div">
+          <div>
+
+          <p style={{fontSize:"30px"}}> {executive.firstName}</p>
+          <p style={{fontSize:"30px"}}> {executive.phoneNumber}</p>
+          </div>
         </div>
       </div>
     )}
     <div>
-      <h2>Client Information</h2>
-      <div>
-        <p>Number of Unique Clients: {clientCount}</p>
-        <button onClick={() => console.log(clients)}>View Clients</button>
+
+      <div className="client-count-and-view">
+        <div>
+
+        <p>Number Clients: {clientCount}</p>
+        </div>
+        <div>
+
+        <button onClick={viewClients} className="view-client-button">View Clients</button>
+        </div>
       </div>
-      <div>
-        <button>Edit</button>
-        <button>Delete</button>
+
+
+      <div className="button-group">
+        <div>
+
+        <button className="edit-button">Edit</button>
+        </div>
+        <div>
+
+        <button className="delete-button">Delete</button>
+        </div>
       </div>
     </div>
   </div>
+  </IonPage>
   
   );
 };

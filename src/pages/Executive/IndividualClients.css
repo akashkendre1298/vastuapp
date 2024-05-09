@@ -27,4 +27,45 @@
   .client-executive {
     color: #666;
   }
-  
+  .client-count-and-view{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .main-content-individualclient{
+    padding: 0 10px;
+  }
+  .edit-button{
+    width: 130px;
+    height: 40px;
+    background-color:#00004d ;
+    color: white;
+    border-radius: 30px;
+    font-size: 16px;
+  }
+  .delete-button{
+    width: 130px;
+    height: 40px;
+    background-color:red ;
+    color: white;
+    border-radius: 30px;
+    font-size: 16px;
+  }
+  .button-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .profile-details-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .view-client-button{
+    width: 100px;
+    height: 40px;
+    background-color:#ca56625e ;
+    /* background: transparent; */
+    border: 1px solid #ca5662;
+    border-radius: 30px;
+  }
