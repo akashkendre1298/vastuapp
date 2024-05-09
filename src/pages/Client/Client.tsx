@@ -22,6 +22,7 @@ import {
 import "./Client.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
+
 const Client = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -33,14 +34,12 @@ const Client = () => {
     feedback: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     try {
       const response = await fetch("http://localhost:8888/api/clients", {
         method: "POST",
@@ -71,31 +70,25 @@ const Client = () => {
   };
 
   return (
-    <>
-      <IonPage>
-        <IonToolbar style={{ color: "#00004D" }}>
-          {" "}
-          <IonButtons slot="start">
-           <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo"></IonImg>
-          </IonButtons>
-        </IonToolbar>
-        <IonContent
-        
-          style={{ paddingTop: "20px", height: "100vh" }}
-        >
-          <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
-            <IonRow>
-              <IonCol>
-                <IonCardHeader className="add-executive-card-header">
-                  <IonCardTitle>Add Client</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent className="add-executive-card-content">
-                  <form onSubmit={handleSubmit}>
-                    <div
+    <IonPage>
+      <IonToolbar style={{ color: "#00004D" }}>
+        {" "}
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+        </IonButtons>
+        <IonButtons slot="end">
+          <IonImg src={logo} alt="App Logo"></IonImg>
+        </IonButtons>
+      </IonToolbar>
+      <IonContent style={{ paddingTop: "20px", height: "100vh" }}>
+        <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+          <IonRow>
+            <IonCol>
+              <IonCardHeader className="add-executive-card-header">
+                <IonCardTitle>Add Client</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent className="add-executive-card-content">
+              <div
                       style={{ paddingBottom: "10px" }}
                       
                     >
@@ -187,43 +180,32 @@ const Client = () => {
                     <div style={{ paddingBottom: "10px" }}>
                       <IonLabel position="stacked">feedback</IonLabel>
                     </div>
-                    <IonItem className="add-executive-item">
+                    <IonItem className="add-executive-item" style={{marginBottom:"50px"}}>
                       <IonInput
                         placeholder="feedback"
                         className="add-executive-input"
                         name="feedback"
                         value={formData.feedback}
                         onIonChange={handleChange}
+                        
                       />
                     </IonItem>
-                    {/* <IonItem className="add-executive-item">
-                    <IonLabel position="stacked">Password</IonLabel>
-                    <IonInput placeholder='' 
-                      type="password" 
-                      className="add-executive-input" 
-                      name="password"
-                      value={formData.password}
-                      onIonChange={handleChange}
-                    />
-                  </IonItem> */}
-                    {/* <IonButton type="submit"  className="add-executive-button">Add</IonButton> */}
 
-                    <button className="add-executive-button">
-                      Add Client{" "}
-                    </button>
-                  </form>
-                </IonCardContent>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonContent>
-        {/* <IonFooter>
-          <IonToolbar>
-            <BottomTabs />
-          </IonToolbar>
-        </IonFooter> */}
-      </IonPage>
-    </>
+             
+                <button
+                  className="add-executive-button"
+                  style={{ position: "fixed", bottom: 5, width: "86%",zIndex: 1,marginTop:"20px" }}
+                  onClick={handleSubmit}
+                >
+                  Add Client
+                </button>
+              </IonCardContent>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
+     
+    </IonPage>
   );
 };
 
