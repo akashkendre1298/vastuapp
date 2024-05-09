@@ -16,12 +16,12 @@ const ViewCasesPage = () => {
 
   useEffect(() => {
     // Fetch case labels from API
-    fetch('http://localhost:8888/api/cases')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://localhost:8888/api/cases")
+      .then((response) => response.json())
+      .then((data) => {
         if (data.data && Array.isArray(data.data)) {
           // Extract caseLabels from each object in the data array
-          const labels = data.data.map(item => {
+          const labels = data.data.map((item) => {
             // console.log('Case Label:', item.caseLabel);
             // console.log('Client ID:', item.client_id);
             // console.log('ID:', item._id);
@@ -29,11 +29,11 @@ const ViewCasesPage = () => {
           });
           setCaseLabels(labels);
         } else {
-          console.error('Error: Data is not in the expected format');
+          console.error("Error: Data is not in the expected format");
         }
       })
-      .catch(error => {
-        console.error('Error fetching cases:', error);
+      .catch((error) => {
+        console.error("Error fetching cases:", error);
       });
   }, []);
 
@@ -44,7 +44,12 @@ const ViewCasesPage = () => {
     <IonPage>
       <IonContent>
         {/* Search Bar */}
-        <IonSearchbar placeholder="Search Cases"></IonSearchbar>
+        <div>
+          <IonSearchbar
+            placeholder="Search Cases"
+            className="custom"
+          ></IonSearchbar>
+        </div>
 
         {/* List of Cases */}
         {/* <IonList>
@@ -64,20 +69,33 @@ const ViewCasesPage = () => {
           )}
         </IonList> */}
 
-
-<IonList>
-  
-  {caseLabels.map((label, index) => (
-    <IonItem key={index} onClick={() => handleCaseSelection(label)}>
-      <IonLabel>{label}</IonLabel>
-    </IonItem>
-  ))}
-</IonList>
-
-
+        <IonList inset={true} style={{marginBottom:"40px"}}>
+          {caseLabels.map((label, index) => (
+            <IonItem
+              key={index}
+              button
+              detail={true}
+              style={{ border: "1px solid black", marginBottom: "20px", borderRadius: "10px"}}
+            >
+              <IonLabel>{label}</IonLabel>
+            </IonItem>
+          ))}
+        </IonList>
         {/* Add Case Button */}
         <Link to="/bottomtabs/addcases">
-          <IonButton expand="block">Add Case</IonButton>
+          <button
+            className="add-executive-button"
+            style={{
+              position: "fixed",
+              bottom: 5,
+              width: "92%",
+              zIndex: 1,
+              marginTop: "20px",
+              marginLeft: "16px",
+            }}
+          >
+            Add Case
+          </button>
         </Link>
       </IonContent>
     </IonPage>
