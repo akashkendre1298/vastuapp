@@ -127,7 +127,7 @@ const AddCasePage = () => {
   </IonHeader>
   <IonContent> 
 
-    <div style={{padding:"10px",marginTop:"10px"}}>
+    <div style={{padding:"10px",marginTop:"25px"}}>
 
     <div>
       <IonLabel position="floating" style={{paddingLeft:"10px"}}>Case Name</IonLabel>
