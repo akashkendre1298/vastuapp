@@ -133,7 +133,7 @@ const AddCasePage = () => {
       <IonLabel position="floating" style={{paddingLeft:"10px"}}>Case Name</IonLabel>
       <IonItem className="add-executive-item" style={{marginTop:"10px"}}>
         
-        <IonInput value={caseName} onIonChange={(e) => setCaseName(e.detail.value)} placeholder="Case Name" ></IonInput>
+        <IonInput value={caseName} onIonChange={(e) => setCaseName(e.detail.value)} placeholder="Case Name" required></IonInput>
       </IonItem>
     </div>
     <div>
@@ -146,6 +146,7 @@ const AddCasePage = () => {
           onIonChange={(e) => setSelectedClient(e.detail.value)}
           // placeholder="Select Client"
           interface="popover"
+          
         >
           {clients.map((client) => (
             <IonSelectOption key={client._id} value={client._id}>{client.firstName}</IonSelectOption>
@@ -164,6 +165,7 @@ const AddCasePage = () => {
           onIonChange={(e) => setSelectedExecutive(e.detail.value)}
           // placeholder="Select Executive"
           interface="popover"
+          
         >
           {executives.map((executive) => (
             <IonSelectOption key={executive._id} value={executive._id}>{executive.firstName}</IonSelectOption>
@@ -185,6 +187,7 @@ const AddCasePage = () => {
           value={issue}
           onIonChange={(e) => setIssue(e.detail.value)}
           placeholder="Write Issue"
+          required
         ></IonTextarea>
       </IonItem>
     </div>

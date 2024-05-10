@@ -10,10 +10,15 @@ import {
   IonLabel,
   IonItem,
   IonButton,
+  IonButtons,
+  IonBackButton,
+  IonImg,
 } from "@ionic/react";
 
 import "./ViewProduct.css";
 import { Link } from "react-router-dom";
+import logo from "../../Assets/pandit_shivkumar_logo.png";
+
 
 const ViewProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
@@ -42,22 +47,20 @@ const ViewProduct = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched product data:", data);
-        // Check if selectedCaseData is an array and not empty
-        if (Array.isArray(data) && data.length > 0) {
-          const firstItem = data[0]; // Get the first object from the array
-          console.log("Product Name:", firstItem.productName);
-          console.log("Product Category:", firstItem.productCategory);
-          // Log rest of the values
-          console.log("Other properties:", firstItem);
-          setSelectedCaseData(firstItem);
+        // Check if data is an array
+        if (Array.isArray(data)) {
+          setSelectedCaseData(data);
         } else {
-          console.error("No product data found for the selected case");
+          console.error("Invalid product data format:", data);
+          setSelectedCaseData([]); // Set an empty array if data is not in the expected format
         }
       })
       .catch((error) => {
         console.error("Error fetching product data:", error);
+        setSelectedCaseData([]); // Set an empty array in case of an error
       });
   };
+  
 
   const handleCaseSelection = (selectedCaseLabel) => {
     setSelectedCase(selectedCaseLabel);
@@ -82,10 +85,16 @@ const ViewProduct = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>View Product</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+    <IonToolbar >
+      <IonButtons slot="start">
+        <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+      </IonButtons>
+      {/* <IonTitle>Case</IonTitle> */}
+      <IonButtons slot="end">
+        <IonImg src={logo} alt="App Logo" />
+      </IonButtons>
+    </IonToolbar>
+  </IonHeader>
       <IonContent>
         <IonItem>
           <IonLabel position="floating">Choose Case</IonLabel>
@@ -116,18 +125,18 @@ const ViewProduct = () => {
               </tr>
             </thead>
             <tbody>
-              {selectedCaseData && (
-                <tr>
-                  <td>{selectedCaseData.productName}</td>
-                  <td>{selectedCaseData.productCategory}</td>
-                  <td>{selectedCaseData.priority ? "true" : "false"}</td>
-                  <td>{selectedCaseData.purchased ? "true" : "false"}</td>
+  {selectedCaseData && selectedCaseData.map((product, index) => (
+    <tr key={index}>
+      <td>{product.productName}</td>
+      <td>{product.productCategory}</td>
+      <td>{product.priority ? "true" : "false"}</td>
+      <td>{product.purchased ? "true" : "false"}</td>
+      <td>{product.paymentStatus}</td>
+      <td>{product.action}</td>
+    </tr>
+  ))}
+</tbody>
 
-                  <td>{selectedCaseData.paymentStatus}</td>
-                  <td>{selectedCaseData.action}</td>
-                </tr>
-              )}
-            </tbody>
           </table>
         </div>
         <div>
