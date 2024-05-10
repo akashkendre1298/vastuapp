@@ -21,3 +21,14 @@
     right: 10px;
     top: calc(50% - 8px);
   }
+  .add-case-button{
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 50px;
+    width: 250px;
+    background-color: #00004D;
+    margin-top: 20px;
+  }

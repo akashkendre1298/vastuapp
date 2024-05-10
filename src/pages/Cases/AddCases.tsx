@@ -188,9 +188,14 @@ const AddCasePage = () => {
         ></IonTextarea>
       </IonItem>
     </div>
-    <IonButton expand="full" onClick={handleAddCase}>
+    <div style={{display:"flex",justifyContent:"center",width:"100%"}}>
+<div>
+
+    <button  className="add-case-button" onClick={handleAddCase}>
       Add Case
-    </IonButton>
+    </button>
+</div>
+    </div>
     </div>
 
   </IonContent>
