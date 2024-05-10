@@ -68,7 +68,7 @@ const Home = () => {
 
   return (
     <>
-      <IonPage style={{ backgroundColor: "#f0f0f0" }}>
+      <IonPage style={{ backgroundColor: "#f0f0f0" }} className="home-page-main">
         <IonHeader>
           <IonToolbar
             style={{
@@ -97,19 +97,16 @@ const Home = () => {
         <IonContent style={{ paddingTop: "100px", backgroundColor: "#f0f0f0" }}>
           <IonGrid
             style={{
-              paddingTop: "50px",
+              // paddingTop: "50px",
+              height:"84vh",
               background: "linear-gradient(135deg, #f5f7fa, #c3cfe2)",
             }}
           >
             <IonRow>
               <IonCol>
                 <IonCard
-                  style={{
-                    height: "160px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                className="card-home"
+                
                   button
                   // onClick={() => handleButtonClick("/bottomtabs/viewexecutive")}
                   href="/bottomtabs/viewexecutive"
@@ -138,14 +135,9 @@ const Home = () => {
                 </IonCard>
               </IonCol>
               <IonCol>
-                <IonCard
-                  style={{
-                    color: "black",
-                    height: "160px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                <IonCard 
+                className="card-home"
+                  
                   button
                   // onClick={() => handleButtonClick("cases")}
                   href="/bottomtabs/viewcases"
@@ -169,13 +161,7 @@ const Home = () => {
               </IonCol>
               <IonCol>
                 <IonCard
-                  style={{
-                    color: "black",
-                    height: "160px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  className="card-home"
                   button
                   // onClick={() => handleButtonClick("meetings")}
                   href="/bottomtabs/meetings"
@@ -199,13 +185,7 @@ const Home = () => {
               </IonCol>
               <IonCol>
                 <IonCard
-                  style={{
-                    color: "black",
-                    height: "160px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  className="card-home"
                   button
                   // onClick={() => handleButtonClick("revenue")}
                   href="/bottomtabs/revenue"
@@ -232,13 +212,7 @@ const Home = () => {
             <IonRow className="add-card-row">
               <IonCol>
                 <IonCard
-                  style={{
-                    color: "black",
-                    height: "160px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  className="card-home"
                   button
                   // onClick={() => handleButtonClick("client")}
                   href="/bottomtabs/addclient"
@@ -263,13 +237,7 @@ const Home = () => {
               </IonCol>
               <IonCol>
                 <IonCard
-                  style={{
-                    color: "black",
-                    height: "160px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                   className="card-home"
                   button
                   // onClick={() => handleButtonClick("reports")}
                   // href="/bottomtabs/report"
@@ -295,6 +263,7 @@ const Home = () => {
             </IonRow>
           </IonGrid>
         </IonContent>
+        
       </IonPage>
     </>
   );

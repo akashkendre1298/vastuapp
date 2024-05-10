@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./IndividualClients.css"
-import { IonPage } from "@ionic/react";
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonImg, IonPage, IonToolbar } from "@ionic/react";
+import logo from "../../Assets/pandit_shivkumar_logo.png";
 
 const IndividualClients = () => {
   const { executiveId } = useParams();
@@ -47,9 +48,26 @@ const IndividualClients = () => {
   };
 
   return (
+    
     <IonPage className="main-content-individualclient">
+      <IonHeader>
+        <IonToolbar style={{ color: "#00004D" }}>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
 
-    <div>
+          </IonButtons>
+
+          {/* <IonTitle>Executives</IonTitle> */}
+
+          <IonButtons slot="end">
+            <IonImg src={logo} alt="App Logo" />
+          </IonButtons>
+        </IonToolbar>
+
+      
+      </IonHeader>
+<IonContent>
+<div>
     {executive && (
       <div>
         <div  className="profile-details-div">
@@ -87,6 +105,8 @@ const IndividualClients = () => {
       </div>
     </div>
   </div>
+</IonContent>
+
   </IonPage>
   
   );

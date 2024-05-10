@@ -151,6 +151,8 @@ const AddCasePage = () => {
         </div>
 
         <IonItem className="add-executive-item">
+        <IonLabel position="floating"></IonLabel>
+
           <IonSelect
             value={selectedClient}
             onIonChange={(e) => setSelectedClient(e.detail.value)}

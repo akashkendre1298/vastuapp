@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IonContent,
   IonGrid,
@@ -18,10 +18,12 @@ import {
   IonButtons,
   IonImg,
   IonPage,
+  IonKeyboard,
 } from "@ionic/react";
 import "./AddExecutive.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "./../../components/BottomTabs/BottomTabs";
+
 const AddExecutive = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -33,12 +35,12 @@ const AddExecutive = () => {
     password: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -70,31 +72,46 @@ const AddExecutive = () => {
     }
   };
 
-  return (
-    <>
-      <IonPage>
-        <IonToolbar style={{ color: "#00004D" }}>
-          {" "}
-          <IonButtons slot="start">
-          <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+  // Listen for keyboard events to adjust layout
+  useEffect(() => {
+    const keyboardDidShow = () => {
+      // Adjust layout to accommodate keyboard
+      document.body.classList.add("keyboard-open");
+    };
 
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo"></IonImg>
-          </IonButtons>
-        </IonToolbar>
-        <IonContent
-          className="add-executive"
-          style={{ paddingTop: "20px", height: "100vh" }}
-        >
-          <IonGrid style={{backgroundColor:"rgba(192, 188, 188, 0.601)"}}>
-            <IonRow>
-              <IonCol>
-                <IonCardHeader className="add-executive-card-header">
-                  {/* <IonCardTitle>Add Executive</IonCardTitle> */}
-                </IonCardHeader>
-                <IonCardContent className="add-executive-card-content">
-                  <form onSubmit={handleSubmit}>
+    const keyboardDidHide = () => {
+      // Restore original layout
+      document.body.classList.remove("keyboard-open");
+    };
+
+    window.addEventListener("keyboardDidShow", keyboardDidShow);
+    window.addEventListener("keyboardDidHide", keyboardDidHide);
+
+    return () => {
+      window.removeEventListener("keyboardDidShow", keyboardDidShow);
+      window.removeEventListener("keyboardDidHide", keyboardDidHide);
+    };
+  }, []);
+
+  return (
+    <IonPage>
+      <IonToolbar style={{ color: "#00004D" }}>
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+        </IonButtons>
+        <IonButtons slot="end">
+          <IonImg src={logo} alt="App Logo"></IonImg>
+        </IonButtons>
+      </IonToolbar>
+      <IonContent className="add-executive" style={{ paddingTop: "20px", height: "100vh" }}>
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <IonCardHeader className="add-executive-card-header">
+                {/* <IonCardTitle>Add Executive</IonCardTitle> */}
+              </IonCardHeader>
+              <IonCardContent className="add-executive-card-content">
+              <form onSubmit={handleSubmit}>
                     <div style={{ paddingBottom: "10px" }}>
                       <IonLabel position="stacked">First Name</IonLabel>
                     </div>
@@ -191,18 +208,25 @@ const AddExecutive = () => {
                     </IonItem>
                     {/* <IonButton type="submit"  className="add-executive-button">Add</IonButton> */}
 
-                    <button className="add-executive-button">
+                    <button
+                      className="add-executive-button"
+                      style={{
+                        position: "fixed",
+                        bottom: 5,
+                        width: "86%",
+                        zIndex: 1,
+                        marginTop: "20px",
+                      }}
+                    >
                       Add Executive{" "}
                     </button>
                   </form>
-                </IonCardContent>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonContent>
-    
-      </IonPage>
-    </>
+              </IonCardContent>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
+    </IonPage>
   );
 };
 

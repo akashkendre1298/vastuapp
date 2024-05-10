@@ -38,6 +38,7 @@ import AddProduct from './../../pages/AddProduct/AddProduct';
 import AddMeeting from './../../pages/Meetings/AddMeeting';
 import IndividualClients from "../../pages/Executive/IndividualClients";
 import viewClients from "../../pages/Executive/ViewClients";
+import ParticularCase from "../../pages/Cases/ParticularCase";
 
 function BottomTabs() {
   return (
@@ -114,6 +115,9 @@ function BottomTabs() {
           <Route path="/bottomtabs/addproduct" component={AddProduct} />
           <Route path="/bottomtabs/individualclients/:executiveId" component={IndividualClients}/>
           <Route path="/client/:executiveId" component={viewClients} />
+          <Route path="/particularCase/:caseId" component={ParticularCase}/>
+      
+    
 
         </IonRouterOutlet>
 

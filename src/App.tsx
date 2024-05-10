@@ -76,7 +76,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
 import LoginPage from "./pages/Login/Login";
-import AppRoutes from "./AppRoutes";
+// import AppRoutes from "./AppRoutes";
 import BottomTabs from "./components/BottomTabs/BottomTabs";
 import SignupPage from './pages/SignUp/SignUp';
 
