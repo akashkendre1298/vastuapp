@@ -1,0 +1,23 @@
+.add-executive {
+    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100vh;
+  }
+  
+  /* Custom styles for input fields and labels */
+  .add-executive-item {
+    margin-bottom: 15px;
+  }
+  
+  /* Custom styles for the file input */
+  .add-executive-item input[type="file"] {
+    /* Add your custom styles here */
+  }
+  
+  /* Custom styles for the dropdown arrow */
+  .select-arrow {
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 8px);
+  }
