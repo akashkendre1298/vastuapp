@@ -10,8 +10,9 @@ import {
 } from "@ionic/react";
 import React from "react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
+import "./ToolBar.css";
 const ToolBar = () => {
   const history = useHistory();
 
@@ -21,15 +22,15 @@ const ToolBar = () => {
   return (
     <IonToolbar>
       <IonButtons slot="start">
-      <IonBackButton
-              defaultHref="#"
-              onClick={goBack}
-              className="back-button"
-            ></IonBackButton>
+        <IonBackButton
+          defaultHref="#"
+          onClick={goBack}
+          className="back-button"
+        ></IonBackButton>
       </IonButtons>
 
       <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" style={{paddingRight:"15px"}} />
+        <IonImg src={logo} alt="App Logo" style={{ paddingRight: "15px" }} />
       </IonButtons>
     </IonToolbar>
   );

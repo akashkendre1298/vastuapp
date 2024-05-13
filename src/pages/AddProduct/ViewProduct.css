@@ -10,7 +10,11 @@
 }
 
 .custom-table th {
-  background-color: #414040;
+  background-color: #959595ac;
+}
+
+.custom-table tr {
+  background-color: #a4aeefac;
 }
 
 .table-container {

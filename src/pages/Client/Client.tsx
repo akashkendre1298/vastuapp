@@ -72,123 +72,124 @@ const Client = () => {
 
   return (
     <IonPage>
-        <ToolBar/>
+      <ToolBar />
 
       <IonContent style={{ paddingTop: "20px", height: "100vh" }}>
         <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
           <IonRow>
             <IonCol>
-              <IonCardHeader className="add-executive-card-header">
-                <IonCardTitle>Add Client</IonCardTitle>
-              </IonCardHeader>
               <IonCardContent className="add-executive-card-content">
-              <div
-                      style={{ paddingBottom: "10px" }}
-                      
-                    >
-                      <IonLabel position="stacked">First Name</IonLabel>
-                    </div>
-                    <IonItem
-                      className="add-executive-item"
-                      style={{
-                        border: "1px solid black",
-                        marginBottom: "25px",
-                      }}
-                    >
-                      <IonInput
-                        placeholder="firstName"
-                        className="add-executive-input"
-                        name="firstName"
-                        value={formData.firstName}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">First Name</IonLabel>
+                </div>
+                <IonItem
+                  className="add-executive-item"
+                  style={{
+                    border: "1px solid black",
+                    marginBottom: "25px",
+                  }}
+                >
+                  <IonInput
+                    placeholder="firstName"
+                    className="add-executive-input"
+                    name="firstName"
+                    value={formData.firstName}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Last Name</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="lastName"
-                        className="add-executive-input"
-                        name="lastName"
-                        value={formData.lastName}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">Last Name</IonLabel>
+                </div>
+                <IonItem className="add-executive-item">
+                  <IonInput
+                    placeholder="lastName"
+                    className="add-executive-input"
+                    name="lastName"
+                    value={formData.lastName}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Email Address</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="email"
-                        type="email"
-                        className="add-executive-input"
-                        name="email"
-                        value={formData.email}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">Email Address</IonLabel>
+                </div>
+                <IonItem className="add-executive-item">
+                  <IonInput
+                    placeholder="email"
+                    type="email"
+                    className="add-executive-input"
+                    name="email"
+                    value={formData.email}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Contact Number</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="phoneNumber"
-                        type="tel"
-                        className="add-executive-input"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">Contact Number</IonLabel>
+                </div>
+                <IonItem className="add-executive-item">
+                  <IonInput
+                    placeholder="phoneNumber"
+                    type="tel"
+                    className="add-executive-input"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Location</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="address"
-                        className="add-executive-input"
-                        name="address"
-                        value={formData.address}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">Location</IonLabel>
+                </div>
+                <IonItem className="add-executive-item">
+                  <IonInput
+                    placeholder="address"
+                    className="add-executive-input"
+                    name="address"
+                    value={formData.address}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">City</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="city"
-                        className="add-executive-input"
-                        name="city"
-                        value={formData.city}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">City</IonLabel>
+                </div>
+                <IonItem className="add-executive-item">
+                  <IonInput
+                    placeholder="city"
+                    className="add-executive-input"
+                    name="city"
+                    value={formData.city}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">feedback</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item" style={{marginBottom:"50px"}}>
-                      <IonInput
-                        placeholder="feedback"
-                        className="add-executive-input"
-                        name="feedback"
-                        value={formData.feedback}
-                        onIonChange={handleChange}
-                        
-                      />
-                    </IonItem>
+                <div style={{ paddingBottom: "10px" }}>
+                  <IonLabel position="stacked">feedback</IonLabel>
+                </div>
+                <IonItem
+                  className="add-executive-item"
+                  style={{ marginBottom: "50px" }}
+                >
+                  <IonInput
+                    placeholder="feedback"
+                    className="add-executive-input"
+                    name="feedback"
+                    value={formData.feedback}
+                    onIonChange={handleChange}
+                  />
+                </IonItem>
 
-             
                 <button
                   className="add-executive-button"
-                  style={{ position: "fixed", bottom: 5, width: "86%",zIndex: 1,marginTop:"20px" }}
+                  style={{
+                    position: "fixed",
+                    bottom: 5,
+                    width: "86%",
+                    zIndex: 1,
+                    marginTop: "20px",
+                  }}
                   onClick={handleSubmit}
                 >
                   Add Client
@@ -198,7 +199,6 @@ const Client = () => {
           </IonRow>
         </IonGrid>
       </IonContent>
-     
     </IonPage>
   );
 };
