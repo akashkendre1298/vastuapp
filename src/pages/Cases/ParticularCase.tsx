@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IonPage, IonContent, IonLabel } from "@ionic/react";
 import { useParams } from "react-router-dom";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const ParticularCase = () => {
   const [caseDetails, setCaseDetails] = useState({}); // Initialize as empty object
@@ -23,6 +24,8 @@ const ParticularCase = () => {
 
   return (
     <IonPage>
+   <ToolBar/>
+
       <IonContent>
         {/* Display case details */}
         <IonLabel>

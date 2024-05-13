@@ -170,7 +170,7 @@ const Home = () => {
                   className="card-home"
                   button
                   // onClick={() => handleButtonClick("meetings")}
-                  href="/bottomtabs/meetings"
+                  href="/bottomtabs/upcomingmeetings"
                 >
                   <IonCardHeader>
                     <IonCardTitle>

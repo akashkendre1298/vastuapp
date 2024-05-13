@@ -18,6 +18,7 @@ import {
 import "./ViewProduct.css";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 
 const ViewProduct = () => {
@@ -85,15 +86,7 @@ const ViewProduct = () => {
   return (
     <IonPage>
       <IonHeader>
-    <IonToolbar >
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-      </IonButtons>
-      {/* <IonTitle>Case</IonTitle> */}
-      <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" />
-      </IonButtons>
-    </IonToolbar>
+   <ToolBar/>
   </IonHeader>
       <IonContent>
         <IonItem>

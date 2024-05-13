@@ -22,6 +22,7 @@ import {
 import "./Client.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const Client = () => {
   const [formData, setFormData] = useState({
@@ -71,15 +72,8 @@ const Client = () => {
 
   return (
     <IonPage>
-      <IonToolbar style={{ color: "#00004D" }}>
-        {" "}
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-        </IonButtons>
-        <IonButtons slot="end">
-          <IonImg src={logo} alt="App Logo"></IonImg>
-        </IonButtons>
-      </IonToolbar>
+        <ToolBar/>
+
       <IonContent style={{ paddingTop: "20px", height: "100vh" }}>
         <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
           <IonRow>

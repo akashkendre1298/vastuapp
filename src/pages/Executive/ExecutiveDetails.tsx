@@ -11,6 +11,7 @@ import {
   IonItem,
   IonLabel,
 } from "@ionic/react";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const ExecutiveDetails = () => {
   const { id } = useParams(); // Get the ID from the URL
@@ -39,9 +40,8 @@ const ExecutiveDetails = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Executive Details</IonTitle>
-        </IonToolbar>
+      <ToolBar/>
+
       </IonHeader>
 
       <IonContent>

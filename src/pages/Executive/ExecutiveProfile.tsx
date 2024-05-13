@@ -4,6 +4,7 @@ import { personCircleOutline } from 'ionicons/icons';
 import './ExecutiveProfile.css'; // Import custom CSS file
 import BottomTabs from '../../components/BottomTabs/BottomTabs';
 import { useHistory } from 'react-router';
+import ToolBar from '../../components/ToolBar/ToolBar';
 
 const ExecutiveProfile = () => {
     const history = useHistory();
@@ -14,6 +15,8 @@ const ExecutiveProfile = () => {
     }
   return (
     <IonPage>
+         <ToolBar/>
+
       <IonContent className="ion-padding">
         {/* Profile Picture Section */}
         <div className="profile-picture">

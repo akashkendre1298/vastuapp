@@ -17,6 +17,7 @@ import {
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import "./AddProduct.css";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const AddProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
@@ -97,18 +98,7 @@ const AddProduct = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton
-              defaultHref="#"
-              className="back-button"
-            ></IonBackButton>
-          </IonButtons>
-          {/* <IonTitle>Case</IonTitle> */}
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
+       <ToolBar/>
       </IonHeader>
       <IonContent className="ion-padding">
         <div style={{ paddingBottom: "10px" }}></div>

@@ -20,6 +20,7 @@ import {
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
 import "./AddCases.css"
+import ToolBar from "../../components/ToolBar/ToolBar";
 const AddCasePage = () => {
   const [caseName, setCaseName] = useState("");
   const [clients, setClients] = useState([]);
@@ -115,15 +116,7 @@ const AddCasePage = () => {
   return (
     <IonPage>
   <IonHeader>
-    <IonToolbar >
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-      </IonButtons>
-      {/* <IonTitle>Case</IonTitle> */}
-      <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" />
-      </IonButtons>
-    </IonToolbar>
+   <ToolBar/>
   </IonHeader>
   <IonContent> 
 

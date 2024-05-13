@@ -9,6 +9,7 @@ import {
   IonButton,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const ViewCasesPage = () => {
   const [selectedCase, setSelectedCase] = useState("");
@@ -42,6 +43,8 @@ const ViewCasesPage = () => {
 
   return (
     <IonPage>
+   <ToolBar/>
+
       <IonContent>
         {/* Search Bar */}
         <div>

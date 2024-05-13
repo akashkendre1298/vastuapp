@@ -23,6 +23,7 @@ import {
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const AddMeeting = () => {
   const [executives, setExecutives] = useState([]);
@@ -110,18 +111,9 @@ const AddMeeting = () => {
   return (
     <IonPage style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+      <ToolBar/>
 
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
-        <IonToolbar color="primary">
-          <IonTitle>Add Meeting</IonTitle>
-        </IonToolbar>
+      
       </IonHeader>
       <IonContent className="ion-padding">
         <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>

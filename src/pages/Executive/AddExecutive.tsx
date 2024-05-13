@@ -23,6 +23,7 @@ import {
 import "./AddExecutive.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "./../../components/BottomTabs/BottomTabs";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const AddExecutive = () => {
   const [formData, setFormData] = useState({
@@ -95,14 +96,7 @@ const AddExecutive = () => {
 
   return (
     <IonPage>
-      <IonToolbar style={{ color: "#00004D" }}>
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-        </IonButtons>
-        <IonButtons slot="end">
-          <IonImg src={logo} alt="App Logo"></IonImg>
-        </IonButtons>
-      </IonToolbar>
+     <ToolBar/>
       <IonContent className="add-executive" style={{ paddingTop: "20px", height: "100vh" }}>
         <IonGrid>
           <IonRow>

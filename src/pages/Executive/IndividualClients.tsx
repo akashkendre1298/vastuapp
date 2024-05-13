@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./IndividualClients.css"
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonImg, IonPage, IonToolbar } from "@ionic/react";
+import "./IndividualClients.css";
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonImg,
+  IonPage,
+  IonToolbar,
+} from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const IndividualClients = () => {
   const { executiveId } = useParams();
@@ -48,67 +57,46 @@ const IndividualClients = () => {
   };
 
   return (
-    
     <IonPage className="main-content-individualclient">
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-
-          </IonButtons>
-
-          {/* <IonTitle>Executives</IonTitle> */}
-
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
-
-      
+        <ToolBar />
       </IonHeader>
-<IonContent>
-<div>
-    {executive && (
-      <div>
-        <div  className="profile-details-div">
+      <IonContent>
+        <div>
+          {executive && (
+            <div>
+              <div className="profile-details-div">
+                <div>
+                  <p style={{ fontSize: "30px" }}> {executive.firstName}</p>
+                  <p style={{ fontSize: "30px" }}> {executive.phoneNumber}</p>
+                </div>
+              </div>
+            </div>
+          )}
           <div>
+            <div className="client-count-and-view">
+              <div>
+                <p>Number Clients: {clientCount}</p>
+              </div>
+              <div>
+                <button onClick={viewClients} className="view-client-button">
+                  View Clients
+                </button>
+              </div>
+            </div>
 
-          <p style={{fontSize:"30px"}}> {executive.firstName}</p>
-          <p style={{fontSize:"30px"}}> {executive.phoneNumber}</p>
+            <div className="button-group">
+              <div>
+                <button className="edit-button">Edit</button>
+              </div>
+              <div>
+                <button className="delete-button">Delete</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-    <div>
-
-      <div className="client-count-and-view">
-        <div>
-
-        <p>Number Clients: {clientCount}</p>
-        </div>
-        <div>
-
-        <button onClick={viewClients} className="view-client-button">View Clients</button>
-        </div>
-      </div>
-
-
-      <div className="button-group">
-        <div>
-
-        <button className="edit-button">Edit</button>
-        </div>
-        <div>
-
-        <button className="delete-button">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</IonContent>
-
-  </IonPage>
-  
+      </IonContent>
+    </IonPage>
   );
 };
 

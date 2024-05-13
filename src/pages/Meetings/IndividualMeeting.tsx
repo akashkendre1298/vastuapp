@@ -20,6 +20,7 @@ import {
 import React, { useState } from "react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const IndividualMeeting = () => {
   const [meetingAim, setMeetingAim] = useState("");
@@ -44,16 +45,8 @@ const IndividualMeeting = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+      <ToolBar />
 
-          </IonButtons>
-
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
 
         {/* <IonToolbar color="primary">
       <IonTitle>Add Meeting</IonTitle>

@@ -21,6 +21,7 @@ import "./UpCommingMeeting.css";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const UpComingMeetings = () => {
   const [meetings, setMeetings] = useState([]);
@@ -50,18 +51,8 @@ const UpComingMeetings = () => {
   return (
     <IonPage style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+      <ToolBar/>
 
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
-        <IonToolbar color="primary">
-          <IonTitle>Upcoming Meetings</IonTitle>
-        </IonToolbar>
       </IonHeader>
       <IonContent style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
         <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>

@@ -13,10 +13,12 @@ import {
 } from "@ionic/react";
 import "./Revenue.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
+import { useHistory } from 'react-router-dom';
+import ToolBar from "../../components/ToolBar/ToolBar";
 
 const Revenue = () => {
   const [totalAmount, setTotalAmount] = useState(null);
-
+const history = useHistory();
   useEffect(() => {
     const fetchTotalAmount = async () => {
       try {
@@ -38,22 +40,14 @@ const Revenue = () => {
 
     fetchTotalAmount();
   }, []);
-
+  const goBack = () => {
+    history.goBack();
+  };
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ color: "#00004D" }}>
-          <IonButtons slot="start">
-            <IonBackButton
-              defaultHref="#"
-              className="back-button"
-            ></IonBackButton>
-          </IonButtons>
+      <ToolBar/>
 
-          <IonButtons slot="end">
-            <IonImg src={logo} alt="App Logo" />
-          </IonButtons>
-        </IonToolbar>
 
         <IonToolbar color="primary">
           <IonTitle>Revenue</IonTitle>

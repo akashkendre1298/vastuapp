@@ -16,6 +16,7 @@ import logo from "../../Assets/pandit_shivkumar_logo.png";
 import { personCircleOutline } from "ionicons/icons";
 import "./Profile.css"
 import { useHistory } from "react-router-dom";
+import ToolBar from "../../components/ToolBar/ToolBar";
 const ProfilePage = () => {
   const history = useHistory();
   const [userData, setUserData] = useState(null);
@@ -67,7 +68,8 @@ const ProfilePage = () => {
 
   return (
     <IonPage>
-      <IonHeader>{/* Your header JSX */}</IonHeader>
+        <ToolBar/>
+
       <IonContent className="ion-padding">
         {userData && (
           <>
