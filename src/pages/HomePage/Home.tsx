@@ -94,8 +94,8 @@ const Home = () => {
             <IonImg
               src={logo}
               alt="App Logo"
-              style={{ width: "60px", height: "60px" }}
               slot="end"
+              style={{paddingRight:"10px"}}
             />{" "}
             {/* Replace with your logo path */}
           </IonToolbar>
@@ -114,7 +114,7 @@ const Home = () => {
                 className="card-home"
                 
                   button
-                  // onClick={() => handleButtonClick("/bottomtabs/viewexecutive")}
+                  
                   href="/bottomtabs/viewexecutive"
                 >
                   <IonCardHeader>

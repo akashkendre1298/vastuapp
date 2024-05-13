@@ -29,7 +29,7 @@ const ToolBar = () => {
       </IonButtons>
 
       <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" />
+        <IonImg src={logo} alt="App Logo" style={{paddingRight:"15px"}} />
       </IonButtons>
     </IonToolbar>
   );
