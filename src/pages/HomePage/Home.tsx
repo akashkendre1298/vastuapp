@@ -66,6 +66,10 @@ const Home = () => {
   //   }
   // };
 
+  const handleProfile = () => {
+    history.push("/bottomtabs/profile");
+  };
+
   return (
     <>
       <IonPage style={{ backgroundColor: "#f0f0f0" }} className="home-page-main">
@@ -80,10 +84,12 @@ const Home = () => {
             {" "}
             {/* Added flex styles */}
             {/* <IonProgressBar type="indeterminate"></IonProgressBar> */}
+          
             <IonIcon
               icon={personCircleOutline}
               style={{ fontSize: "35px" }}
               slot="start"
+              onClick={handleProfile}
             ></IonIcon>
             <IonImg
               src={logo}
