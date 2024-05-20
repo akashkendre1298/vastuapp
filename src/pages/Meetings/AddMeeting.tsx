@@ -24,6 +24,7 @@ import {
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import BottomTabs from "../../components/BottomTabs/BottomTabs";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import"./AddMeeting.css"
 
 const AddMeeting = () => {
   const [executives, setExecutives] = useState([]);
@@ -116,7 +117,7 @@ const AddMeeting = () => {
       
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+        <IonGrid>
           <IonRow>
             <IonCol>
               <div>
@@ -133,15 +134,17 @@ const AddMeeting = () => {
                   ></IonInput>
                 </IonItem>
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="floating">Executive Name</IonLabel>
+                  {/* <IonLabel position="floating">Executive Name</IonLabel> */}
                 </div>
                 <IonItem
                   style={{ border: "1px solid black", marginBottom: "25px" }}
                 >
+                  <IonLabel position="floating">Executive Name</IonLabel>
+
                   <IonSelect
                     value={selectedExecutive}
                     onIonChange={handleExecutiveChange}
-                    placeholder="Select Executive"
+                   
                     interface="popover"
                   >
                     {executives.map((executive) => (
@@ -166,8 +169,11 @@ const AddMeeting = () => {
                     disabled
                   ></IonInput>
                 </IonItem>
-                <div>
+                <div className="date-div-meeting">
+                  <div>
+
                   <label htmlFor="Date">Date</label>
+                  </div>
                   <div>
                     <input
                       type="date"
@@ -177,16 +183,18 @@ const AddMeeting = () => {
                   </div>
                 </div>
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="floating">Conduction Mode</IonLabel>
+                  {/* <IonLabel position="floating">Conduction Mode</IonLabel> */}
                 </div>
                 <IonItem
                   style={{ border: "1px solid black", marginBottom: "25px" }}
                 >
+                  <IonLabel position="floating">Conduction Mode</IonLabel>
+
                   <IonSelect
                     value={conductionMode}
                     onIonChange={(e) => setConductionMode(e.detail.value)}
                     interface="popover"
-                    placeholder="Select Mode"
+                   
                   >
                     <IonSelectOption value="Online">Online</IonSelectOption>
                     <IonSelectOption value="In-person">
@@ -205,9 +213,9 @@ const AddMeeting = () => {
                     onIonChange={(e) => setOtherDetails(e.detail.value)}
                   ></IonTextarea>
                 </IonItem>
-                <IonButton expand="full" onClick={handleAddMeeting}>
+                <button expand="full" onClick={handleAddMeeting} className="add-executive-btn">
                   Add Meeting
-                </IonButton>
+                </button>
               </div>
             </IonCol>
           </IonRow>

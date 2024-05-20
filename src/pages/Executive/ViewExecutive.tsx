@@ -2,28 +2,20 @@ import React, { useState, useEffect } from "react";
 import {
   IonPage,
   IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonList,
   IonItem,
   IonLabel,
-  IonButton,
   IonRouterLink,
-  IonSearchbar,
-  IonBackButton,
-  IonButtons,
-  IonImg,
-  IonFooter,
 } from "@ionic/react";
 import "./ViewExecutive.css";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
 import { Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const ViewExecutive = () => {
   const [executives, setExecutives] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
     const fetchExecutives = async () => {
@@ -48,65 +40,67 @@ const ViewExecutive = () => {
     console.log("Clicked Executive ID:", executive.id);
   };
 
+  // Function to handle search input
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter executives based on search query
+  const filteredExecutives = executives.filter((executive) =>
+    executive.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <>
-      <IonPage>
-        <IonHeader>
-          <ToolBar/>
+    <IonPage>
+      <IonHeader>
+        <ToolBar />
+      </IonHeader>
 
-          {/* <IonToolbar color="primary">
-            <IonTitle>Executives</IonTitle>
-          </IonToolbar> */}
-        </IonHeader>
-
-        <IonContent className="view-executive-page">
-          <div className="search-div">
-            <div style={{ width: "60%" }}>
-              <IonSearchbar className="custom"></IonSearchbar>
-            </div>
-          </div>
-          <div style={{marginBottom:"60px"}}>
-            {executives.length > 0 && ( // Check if executives are available
-              <IonList inset={true}>
-                {executives.map((executive, index) => (
-                  <IonItem
-                    key={index}
-                    button
-                    detail={true}
-                    style={{ border: "1px solid black", marginBottom: "25px" }}
-                    onClick={() => logExecutiveData(executive)}
+      <IonContent className="view-executive-page">
+        <div>
+          <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
+        </div>
+        <div style={{ marginBottom: "60px" }}>
+          {filteredExecutives.length > 0 && ( // Check if executives are available
+            <IonList inset={true}>
+              {filteredExecutives.map((executive, index) => (
+                <IonItem
+                  key={index}
+                  button
+                  detail={true}
+                  style={{ border: "1px solid black", marginBottom: "25px", borderRadius: "10px" }}
+                  onClick={() => logExecutiveData(executive)}
+                >
+                  <IonRouterLink
+                    routerLink={`/bottomtabs/individualclients/${executive._id}`}
                   >
-                    <IonRouterLink
-                      routerLink={`/bottomtabs/individualclients/${executive._id}`}
-                    >
-                      <IonLabel style={{ padding: "10px" }}>
-                        <h2>{executive.firstName}</h2>
-                        <p>{executive.phoneNumber}</p>
-                      </IonLabel>
-                    </IonRouterLink>
-                  </IonItem>
-                ))}
-              </IonList>
-            )}
-          </div>
-          {/* Add Executive button */}
-          <div
-            style={{
-              position: "fixed",
-              bottom: 5,
-              width: "90%",
-              zIndex: 1,
-              marginTop: "20px",
-              marginLeft: "18px",
-            }}
-          >
-            <Link to="/bottomtabs/addexecutive">
-              <button className="add-executive-btn">Add Executive</button>
-            </Link>
-          </div>
-        </IonContent>
-      </IonPage>
-    </>
+                    <IonLabel style={{ padding: "10px" }}>
+                      <h2>{executive.firstName}</h2>
+                      <p>{executive.phoneNumber}</p>
+                    </IonLabel>
+                  </IonRouterLink>
+                </IonItem>
+              ))}
+            </IonList>
+          )}
+        </div>
+        {/* Add Executive button */}
+        <div
+          style={{
+            position: "fixed",
+            bottom: 5,
+            width: "90%",
+            zIndex: 1,
+            marginTop: "20px",
+            marginLeft: "18px",
+          }}
+        >
+          <Link to="/bottomtabs/addexecutive">
+            <button className="add-executive-btn">Add Executive</button>
+          </Link>
+        </div>
+      </IonContent>
+    </IonPage>
   );
 };
 

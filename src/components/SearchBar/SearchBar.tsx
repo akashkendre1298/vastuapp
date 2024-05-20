@@ -2,17 +2,23 @@ import { IonContent, IonHeader, IonPage, IonSearchbar, IonTitle, IonToolbar } fr
 import React from 'react';
 import "./SearchBar.css"
 
-const SearchBar = () => {
 
-    return (
-        <div className='search-div'>
-  <div style={{width:"60%"}}>
-      <IonSearchbar className="custom"></IonSearchbar>
-      
-  </div>
+const SearchBar = ({ searchQuery, handleSearch }) => {
+  return (
+    <div className='search-div'>
 
-</div>
-    );
+
+   
+    <IonSearchbar
+      value={searchQuery}
+      onIonInput={handleSearch}
+      placeholder="Search"
+      className='custom'
+    />
+     </div>
+  );
 };
 
 export default SearchBar;
+
+  

@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import {
   IonPage,
   IonContent,
-  IonSearchbar,
   IonList,
   IonItem,
   IonLabel,
-  IonButton,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const ViewCasesPage = () => {
-  const [selectedCase, setSelectedCase] = useState("");
   const [caseLabels, setCaseLabels] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
     // Fetch case labels from API
@@ -23,9 +22,6 @@ const ViewCasesPage = () => {
         if (data.data && Array.isArray(data.data)) {
           // Extract caseLabels from each object in the data array
           const labels = data.data.map((item) => {
-            // console.log('Case Label:', item.caseLabel);
-            // console.log('Client ID:', item.client_id);
-            // console.log('ID:', item._id);
             return { id: item._id, label: item.caseLabel };
           });
           setCaseLabels(labels);
@@ -38,62 +34,52 @@ const ViewCasesPage = () => {
       });
   }, []);
 
-  // Convert object values to an array
-  // const dataArray = Object.values(data);
+  // Function to handle search input
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter cases based on search query
+  const filteredCases = caseLabels.filter((caseItem) =>
+    caseItem.label?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <IonPage>
-   <ToolBar/>
-
+      <ToolBar />
       <IonContent>
         {/* Search Bar */}
         <div>
-          <IonSearchbar
-            placeholder="Search Cases"
-            className="custom"
-          ></IonSearchbar>
+          <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
         </div>
 
         {/* List of Cases */}
-        {/* <IonList>
-          {dataArray.length > 0 ? (
-            dataArray.map((item, index) => (
-              <IonItem key={index}>
-                <IonLabel>
-                  <h2>Case Label: {item.caseLabel}</h2>
-                  <p>Executive: {item.executive}</p>
-                </IonLabel>
-              </IonItem>
-            ))
-          ) : (
+        {filteredCases.length > 0 ? (
+          <IonList inset={true} style={{ marginBottom: "40px" }}>
+            {filteredCases.map((caseItem) => (
+              <Link key={caseItem.id} to={`/particularCase/${caseItem.id}`}>
+                <IonItem
+                  button
+                  detail={true}
+                  style={{
+                    border: "1px solid black",
+                    marginBottom: "20px",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <IonLabel>{caseItem.label}</IonLabel>
+                </IonItem>
+              </Link>
+            ))}
+          </IonList>
+        ) : (
+          <IonList inset={true} style={{ marginBottom: "40px" }}>
             <IonItem>
               <IonLabel>No cases found</IonLabel>
             </IonItem>
-          )}
-        </IonList> */}
+          </IonList>
+        )}
 
-<IonList inset={true} style={{ marginBottom: "40px" }}>
-          {caseLabels.map((caseItem) => (
-            <Link key={caseItem.id} to={`/particularCase/${caseItem.id}`}>
-           
-              <IonItem
-                button
-                detail={true}
-                style={{
-                  border: "1px solid black",
-                  marginBottom: "20px",
-                  borderRadius: "10px",
-                }}
-              >
-                <IonLabel>{caseItem.label}</IonLabel>
-
-
-                
-              </IonItem>
-            </Link>
-          ))}
-        </IonList>
-        {/* Add Case Button */}
         <Link to="/bottomtabs/addcases">
           <button
             className="add-executive-button"

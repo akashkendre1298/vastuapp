@@ -80,7 +80,7 @@ const Client = () => {
       <ToolBar />
 
       <IonContent style={{ paddingTop: "20px", height: "100vh" }}>
-        <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+        <IonGrid >
           <IonRow>
             <IonCol>
               <IonCardContent className="add-executive-card-content">

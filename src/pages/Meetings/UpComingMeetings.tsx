@@ -3,25 +3,16 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonLabel,
-  IonItem,
   IonList,
-  IonButtons,
-  IonBackButton,
-  IonImg,
-  IonButton,
+  IonItem,
+  IonLabel,
   IonRouterLink,
   IonGrid,
 } from "@ionic/react";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
 import "./UpCommingMeeting.css";
-
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const UpComingMeetings = () => {
   const [meetings, setMeetings] = useState([]);
@@ -30,6 +21,7 @@ const UpComingMeetings = () => {
   );
   const [loading, setLoading] = useState(false);
   const [noMeetingsToday, setNoMeetingsToday] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
     fetchMeetings(selectedDate);
@@ -58,21 +50,30 @@ const UpComingMeetings = () => {
     }
   };
 
+  // Function to handle search input
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter meetings based on search query
+  const filteredMeetings = meetings.filter((meeting) =>
+    meeting.meetingTitle.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <IonPage style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+    <IonPage>
       <IonHeader>
         <ToolBar />
       </IonHeader>
       <IonContent>
-        <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+        <IonGrid>
           <div style={{ marginTop: "-10px" }}>
-            <SearchBar />
+            <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
           </div>
           <div style={{ textAlign: "right", marginRight: "10px" }}>
             <div
               style={{
                 paddingBottom: "10px",
-                // marginTop: "10px",
                 paddingLeft: "10px",
               }}
             >
@@ -97,8 +98,8 @@ const UpComingMeetings = () => {
             <IonList>
               {loading && <IonItem>Loading...</IonItem>}
               {!loading &&
-                (meetings.length > 0
-                  ? meetings.map((meeting) => (
+                (filteredMeetings.length > 0
+                  ? filteredMeetings.map((meeting) => (
                       <IonRouterLink
                         key={meeting._id}
                         routerLink={`/individualmeeting/${meeting._id}`}
@@ -123,7 +124,6 @@ const UpComingMeetings = () => {
               bottom: 5,
               width: "90%",
               zIndex: 1,
-              // marginTop: "20px",
               marginLeft: "18px",
             }}
           >
