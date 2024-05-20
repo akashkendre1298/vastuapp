@@ -18,6 +18,7 @@ import {
   IonButtons,
   IonImg,
   IonPage,
+  IonToast, 
 } from "@ionic/react";
 import "./Client.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
@@ -25,6 +26,8 @@ import BottomTabs from "../../components/BottomTabs/BottomTabs";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
 const Client = () => {
+  const [showToast, setShowToast] = useState(false);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -52,7 +55,9 @@ const Client = () => {
 
       if (response.ok) {
         console.log("Client added successfully");
-        // Clear form after successful submission
+        // Display success message
+        setShowToast(true);
+       
         setFormData({
           firstName: "",
           lastName: "",
@@ -69,7 +74,7 @@ const Client = () => {
       console.error("Error:", error);
     }
   };
-
+  
   return (
     <IonPage>
       <ToolBar />
@@ -194,6 +199,12 @@ const Client = () => {
                 >
                   Add Client
                 </button>
+                <IonToast
+        isOpen={showToast}
+        onDidDismiss={() => setShowToast(false)}
+        message="Client added successfully"
+        duration={2000}
+      />
               </IonCardContent>
             </IonCol>
           </IonRow>

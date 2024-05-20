@@ -63,17 +63,16 @@ const UpComingMeetings = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+      <IonContent>
         <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
-          <div>
+          <div style={{ marginTop: "-10px" }}>
             <SearchBar />
           </div>
-
           <div style={{ textAlign: "right", marginRight: "10px" }}>
             <div
               style={{
                 paddingBottom: "10px",
-                marginTop: "10px",
+                // marginTop: "10px",
                 paddingLeft: "10px",
               }}
             >
@@ -92,35 +91,46 @@ const UpComingMeetings = () => {
               />
             </div>
           </div>
-          {noMeetingsToday && <IonItem>No meetings for today</IonItem>}
-          <IonList lines="full">
-            {loading && <IonItem>Loading...</IonItem>}
-            {!loading &&
-              (meetings.length > 0
-                ? meetings.map((meeting) => (
-                    <IonRouterLink
-                      key={meeting._id}
-                      routerLink={`/individualmeeting/${meeting._id}`}
-                    >
-                      <IonItem
-                        button
-                        detail={true}
-                        style={{ paddingBottom: "25px" }}
+
+          <div style={{ height: "63vh" }}>
+            {noMeetingsToday && <IonItem>No meetings for today</IonItem>}
+            <IonList>
+              {loading && <IonItem>Loading...</IonItem>}
+              {!loading &&
+                (meetings.length > 0
+                  ? meetings.map((meeting) => (
+                      <IonRouterLink
+                        key={meeting._id}
+                        routerLink={`/individualmeeting/${meeting._id}`}
                       >
-                        <IonLabel style={{ padding: "5px" }}>
-                          <p>{meeting.meetingTitle}</p>
-                          <p>{new Date(meeting.date).toLocaleString()}</p>
-                        </IonLabel>
-                      </IonItem>
-                    </IonRouterLink>
-                  ))
-                : !noMeetingsToday && (
-                    <IonItem>No meetings for selected date</IonItem>
-                  ))}
-          </IonList>
-          <Link to="/bottomtabs/addmeetings">
-            <IonButton>Add Meeting</IonButton>
-          </Link>
+                        <IonItem button detail={true}>
+                          <IonLabel style={{ padding: "5px" }}>
+                            <p>{meeting.meetingTitle}</p>
+                            <p>{new Date(meeting.date).toLocaleString()}</p>
+                          </IonLabel>
+                        </IonItem>
+                      </IonRouterLink>
+                    ))
+                  : !noMeetingsToday && (
+                      <IonItem>No meetings for selected date</IonItem>
+                    ))}
+            </IonList>
+          </div>
+
+          <div
+            style={{
+              position: "fixed",
+              bottom: 5,
+              width: "90%",
+              zIndex: 1,
+              // marginTop: "20px",
+              marginLeft: "18px",
+            }}
+          >
+            <Link to="/bottomtabs/addmeetings">
+              <button className="add-executive-btn">Add Meeting</button>
+            </Link>
+          </div>
         </IonGrid>
       </IonContent>
     </IonPage>
