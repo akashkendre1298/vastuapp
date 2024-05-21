@@ -107,7 +107,7 @@ function BottomTabs() {
           <Route path="/bottomtabs/viewcases" component={ViewCasesPage} />
           <Route path="/bottomtabs/addcases" component={AddCasePage} />
           <Route path="/bottomtabs/viewexecutive" component={ViewExecutive} />
-          {/* <Route path="/bottomtabs/meetings" component={AddMeeting} /> */}
+          
           <Route path="/bottomtabs/revenue" component={Revenue} />
           <Route path="/bottomtabs/addclient" component={Client} />
           <Route path="/bottomtabs/addexecutive" component={AddExecutive} />
@@ -116,6 +116,7 @@ function BottomTabs() {
           <Route path="/bottomtabs/individualclients/:executiveId" component={IndividualClients}/>
           <Route path="/client/:executiveId" component={viewClients} />
           <Route path="/particularCase/:caseId" component={ParticularCase}/>
+          <Route path="/bottomtabs/individualmeeting/:meetingId" component={IndividualMeeting} />
       
     
 

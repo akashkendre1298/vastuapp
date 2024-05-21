@@ -37,6 +37,7 @@ const AddMeeting = () => {
   const [date, setDate] = useState("");
   const [otherDetails, setOtherDetails] = useState("");
 
+
   useEffect(() => {
     fetchExecutives();
   }, []);
@@ -56,6 +57,16 @@ const AddMeeting = () => {
 
   const handleAddMeeting = async () => {
     try {
+      // Log the entered data before sending
+      console.log("Entered Data:", {
+        meetingTitle: meetingAim,
+        executiveName: `${firstName} ${lastName}`,
+        executiveEmail: executiveEmail,
+        meetingMode: conductionMode,
+        date: date,
+        details: otherDetails,
+      });
+  
       const response = await fetch("http://localhost:8888/api/meetings", {
         method: "POST",
         headers: {
@@ -65,20 +76,20 @@ const AddMeeting = () => {
           meetingTitle: meetingAim,
           executives: [
             {
-              name: `${firstName} ${lastName}`, // Concatenate first and last names
+              name: `${firstName} ${lastName}`,
               email: executiveEmail,
             },
           ],
           meetingMode: conductionMode,
-          date: new Date(date).toISOString(), // Convert date to ISO string format
+          date: new Date(date).toISOString(),
           details: otherDetails,
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to add meeting");
       }
-
+  
       // If the meeting was successfully added, reset the form fields
       setMeetingAim("");
       setSelectedExecutive("");
@@ -86,13 +97,15 @@ const AddMeeting = () => {
       setConductionMode("");
       setDate("");
       setOtherDetails("");
-
+  
       // Log success message or handle further actions
       console.log("Meeting added successfully!");
     } catch (error) {
       console.error("Error adding meeting:", error);
     }
   };
+  
+  
   const handleDateChange = (e) => {
     setDate(e.target.value); // Update the date state with the selected date value
   };
@@ -208,10 +221,11 @@ const AddMeeting = () => {
                 <IonItem
                   style={{ border: "1px solid black", marginBottom: "25px" }}
                 >
-                  <IonTextarea
-                    value={otherDetails}
-                    onIonChange={(e) => setOtherDetails(e.detail.value)}
-                  ></IonTextarea>
+                <IonTextarea
+  value={otherDetails}
+  onIonChange={(e) => setOtherDetails(e.detail.value)}
+></IonTextarea>
+
                 </IonItem>
                 <button expand="full" onClick={handleAddMeeting} className="add-executive-btn">
                   Add Meeting

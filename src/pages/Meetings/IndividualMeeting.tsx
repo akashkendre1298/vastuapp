@@ -1,139 +1,120 @@
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonSelect,
-  IonSelectOption,
-  IonDatetime,
-  IonTextarea,
-  IonButton,
-  IonButtons,
-  IonImg,
-  IonBackButton,
-  IonFooter,
-} from "@ionic/react";
-import React, { useState } from "react";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
-import ToolBar from "../../components/ToolBar/ToolBar";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { IonPage, IonHeader, IonContent, IonItem, IonLabel, IonButton, IonInput, IonTextarea } from '@ionic/react';
+import ToolBar from '../../components/ToolBar/ToolBar';
 
-const IndividualMeeting = () => {
-  const [meetingAim, setMeetingAim] = useState("");
-  const [executiveName, setExecutiveName] = useState("");
-  const [executiveEmail, setExecutiveEmail] = useState("");
-  const [date, setDate] = useState("");
-  const [conductionMode, setConductionMode] = useState("");
-  const [otherDetails, setOtherDetails] = useState("");
+const MeetingDetails = () => {
+  const { meetingId } = useParams();
+  const [meeting, setMeeting] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [updatedMeeting, setUpdatedMeeting] = useState({});
 
-  const handleAddMeeting = () => {
-    // Implement your logic to handle adding a meeting here
-    console.log("Meeting details:", {
-      meetingAim,
-      executiveName,
-      executiveEmail,
-      date,
-      conductionMode,
-      otherDetails,
+  useEffect(() => {
+    const fetchMeeting = async () => {
+      try {
+        const response = await fetch(`http://localhost:8888/api/meetings/${meetingId}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch meeting details');
+        }
+
+        const data = await response.json();
+
+        setMeeting(data);
+        setUpdatedMeeting(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching meeting details:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchMeeting();
+  }, [meetingId]);
+
+  const handleEditClick = () => {
+    setEditing(true);
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      const response = await fetch(`http://localhost:8888/api/meetings/${meetingId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedMeeting)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update meeting details');
+      }
+
+      const data = await response.json();
+      setMeeting(data);
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating meeting details:', error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedMeeting({
+      ...updatedMeeting,
+      [name]: value
     });
   };
+
+  if (loading) {
+    return <IonItem>Loading...</IonItem>;
+  }
+
+  if (!meeting) {
+    return <IonItem>Meeting not found</IonItem>;
+  }
 
   return (
     <IonPage>
       <IonHeader>
-      <ToolBar />
-
-
-        {/* <IonToolbar color="primary">
-      <IonTitle>Add Meeting</IonTitle>
-    </IonToolbar> */}
+        <ToolBar />
       </IonHeader>
-      <IonContent className="ion-padding">
-        <div style={{ paddingBottom: "10px" }}>
-          <IonLabel position="floating" style={{ padding: "10px" }}>
-            Meeting Aim
+      <IonContent>
+
+        <div style={{height:"100vh"}}>
+
+        <IonItem >
+          <IonLabel>
+            {editing ? (
+              <>
+                <IonInput name="meetingTitle" value={updatedMeeting.meetingTitle} onIonChange={handleChange} />
+                <IonInput name="executiveName" value={updatedMeeting.executiveName} onIonChange={handleChange} />
+                <IonInput name="executivesEmail" value={updatedMeeting.executivesEmail} onIonChange={handleChange} />
+                <IonInput name="clintName" value={updatedMeeting.clintName} onIonChange={handleChange} />
+                <IonInput name="meetingMode" value={updatedMeeting.meetingMode} onIonChange={handleChange} />
+                <IonInput name="date" type="datetime-local" value={new Date(updatedMeeting.date).toISOString().slice(0, -1)} onIonChange={handleChange} />
+                <IonTextarea name="details" value={updatedMeeting.details} onIonChange={handleChange} />
+                <IonButton expand="block" onClick={handleSaveClick}>Save</IonButton>
+              </>
+            ) : (
+              <>
+                <h2>{meeting.meetingTitle}</h2>
+                <p><strong>Executive Name:</strong> {meeting.executiveName}</p>
+                <p><strong>Executive Email:</strong> {meeting.executivesEmail}</p>
+                <p><strong>Client Name:</strong> {meeting.clintName}</p>
+                <p><strong>Meeting Mode:</strong> {meeting.meetingMode}</p>
+                <p><strong>Date:</strong> {new Date(meeting.date).toLocaleString()}</p>
+                <p><strong>Details:</strong> {meeting.details}</p>
+                <IonButton expand="block" onClick={handleEditClick}>Edit</IonButton>
+              </>
+            )}
           </IonLabel>
-        </div>
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-          {/* <IonLabel position="floating" >Meeting Aim</IonLabel> */}
-          <IonInput
-            value={meetingAim}
-            onIonChange={(e) => setMeetingAim(e.detail.value)}
-            placeholder="Meeting Aim"
-          ></IonInput>
         </IonItem>
-        <div style={{ paddingBottom: "10px" }}>
-          <IonLabel position="floating" style={{ padding: "10px" }}>
-            Executive Name
-          </IonLabel>
         </div>
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-          <IonInput
-            value={executiveName}
-            onIonChange={(e) => setExecutiveName(e.detail.value)}
-            placeholder="Executive Name"
-          ></IonInput>
-        </IonItem>
-
-        <div style={{ paddingBottom: "10px" }}>
-          <IonLabel position="floating" style={{ padding: "10px" }}>
-            Executive Email
-          </IonLabel>
-        </div>
-
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-          <IonInput
-            type="email"
-            value={executiveEmail}
-            onIonChange={(e) => setExecutiveEmail(e.detail.value)}
-            placeholder="Executive Email"
-          ></IonInput>
-        </IonItem>
-
-        <div style={{ paddingBottom: "10px" }}>
-          <label htmlFor="">Date</label>
-        </div>
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-          <IonInput type="date" />
-        </IonItem>
-        <div style={{ paddingBottom: "10px" }}>
-          <IonLabel position="floating">Conduction Mode</IonLabel>
-        </div>
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-          <IonLabel position="floating"></IonLabel>
-
-          <IonSelect
-            value={conductionMode}
-            onIonChange={(e) => setConductionMode(e.detail.value)}
-            interface="popover"
-            placeholder="Mode"
-          >
-            <IonSelectOption value="Online">Online</IonSelectOption>
-            <IonSelectOption value="In-person">In-person</IonSelectOption>
-          </IonSelect>
-        </IonItem>
-
-        <div style={{ paddingBottom: "10px" }}>
-          <IonLabel position="floating">Other Details</IonLabel>
-        </div>
-        <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
-          <IonTextarea
-            value={otherDetails}
-            onIonChange={(e) => setOtherDetails(e.detail.value)}
-          ></IonTextarea>
-        </IonItem>
-
-        <IonButton expand="full" onClick={handleAddMeeting}>
-          Add Meeting
-        </IonButton>
       </IonContent>
-     
     </IonPage>
   );
 };
 
-export default IndividualMeeting;
+export default MeetingDetails;
