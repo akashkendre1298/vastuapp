@@ -134,7 +134,10 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
+                      <p style={{textAlign:"center"}}>
+
                       Executives
+                      </p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -159,7 +162,10 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
+                      <p style={{textAlign:"center"}}> 
+
                       Cases
+                      </p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -183,7 +189,11 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
+
+                      <p style={{textAlign:"center"}}>
+
                       Meetings
+                      </p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -207,8 +217,10 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />{" "}
-                      {/* Added margin for spacing */}
+                     <p style={{textAlign:"center"}}>
+
                       Revenue
+                     </p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -234,8 +246,10 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
-                      <br />
+                      <p style={{textAlign:"center"}}>
+
                       Add Client
+                      </p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -245,8 +259,7 @@ const Home = () => {
                 <IonCard
                    className="card-home"
                   button
-                  // onClick={() => handleButtonClick("reports")}
-                  // href="/bottomtabs/report"
+                  
                 >
                   <IonCardHeader>
                     <IonCardTitle>
@@ -259,8 +272,10 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />{" "}
-                      {/* Added margin for spacing */}
+                     <p style={{textAlign:"center"}}>
+
                       Reports
+                     </p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
