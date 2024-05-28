@@ -148,7 +148,7 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Meeting Aim</IonLabel>
                 </div>
-                <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem className="add-executive-item"  style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonInput
                     name="meetingTitle"
                     value={formData.meetingTitle}
@@ -157,7 +157,7 @@ const AddMeeting = () => {
                   ></IonInput>
                 </IonItem>
                 <div style={{ paddingBottom: "10px" }}></div>
-                <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonLabel position="floating">Executive Name</IonLabel>
 
                   <IonSelect
@@ -176,7 +176,7 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Executive Email</IonLabel>
                 </div>
-                <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonInput
                     type="email"
                     name="executivesEmail"
@@ -198,7 +198,7 @@ const AddMeeting = () => {
                   </div>
                 </div>
                 <div style={{ paddingBottom: "10px" }}></div>
-                <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonLabel position="floating">Conduction Mode</IonLabel>
 
                   <IonSelect
@@ -214,7 +214,7 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Other details</IonLabel>
                 </div>
-                <IonItem style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonTextarea
                     name="details"
                     value={formData.details}

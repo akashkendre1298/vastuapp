@@ -49,9 +49,7 @@ const history = useHistory();
       <ToolBar/>
 
 
-        <IonToolbar color="primary">
-          <IonTitle>Revenue</IonTitle>
-        </IonToolbar>
+    
       </IonHeader>
       <IonContent className="ion-padding">
         <div className="total-revenue-div">

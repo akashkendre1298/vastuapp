@@ -1,4 +1,3 @@
-// viewClients.js
 
 import { IonContent, IonPage } from "@ionic/react";
 import React, { useState, useEffect } from "react";

@@ -4,25 +4,14 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonCard,
   IonCardHeader,
-  IonCardTitle,
   IonCardContent,
-  IonButton,
   IonItem,
   IonLabel,
   IonInput,
-  IonFooter,
-  IonToolbar,
-  IonBackButton,
-  IonButtons,
-  IonImg,
   IonPage,
-  IonKeyboard,
 } from "@ionic/react";
 import "./AddExecutive.css";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
-import BottomTabs from "./../../components/BottomTabs/BottomTabs";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
 const AddExecutive = () => {
@@ -35,6 +24,7 @@ const AddExecutive = () => {
     city: "",
     password: "",
   });
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +45,6 @@ const AddExecutive = () => {
 
       if (response.ok) {
         console.log("Executive added successfully");
-        // Clear form after successful submission
         setFormData({
           firstName: "",
           lastName: "",
@@ -65,6 +54,12 @@ const AddExecutive = () => {
           city: "",
           password: "",
         });
+        setSuccessMessage("Executive added successfully!");
+
+        // Clear the success message after 3 seconds
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
       } else {
         console.error("Failed to add executive");
       }
@@ -73,15 +68,12 @@ const AddExecutive = () => {
     }
   };
 
-  // Listen for keyboard events to adjust layout
   useEffect(() => {
     const keyboardDidShow = () => {
-      // Adjust layout to accommodate keyboard
       document.body.classList.add("keyboard-open");
     };
 
     const keyboardDidHide = () => {
-      // Restore original layout
       document.body.classList.remove("keyboard-open");
     };
 
@@ -96,7 +88,7 @@ const AddExecutive = () => {
 
   return (
     <IonPage>
-     <ToolBar/>
+      <ToolBar />
       <IonContent className="add-executive" style={{ paddingTop: "20px", height: "100vh" }}>
         <IonGrid>
           <IonRow>
@@ -105,116 +97,111 @@ const AddExecutive = () => {
                 {/* <IonCardTitle>Add Executive</IonCardTitle> */}
               </IonCardHeader>
               <IonCardContent className="add-executive-card-content">
-              <form onSubmit={handleSubmit}>
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">First Name</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="firstName"
-                        className="add-executive-input"
-                        name="firstName"
-                        value={formData.firstName}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                <form onSubmit={handleSubmit}>
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">First Name</IonLabel>
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="firstName"
+                      className="add-executive-input"
+                      name="firstName"
+                      value={formData.firstName}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Last Name</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="lastName"
-                        className="add-executive-input"
-                        name="lastName"
-                        value={formData.lastName}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">Last Name</IonLabel>
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="lastName"
+                      className="add-executive-input"
+                      name="lastName"
+                      value={formData.lastName}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Email Address</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="email"
-                        type="email"
-                        className="add-executive-input"
-                        name="email"
-                        value={formData.email}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Contact Number</IonLabel>
-                    </div>
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">Email Address</IonLabel>
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="email"
+                      type="email"
+                      className="add-executive-input"
+                      name="email"
+                      value={formData.email}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">Contact Number</IonLabel>
+                  </div>
 
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="phoneNumber"
-                        type="tel"
-                        className="add-executive-input"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="phoneNumber"
+                      type="tel"
+                      className="add-executive-input"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Location</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="address"
-                        className="add-executive-input"
-                        name="address"
-                        value={formData.address}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">Location</IonLabel>
+                  </div>
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="address"
+                      className="add-executive-input"
+                      name="address"
+                      value={formData.address}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">City</IonLabel>
-                    </div>
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">City</IonLabel>
+                  </div>
 
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="city"
-                        className="add-executive-input"
-                        name="city"
-                        value={formData.city}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="city"
+                      className="add-executive-input"
+                      name="city"
+                      value={formData.city}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
 
-                    <div style={{ paddingBottom: "10px" }}>
-                      <IonLabel position="stacked">Password</IonLabel>
-                    </div>
-                    <IonItem className="add-executive-item">
-                      <IonInput
-                        placeholder="password"
-                        type="password"
-                        className="add-executive-input"
-                        name="password"
-                        value={formData.password}
-                        onIonChange={handleChange}
-                      />
-                    </IonItem>
-                    {/* <IonButton type="submit"  className="add-executive-button">Add</IonButton> */}
+                  <div style={{ paddingBottom: "10px" }}>
+                    <IonLabel position="stacked">Password</IonLabel>
+                  </div>
+                  <IonItem className="add-executive-item" style={{ marginBottom: "50px" }}>
+                    <IonInput
+                      placeholder="password"
+                      type="password"
+                      className="add-executive-input"
+                      name="password"
+                      value={formData.password}
+                      onIonChange={handleChange}
+                    />
+                  </IonItem>
 
-                    <button
-                      className="add-executive-button"
-                      style={{
-                        position: "fixed",
-                        bottom: 5,
-                        width: "86%",
-                        zIndex: 1,
-                        marginTop: "20px",
-                      }}
-                    >
-                      Add Executive{" "}
-                    </button>
-                  </form>
+                  <button className="add-executive-button">
+                    Add Executive
+                  </button>
+                </form>
+                {successMessage && (
+                  <div className="success-message">
+                    {successMessage}
+                  </div>
+                )}
               </IonCardContent>
             </IonCol>
           </IonRow>

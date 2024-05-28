@@ -1,31 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import "./IndividualClients.css";
 import {
-  IonBackButton,
-  IonButtons,
   IonContent,
   IonHeader,
-  IonImg,
   IonPage,
   IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonLoading,
+  IonAlert
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
 const IndividualClients = () => {
   const { executiveId } = useParams();
+  const history = useHistory();
 
   const [executive, setExecutive] = useState(null);
   const [clientCount, setClientCount] = useState(0);
   const [clients, setClients] = useState([]);
- 
+  const [showClients, setShowClients] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedExecutive, setEditedExecutive] = useState({
+    firstName: "",
+    phoneNumber: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+
   useEffect(() => {
     // Fetch executive details using executiveId
     fetch(`http://localhost:8888/api/executives/${executiveId}`)
       .then((response) => response.json())
       .then((data) => {
         setExecutive(data);
+        setEditedExecutive({
+          firstName: data.firstName,
+          phoneNumber: data.phoneNumber,
+        });
       })
       .catch((error) => {
         console.error("Error fetching executive details:", error);
@@ -35,14 +52,21 @@ const IndividualClients = () => {
     fetch(`http://localhost:8888/api/cases/byExecutiveId/${executiveId}`)
       .then((response) => response.json())
       .then((data) => {
-        if (data.data && Array.isArray(data.data)) {
-          // Extract caseLabels from each object in the data array
-          const labels = data.data.map((item) => {
+        console.log("Client details:", data); // Log the client details
+        // Find the count object in the data array
+        const countObject = data.find((item) => item.count !== undefined);
+        // Extract the count value
+        const clientCount = countObject ? countObject.count : 0;
+        // Filter out the count object from the data array
+        const filteredData = data.filter((item) => item.count === undefined);
+        if (filteredData && Array.isArray(filteredData)) {
+          // Extract caseLabels from each object in the filteredData array
+          const labels = filteredData.map((item) => {
             return item.caseLabel;
           });
           // setCaseLabels(labels);
-          setClientCount(data.count);
-          setClients(data.clients);
+          setClientCount(clientCount); // Set clientCount here
+          setClients(filteredData);
         } else {
           console.error("Error: Data is not in the expected format");
         }
@@ -52,8 +76,65 @@ const IndividualClients = () => {
       });
   }, [executiveId]);
 
-  const viewClients = () => {
-    window.location.href = `/clients/${executiveId}`;
+  const toggleClientList = () => {
+    setShowClients(!showClients);
+  };
+
+  const handleDelete = () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmation = (confirmed) => {
+    setShowConfirmation(false);
+    if (confirmed) {
+      setIsDeleting(true);
+      // Make DELETE request to delete executive
+      fetch(`http://localhost:8888/api/executives/${executiveId}`, {
+        method: "DELETE",
+      })
+        .then(() => {
+          setIsDeleting(false);
+          console.log("Executive deleted successfully!");
+          history.goBack();
+        })
+        .catch((error) => {
+          setIsDeleting(false);
+          console.error("Error deleting executive:", error);
+        });
+    }
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedExecutive((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // Make PATCH request to update executive details
+    fetch(`http://localhost:8888/api/executives/${executiveId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedExecutive),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setExecutive(data);
+        setIsEditing(false);
+        setSuccessMessage("Details updated successfully!");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error("Error updating executive details:", error);
+      });
   };
 
   return (
@@ -66,35 +147,104 @@ const IndividualClients = () => {
           {executive && (
             <div>
               <div className="profile-details-div">
-                <div>
-                  <p style={{ fontSize: "30px" }}> {executive.firstName}</p>
-                  <p style={{ fontSize: "30px" }}> {executive.phoneNumber}</p>
-                </div>
+                {isEditing ? (
+                  <form onSubmit={handleFormSubmit}>
+                    <div>
+                      <label>
+                        Name:
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={editedExecutive.firstName}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        Phone Number:
+                        <input
+                          type="text"
+                          name="phoneNumber"
+                          value={editedExecutive.phoneNumber}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </label>
+                    </div>
+                    <button type="submit" className="save-button">Save</button>
+                  </form>
+                ) : (
+                  <div>
+                    <p style={{ fontSize: "30px" }}>{executive.firstName}</p>
+                    <p style={{ fontSize: "30px" }}>{executive.phoneNumber}</p>
+                  </div>
+                )}
               </div>
+              {successMessage && (
+                <div className="success-message">{successMessage}</div>
+              )}
             </div>
           )}
           <div>
             <div className="client-count-and-view">
-              <div>
-                <p>Number Clients: {clientCount}</p>
-              </div>
-              <div>
-                <button onClick={viewClients} className="view-client-button">
-                  View Clients
-                </button>
-              </div>
+              <p>Number of Clients: {clientCount}</p>
+              <button onClick={toggleClientList} className="view-client-button">
+                {showClients ? "Hide Clients" : "View Clients"}
+              </button>
             </div>
-
+            {showClients && (
+              <IonList>
+                {clients.map((client, index) => (
+                  <IonItem key={index} className="client-details">
+                    <IonLabel>
+                      <p>Client Name: {client.client}</p>
+                      <p>Case Label: {client.caseLabel}</p>
+                      <p>Contact Number: {client.contactNumber}</p>
+                      {/* Render additional client details as needed */}
+                    </IonLabel>
+                  </IonItem>
+                ))}
+              </IonList>
+            )}
             <div className="button-group">
               <div>
-                <button className="edit-button">Edit</button>
+                <button className="edit-button" onClick={handleEditClick}>
+                  Edit
+                </button>
               </div>
               <div>
-                <button className="delete-button">Delete</button>
+                <button className="delete-button" onClick={handleDelete}>Delete</button>
               </div>
             </div>
           </div>
         </div>
+        <IonLoading
+          isOpen={isDeleting}
+          message={'Updating Executives...'}
+        />
+        <IonAlert
+          isOpen={showConfirmation}
+          onDidDismiss={() => setShowConfirmation(false)}
+          header={'Confirm Deletion'}
+          message={'Are you sure you want to delete this executive?'}
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                handleConfirmation(false);
+              }
+            },
+            {
+              text: 'Delete',
+              handler: () => {
+                handleConfirmation(true);
+              }
+            }
+          ]}
+        />
       </IonContent>
     </IonPage>
   );

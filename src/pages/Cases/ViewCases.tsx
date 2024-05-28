@@ -57,7 +57,7 @@ const ViewCasesPage = () => {
         {filteredCases.length > 0 ? (
           <IonList inset={true} style={{ marginBottom: "40px" }}>
             {filteredCases.map((caseItem) => (
-              <Link key={caseItem.id} to={`/particularCase/${caseItem.id}`}>
+              <Link key={caseItem.id} to={`/bottomtabs/particularCase/${caseItem.id}`}>
                 <IonItem
                   button
                   detail={true}
