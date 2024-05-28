@@ -19,7 +19,7 @@ const IndividualClients = () => {
   const [executive, setExecutive] = useState(null);
   const [clientCount, setClientCount] = useState(0);
   const [clients, setClients] = useState([]);
-
+ 
   useEffect(() => {
     // Fetch executive details using executiveId
     fetch(`http://localhost:8888/api/executives/${executiveId}`)
