@@ -259,7 +259,7 @@ const Home = () => {
                 <IonCard
                    className="card-home"
                   button
-                  
+                  href="/bottomtabs/reports"
                 >
                   <IonCardHeader>
                     <IonCardTitle>

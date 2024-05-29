@@ -39,6 +39,7 @@ import AddMeeting from './../../pages/Meetings/AddMeeting';
 import IndividualClients from "../../pages/Executive/IndividualClients";
 import viewClients from "../../pages/Executive/ViewClients";
 import ParticularCase from "../../pages/Cases/ParticularCase";
+import ReportPage from "../../pages/Reports/Reorts";
 
 function BottomTabs() {
   return (
@@ -117,6 +118,7 @@ function BottomTabs() {
           <Route path="/bottomtabs/client/:executiveId" component={viewClients} />
           <Route path="/bottomtabs/particularCase/:caseId" component={ParticularCase}/>
           <Route path="/bottomtabs/individualmeeting/:meetingId" component={IndividualMeeting} />
+          <Route path="/bottomtabs/reports" component={ReportPage} />
       
     
 
