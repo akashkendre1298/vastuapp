@@ -2,21 +2,15 @@ import React, { useState, useEffect } from "react";
 import {
   IonPage,
   IonContent,
-  IonAvatar,
-  IonLabel,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonImg,
-  IonTitle,
   IonIcon,
+  IonRow,
+  IonButton,
 } from "@ionic/react";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
 import { personCircleOutline } from "ionicons/icons";
-import "./Profile.css"
 import { useHistory } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import "./Profile.css";
+
 const ProfilePage = () => {
   const history = useHistory();
   const [userData, setUserData] = useState(null);
@@ -59,6 +53,7 @@ const ProfilePage = () => {
 
     fetchUserData();
   }, []);
+
   const handleLogout = () => {
     // Clear local storage
     localStorage.clear();
@@ -68,20 +63,17 @@ const ProfilePage = () => {
 
   return (
     <IonPage>
-        <ToolBar/>
-
+      <ToolBar />
       <IonContent className="ion-padding">
-        {userData && (
-          <>
-            <div style={{display:"flex",justifyContent:"center"}}>
+        <IonRow className="avatar-row">
+          <div className="avatar-container">
+            <IonIcon icon={personCircleOutline} className="avatar-icon" />
+          </div>
+        </IonRow>
 
-              <IonIcon
-                icon={personCircleOutline}
-                style={{ fontSize: "100px", color: "#ffffff" }}
-              />
-            </div>
-         
-            <div style={{ textAlign: "center" , marginTop:"30px"}}>
+        <div style={{ textAlign: "center", marginTop: "30px" }}>
+          {userData && (
+            <>
               <h2
                 style={{
                   fontSize: "30px",
@@ -91,24 +83,26 @@ const ProfilePage = () => {
               >
                 {userData.firstname} {userData.lastname}
               </h2>
-              <p> {userData.email}</p>
+              <p>{userData.email}</p>
+              <p>{userData.phonenumber}</p>
+            </>
+          )}
+          {error && <p className="error-message">{error}</p>}
+        </div>
 
-              <p> {userData.phonenumber}</p>
-            </div>
-
-            {/* <IonLabel>Password: {userData.password}</IonLabel> */}
-          </>
-        )}
-        {error && <p className="error-message">{error}</p>}
-       
-
-       
-      </IonContent>
-      <div className="logout-btn-div">
-        <button className="logout-btn" onClick={handleLogout}>
+        <div className="logout-btn-div">
+        <button
+          className="logout-btn"
+          expand="block"
+          color="danger"
+          onClick={handleLogout}
+        >
           Logout
         </button>
       </div>
+      </IonContent>
+
+     
     </IonPage>
   );
 };
