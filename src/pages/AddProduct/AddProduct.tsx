@@ -54,13 +54,15 @@ const AddProduct = () => {
       setError("Please fill in all required fields.");
       return;
     }
-
+  
     setError(""); // Clear any previous error messages
-
+  
+    console.log("Priority value:", priority); // Add console log here
+  
     const selectedCaseItem = caseData.find(
       (item) => item.caseLabel === selectedCase
     );
-
+  
     if (selectedCaseItem) {
       const { _id: caseID, client_id, executiveID } = selectedCaseItem;
       const data = {
@@ -69,9 +71,9 @@ const AddProduct = () => {
         exeID: executiveID,
         productName,
         productCategory: categoryName,
-        priority,
+        priority: priority ? "high" : "low", // Convert boolean to string
       };
-
+  
       // Send a POST request to save the product data
       fetch("http://localhost:8888/api/addproduct/", {
         method: "POST",
@@ -94,6 +96,8 @@ const AddProduct = () => {
         });
     }
   };
+  
+  
 
   return (
     <IonPage>

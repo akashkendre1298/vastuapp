@@ -20,37 +20,35 @@ const ReportPage = () => {
     let responseData;
   
     switch (type) {
-      case 'executives':
-        apiUrl = 'http://localhost:8888/api/executives';
-        responseData = await fetchData(apiUrl);
-        break;
       case 'clients':
         apiUrl = 'http://localhost:8888/api/clients';
-        responseData = await fetchData(apiUrl);
         break;
       case 'cases':
         apiUrl = 'http://localhost:8888/api/cases';
-        responseData = await fetchData(apiUrl);
+        break;
+      case 'executives': // Added case for executives
+        apiUrl = 'http://localhost:8888/api/executives';
         break;
       default:
         return;
     }
   
+    responseData = await fetchData(apiUrl);
+  
     if (responseData) {
-      const { data, totalCount, totalAmount } = responseData;
       let filteredData = [];
   
       switch (type) {
-        case 'executives':
-          filteredData = data.map(item => {
-            const { _id, __v,exeId, client_id, executiveID,password, image, ...rest } = item;
+        case 'clients':
+        case 'cases':
+          filteredData = responseData.data.map(item => {
+            const { _id, __v, exeId, client_id, executiveID, password, image, ...rest } = item;
             return rest;
           });
           break;
-        case 'clients':
-        case 'cases':
-          filteredData = data.map(item => {
-            const { _id, __v,exeId, client_id, executiveID,password, image, ...rest } = item;
+        case 'executives':
+          filteredData = responseData.map(item => {
+            const { _id, __v, password, ...rest } = item;
             return rest;
           });
           break;
@@ -58,11 +56,9 @@ const ReportPage = () => {
           break;
       }
   
-      createExcelFile(type, filteredData, totalCount, totalAmount);
+      createExcelFile(type, filteredData);
     }
   };
-  
-  
 
   const fetchData = async (apiUrl) => {
     try {
@@ -99,38 +95,37 @@ const ReportPage = () => {
     <IonPage>
       <ToolBar />
       <IonContent >
-      <div className="main-card">
-
-       
+        <div className="main-card">
           <IonCardHeader className="report-header">
             <h1>Reports</h1>
           </IonCardHeader>
+          <IonCardContent>
+  <IonGrid className="report-button-group">
+    <IonRow className="report-buttons">
+      <IonCol>
+        <button className="report-button" onClick={() => generateReport("clients")}>
+          Clients Report
+        </button>
+      </IonCol>
+    </IonRow>
+    <IonRow className="report-buttons">
+      <IonCol>
+        <button className="report-button" onClick={() => generateReport("cases")}>
+          Cases Report
+        </button>
+      </IonCol>
+    </IonRow>
+    <IonRow className="report-buttons">
+      <IonCol>
+        <button className="report-button" onClick={() => generateReport("executives")}>
+          Executives Report
+        </button>
+      </IonCol>
+    </IonRow>
+  </IonGrid>
+</IonCardContent>
 
-          <IonCardContent >
-            <IonGrid>
-              <IonRow className="report-buttons">
-                <IonCol >
-                  <button className="report-button" onClick={() => generateReport("executives")}>
-                    Executives Report
-                  </button>
-                </IonCol>
-                <IonCol >
-                  <button className="report-button" onClick={() => generateReport("clients")}>
-                    Clients Report
-                  </button>
-                </IonCol>
-              </IonRow>
-              <IonRow className="report-buttons">
-                <IonCol >
-                  <button className="report-button" onClick={() => generateReport("cases")}>
-                    Cases Report
-                  </button>
-                </IonCol>
-              </IonRow>
-            </IonGrid>
-          </IonCardContent>
-          </div>
-       
+        </div>
       </IonContent>
     </IonPage>
   );

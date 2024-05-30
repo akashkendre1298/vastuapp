@@ -14,12 +14,9 @@ import {
   IonBackButton,
   IonImg,
 } from "@ionic/react";
-
-import "./ViewProduct.css";
 import { Link } from "react-router-dom";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
 import ToolBar from "../../components/ToolBar/ToolBar";
-
+import "./ViewProduct.css";
 
 const ViewProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
@@ -61,7 +58,6 @@ const ViewProduct = () => {
         setSelectedCaseData([]); // Set an empty array in case of an error
       });
   };
-  
 
   const handleCaseSelection = (selectedCaseLabel) => {
     setSelectedCase(selectedCaseLabel);
@@ -77,17 +73,20 @@ const ViewProduct = () => {
     }
   };
 
-  // After the selectedCaseData is fetched, you can access productName and productCategory
-  console.log("Product Name:", selectedCaseData?.productName);
-  console.log("Product Category:", selectedCaseData?.productCategory);
-  console.log("Product purchesed:", selectedCaseData?.purchased);
-  console.log("Product priority:", selectedCaseData?.priority);
+  const confirmDelete = (index) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      // If the user confirms, delete the product row
+      const updatedProductData = [...selectedCaseData];
+      updatedProductData.splice(index, 1);
+      setSelectedCaseData(updatedProductData);
+    }
+  };
 
   return (
     <IonPage>
       <IonHeader>
-   <ToolBar/>
-  </IonHeader>
+        <ToolBar />
+      </IonHeader>
       <IonContent>
         <IonItem>
           <IonLabel position="floating">Choose Case</IonLabel>
@@ -118,29 +117,32 @@ const ViewProduct = () => {
               </tr>
             </thead>
             <tbody>
-  {selectedCaseData && selectedCaseData.map((product, index) => (
-    <tr key={index}>
-      <td>{product.productName}</td>
-      <td>{product.productCategory}</td>
-      <td>{product.priority ? "true" : "false"}</td>
-      <td>{product.purchased ? "true" : "false"}</td>
-      <td>{product.paymentStatus}</td>
-      <td>{product.action}</td>
-    </tr>
-  ))}
-</tbody>
-
+              {selectedCaseData &&
+                selectedCaseData.map((product, index) => (
+                  <tr key={index}>
+                    <td>{product.productName}</td>
+                    <td>{product.productCategory}</td>
+                    <td>{product.priority ? "true" : "false"}</td>
+                    <td>{product.purchased ? "true" : "false"}</td>
+                    <td>{product.paymentStatus}</td>
+                    <td>
+                      {/* Trash icon */}
+                      <ion-icon
+                        name="trash"
+                        onClick={() => confirmDelete(index)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
           </table>
         </div>
         <div>
-         
-            <Link to="/bottomtabs/addproduct">
-              <IonButton>Add Product</IonButton>
-            </Link>
-         
+          <Link to="/bottomtabs/addproduct">
+            <button className="product-buton">Add Product</button>
+          </Link>
         </div>
       </IonContent>
-
     </IonPage>
   );
 };
