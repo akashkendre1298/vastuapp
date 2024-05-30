@@ -233,7 +233,7 @@ const Home = () => {
                   className="card-home"
                   button
                   // onClick={() => handleButtonClick("client")}
-                  href="/bottomtabs/addclient"
+                  href="/bottomtabs/viewclients"
                 >
                   <IonCardHeader>
                     <IonCardTitle>
@@ -248,7 +248,7 @@ const Home = () => {
                       />
                       <p style={{textAlign:"center"}}>
 
-                      Add Client
+                       Clients
                       </p>
                     </IonCardTitle>
                   </IonCardHeader>

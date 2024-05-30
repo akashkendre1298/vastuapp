@@ -30,7 +30,8 @@
     height: 50px;
     width: 320px;
     background-color: #00004D;
-    /* margin-top: 20px; */
+
+    margin-top: 20px;
   }
   .label-cases{
     padding-left: 10px;

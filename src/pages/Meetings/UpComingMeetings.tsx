@@ -127,7 +127,7 @@ const UpComingMeetings = () => {
 
           <div style={{ borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
             <IonList>
-            <p>Meetings on  {selectedDate}</p>
+            <p style={{paddingLeft:"10px"}}>Meetings on  {selectedDate}</p>
 
               {noMeetingsToday && <IonItem>No meetings for today</IonItem>}
               {loading && <IonItem>Loading...</IonItem>}
@@ -151,7 +151,7 @@ const UpComingMeetings = () => {
 
           <div>
             <IonList style={{paddingBottom:"50px"}}>
-              <p>Upcoming Meetings</p>
+              <p style={{paddingLeft:"10px"}}>Upcoming Meetings</p>
               {loading && <IonItem>Loading...</IonItem>}
               {!loading &&
                 meetings.length > 0 &&
