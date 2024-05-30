@@ -15,7 +15,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 
 const ViewExecutive = () => {
   const [executives, setExecutives] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   useEffect(() => {
     const fetchExecutives = async () => {

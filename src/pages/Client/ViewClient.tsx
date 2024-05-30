@@ -12,9 +12,11 @@ import {
 import ToolBar from "../../components/ToolBar/ToolBar";
 import "./ViewClient.css";
 import { Link } from "react-router-dom";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const ViewClientPage = () => {
   const [clients, setClients] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -34,43 +36,62 @@ const ViewClientPage = () => {
     fetchClients();
   }, []);
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredClients = clients.filter((client) =>
+    client.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  client.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <IonPage>
       <IonHeader>
         <ToolBar />
       </IonHeader>
       <IonContent>
-        <IonList style={{
-            marginBottom:"50px",
-            padding:"10px 10px 0 10px"
-        }}>
-          <IonAccordionGroup>
-            {clients.map((client) => (
-              <IonAccordion key={client._id} value={client._id}>
-                <IonItem slot="header" className="ion-item-header"  style={{ border: "1px solid black", marginBottom: "25px", borderRadius: "10px", margin:"0 10px 20px 10px" }}>
-                  <IonLabel>
-                    {client.firstName} {client.lastName} 
-                  </IonLabel>
-                  <br />
-                  <IonLabel>
-                  {client.phoneNumber}
-                  </IonLabel>
-                </IonItem>
-                <div className="ion-padding" slot="content">
-                  <p>Email: {client.email}</p>
-                  <p>Address: {client.address}</p>
-                  <p>City: {client.city}</p>
-                  <p>Feedback: {client.feedback}</p>
-                  <p>Call Details: {client.callDetails}</p>
-                  <p>First Meeting Date: {new Date(client.firstMeetingDate).toLocaleDateString()}</p>
-                  <p>Issues: {client.issues}</p>
-                  <p>Joining Date: {new Date(client.joiningDate).toLocaleDateString()}</p>
-                 
-                </div>
-              </IonAccordion>
-            ))}
-          </IonAccordionGroup>
-        </IonList>
+        <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
+        <IonList style={{ marginBottom: "50px", padding: "10px 10px 0 10px" }}>
+  <IonAccordionGroup>
+    {filteredClients.map((client) => (
+      <IonAccordion key={client._id} value={client._id}>
+        <IonItem
+          slot="header"
+          className="ion-item-header"
+          style={{
+            border: "1px solid black",
+            marginBottom: "25px",
+            borderRadius: "10px",
+            margin: "0 10px 20px 10px",
+          }}
+        >
+          <IonLabel>
+            {client.firstName} {client.lastName}
+          </IonLabel>
+          <br />
+          <IonLabel>{client.phoneNumber}</IonLabel>
+        </IonItem>
+        <div className="ion-padding" slot="content">
+          <p>Email: {client.email}</p>
+          <p>Address: {client.address}</p>
+          <p>City: {client.city}</p>
+          <p>Feedback: {client.feedback}</p>
+          <p>Call Details: {client.callDetails}</p>
+          <p>
+            First Meeting Date:{" "}
+            {new Date(client.firstMeetingDate).toLocaleDateString()}
+          </p>
+          <p>Issues: {client.issues}</p>
+          <p>
+            Joining Date:{" "}
+            {new Date(client.joiningDate).toLocaleDateString()}
+          </p>
+        </div>
+      </IonAccordion>
+    ))}
+  </IonAccordionGroup>
+</IonList>
 
         <div
           style={{
@@ -92,3 +113,4 @@ const ViewClientPage = () => {
 };
 
 export default ViewClientPage;
+
