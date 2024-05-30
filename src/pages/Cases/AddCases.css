@@ -2,7 +2,7 @@
     padding: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    height: 100vh;
+    /* height: 100vh; */
   }
   
   /* Custom styles for input fields and labels */
@@ -28,7 +28,15 @@
     border-radius: 10px;
     cursor: pointer;
     height: 50px;
-    width: 250px;
+    width: 320px;
     background-color: #00004D;
     /* margin-top: 20px; */
+  }
+  .label-cases{
+    padding-left: 10px;
+  }
+  .case-page{
+    /* padding: 10px; */
+    height: 80vh;
+    /* background-color: #f8f8f8; */
   }

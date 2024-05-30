@@ -9,19 +9,21 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
-  IonButton
+  IonButton,
+  IonToast,
 } from "@ionic/react";
 import ToolBar from "../../components/ToolBar/ToolBar";
 import "./AddCases.css";
 
 const AddCasePage = () => {
-  const [caseName, setCaseName] = useState("");
+  const [caseLabel, setCaseLabel] = useState("");
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState("");
   const [executives, setExecutives] = useState([]);
   const [selectedExecutive, setSelectedExecutive] = useState("");
   const [issue, setIssue] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -37,6 +39,7 @@ const AddCasePage = () => {
         setClients([]);
       }
     };
+
     const fetchExecutives = async () => {
       try {
         const response = await fetch("http://localhost:8888/api/executives");
@@ -69,20 +72,23 @@ const AddCasePage = () => {
         (executive) => executive._id === selectedExecutive
       )?.firstName;
 
-      const formData = new FormData();
-      formData.append("caseLabel", caseName);
-      formData.append("client", selectedClientName);
-      formData.append("client_id", selectedClient);
-      formData.append("executive", selectedExecutiveName);
-      formData.append("executiveID", selectedExecutive);
-      formData.append("issues", issue);
-      if (selectedFile) {
-        formData.append("image", selectedFile);
-      }
+      const caseData = {
+        caseLabel: caseLabel,
+        client: selectedClientName || "",
+        client_id: selectedClient || "",
+        executive: selectedExecutiveName || "",
+        executive_id: selectedExecutive || "",
+        issues: issue || "",
+      };
+
+      console.log("Case data to be sent:", caseData);
 
       const response = await fetch("http://localhost:8888/api/cases", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(caseData),
       });
 
       if (!response.ok) {
@@ -92,9 +98,36 @@ const AddCasePage = () => {
       const responseData = await response.json();
       console.log("Response from server:", responseData);
 
+      // If there is a file selected, handle the file upload separately
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        const imageUploadResponse = await fetch(
+          `http://localhost:8888/api/cases/${responseData.caseId}/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!imageUploadResponse.ok) {
+          throw new Error(`Image upload failed: ${imageUploadResponse.status}`);
+        }
+
+        const imageUploadData = await imageUploadResponse.json();
+        console.log("Image upload response:", imageUploadData);
+      }
+
       // Case added successfully
       console.log("Case added successfully");
-      // You can redirect or show a success message here
+      setShowToast(true);
+
+      // Clear all fields
+      setCaseLabel("");
+      setSelectedClient("");
+      setSelectedExecutive("");
+      setIssue("");
+      setSelectedFile(null);
     } catch (error) {
       console.error("Error adding case:", error);
       // Handle errors appropriately (e.g., display an error message to the user)
@@ -102,18 +135,26 @@ const AddCasePage = () => {
   };
 
   return (
-    <IonPage>
+    <IonPage className="case-page">
       <IonHeader>
         <ToolBar />
       </IonHeader>
       <IonContent>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message="Case added successfully!"
+          duration={2000}
+        />
         <div className="add-executive">
           <div>
-            <IonLabel position="floating">Case Name</IonLabel>
-            <IonItem className="add-executive-item">
+            <IonLabel position="floating" className="label-cases">Case Name</IonLabel>
+            <IonItem className="add-executive-item" style={{
+              marginTop:"10px"
+            }}>
               <IonInput
-                value={caseName}
-                onIonChange={(e) => setCaseName(e.detail.value)}
+                value={caseLabel}
+                onIonChange={(e) => setCaseLabel(e.detail.value)}
                 placeholder="Case Name"
                 required
               ></IonInput>
@@ -121,15 +162,12 @@ const AddCasePage = () => {
           </div>
           <div>
             <IonItem className="add-executive-item">
-
-            <IonLabel position="floating">Client Name</IonLabel>
-
+              <IonLabel position="floating" className="label-cases">Client Name</IonLabel>
               <IonSelect
                 value={selectedClient}
                 onIonChange={(e) => setSelectedClient(e.detail.value)}
                 interface="popover"
               >
-                
                 {clients.map((client) => (
                   <IonSelectOption key={client._id} value={client._id}>
                     {client.firstName}
@@ -141,7 +179,7 @@ const AddCasePage = () => {
           </div>
           <div>
             <IonItem className="add-executive-item">
-            <IonLabel position="floating">Executive Name</IonLabel>
+              <IonLabel position="floating">Executive Name</IonLabel>
               <IonSelect
                 value={selectedExecutive}
                 onIonChange={(e) => setSelectedExecutive(e.detail.value)}
@@ -156,27 +194,32 @@ const AddCasePage = () => {
               <div className="select-arrow"></div>
             </IonItem>
           </div>
-          <div>
+          {/* <div>
             <IonLabel position="floating">Add Image</IonLabel>
             <IonItem className="add-executive-item">
               <input type="file" accept="image/*" onChange={handleFileChange} />
             </IonItem>
-          </div>
+          </div> */}
           <div>
-            <IonLabel position="stacked">Issue</IonLabel>
-            <IonItem className="add-executive-item">
+            <IonLabel position="stacked" className="label-cases">Issue</IonLabel>
+            <IonItem className="add-executive-item" style={{
+              marginTop:"10px"
+            }}>
               <IonTextarea
                 value={issue}
-                onIonChange={(e) => setIssue(e.detail.value)}
+                onIonChange={(e) => {
+                  console.log("Issue change event:", e.detail.value);
+                  setIssue(e.detail.value);
+                }}
                 placeholder="Write Issue"
                 required
               ></IonTextarea>
             </IonItem>
           </div>
           <div className="button-container">
-            <IonButton className="add-case-button" onClick={handleAddCase}>
+            <button className="add-case-button" onClick={handleAddCase}>
               Add Case
-            </IonButton>
+            </button>
           </div>
         </div>
       </IonContent>

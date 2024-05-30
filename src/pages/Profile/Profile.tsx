@@ -80,11 +80,12 @@ const ProfilePage = () => {
                   display: "block",
                   textAlign: "center",
                 }}
+                className="text"
               >
                 {userData.firstname} {userData.lastname}
               </h2>
-              <p>{userData.email}</p>
-              <p>{userData.phonenumber}</p>
+              <p   className="text">{userData.email}</p>
+              <p   className="text">{userData.phonenumber}</p>
             </>
           )}
           {error && <p className="error-message">{error}</p>}

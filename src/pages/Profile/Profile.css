@@ -79,8 +79,14 @@ box-shadow: 1px 6px 14px 2px gray;
 
     width: 100px;
     height: 40px;
-    background-color: red;
+    background-color: #f94848;
     color:white ;
     border-radius: 50px;
     font-size: 16px;
+  }
+  .text{
+
+    font-size: 20px;
+    letter-spacing:2px;
+    text-shadow: 5px 5px 20px white;
   }

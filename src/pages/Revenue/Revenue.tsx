@@ -77,23 +77,7 @@ const history = useHistory();
             </p>
           </div> */}
         </div>
-        <div className="div-revenue-first-section">
-          <div>
-            <p>Nishant</p>
-          </div>
-          <div>
-            <p>₹25000</p>
-          </div>
-        </div>
-
-        <div className="div-revenue-first-section">
-          <div>
-            <p>Sagar</p>
-          </div>
-          <div>
-            <p>₹15000</p>
-          </div>
-        </div>
+        
       </IonContent>
     </IonPage>
   );
