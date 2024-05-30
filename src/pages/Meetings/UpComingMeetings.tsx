@@ -94,9 +94,7 @@ const UpComingMeetings = () => {
       </IonHeader>
       <IonContent>
         <IonGrid style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
-          <div style={{ marginTop: "-10px" }}>
-            <SearchBar />
-          </div>
+        
           <div style={{ textAlign: "right", marginRight: "10px" }}>
             <div
               style={{
@@ -177,11 +175,12 @@ const UpComingMeetings = () => {
               bottom: 5,
               width: "90%",
               zIndex: 1,
-              marginLeft: "18px",
+              // padding:"10px 10px"
+              marginLeft: "12px",  
             }}
           >
             <Link to="/bottomtabs/addmeetings">
-              <button className="add-executive-btn">Add Meeting</button>
+              <button className="add-meeting-btn">Add Meeting</button>
             </Link>
           </div>
         </IonGrid>

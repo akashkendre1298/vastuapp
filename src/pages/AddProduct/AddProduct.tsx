@@ -11,9 +11,6 @@ import {
   IonToolbar,
   IonInput,
   IonCheckbox,
-  IonButtons,
-  IonBackButton,
-  IonImg,
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import "./AddProduct.css";
@@ -56,9 +53,7 @@ const AddProduct = () => {
     }
   
     setError(""); // Clear any previous error messages
-  
-    console.log("Priority value:", priority); // Add console log here
-  
+
     const selectedCaseItem = caseData.find(
       (item) => item.caseLabel === selectedCase
     );
@@ -75,14 +70,19 @@ const AddProduct = () => {
       };
   
       // Send a POST request to save the product data
-      fetch("http://localhost:8888/api/addproduct/", {
+      fetch("http://localhost:8888/api/addproduct", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then((data) => {
           console.log("Product saved successfully:", data);
           // Clear the form fields after successful save
@@ -93,11 +93,10 @@ const AddProduct = () => {
         })
         .catch((error) => {
           console.error("Error saving product:", error);
+          setError("Error saving product. Please try again.");
         });
     }
   };
-  
-  
 
   return (
     <IonPage>
@@ -110,7 +109,6 @@ const AddProduct = () => {
           <IonLabel position="floating">Choose Case</IonLabel>
           <IonSelect
             interface="popover"
-            // placeholder="Choose Case"
             value={selectedCase}
             onIonChange={(e) => handleCaseSelection(e.detail.value)}
           >

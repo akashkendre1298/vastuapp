@@ -89,7 +89,7 @@ const AddExecutive = () => {
   return (
     <IonPage>
       <ToolBar />
-      <IonContent className="add-executive" style={{ paddingTop: "20px", height: "100vh" }}>
+      <IonContent className="add-executive" style={{  height: "100vh" }}>
         <IonGrid>
           <IonRow>
             <IonCol>
@@ -108,6 +108,7 @@ const AddExecutive = () => {
                       name="firstName"
                       value={formData.firstName}
                       onIonChange={handleChange}
+                      pattern="[A-Za-z ]*"
                     />
                   </IonItem>
 
@@ -121,6 +122,7 @@ const AddExecutive = () => {
                       name="lastName"
                       value={formData.lastName}
                       onIonChange={handleChange}
+                      pattern="[A-Za-z ]*"
                     />
                   </IonItem>
 
@@ -141,16 +143,19 @@ const AddExecutive = () => {
                     <IonLabel position="stacked">Contact Number</IonLabel>
                   </div>
 
-                  <IonItem className="add-executive-item">
-                    <IonInput
-                      placeholder="phoneNumber"
-                      type="tel"
-                      className="add-executive-input"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onIonChange={handleChange}
-                    />
-                  </IonItem>
+                 <IonItem className="add-executive-item">
+  <IonInput
+    placeholder="Contact Number"
+    type="tel"
+    className="add-executive-input"
+    name="phoneNumber"
+    value={formData.phoneNumber}
+    onIonChange={handleChange}
+    pattern="[0-9]{10}"
+    title="Please enter a 10-digit phone number"
+  />
+</IonItem>
+
 
                   <div style={{ paddingBottom: "10px" }}>
                     <IonLabel position="stacked">Location</IonLabel>
@@ -176,6 +181,7 @@ const AddExecutive = () => {
                       name="city"
                       value={formData.city}
                       onIonChange={handleChange}
+                      pattern="[A-Za-z ]*"
                     />
                   </IonItem>
 

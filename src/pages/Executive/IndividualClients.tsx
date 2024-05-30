@@ -138,12 +138,14 @@ const IndividualClients = () => {
   };
 
   return (
-    <IonPage className="main-content-individualclient">
+    <IonPage >
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent>
-        <div>
+      <IonContent className="main-content-individualclient">
+        <div style={{
+          padding:"0 20px"
+        }}>
           {executive && (
             <div>
               <div className="profile-details-div">
@@ -158,6 +160,7 @@ const IndividualClients = () => {
                           value={editedExecutive.firstName}
                           onChange={handleInputChange}
                           required
+                          pattern="[A-Za-z ]*"
                         />
                       </label>
                     </div>
@@ -170,6 +173,8 @@ const IndividualClients = () => {
                           value={editedExecutive.phoneNumber}
                           onChange={handleInputChange}
                           required
+                          pattern="[0-9]{10}"
+                          title="Please enter a 10-digit phone number"
                         />
                       </label>
                     </div>

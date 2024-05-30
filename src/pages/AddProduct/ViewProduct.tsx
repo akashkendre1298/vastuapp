@@ -13,6 +13,7 @@ import {
   IonButtons,
   IonBackButton,
   IonImg,
+  IonIcon,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
@@ -75,12 +76,27 @@ const ViewProduct = () => {
 
   const confirmDelete = (index) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      // If the user confirms, delete the product row
-      const updatedProductData = [...selectedCaseData];
-      updatedProductData.splice(index, 1);
-      setSelectedCaseData(updatedProductData);
+      // If the user confirms, send delete request to the server
+      const productId = selectedCaseData[index]._id; // Assuming _id is the unique identifier of the product
+      fetch(`http://localhost:8888/api/addproduct/${productId}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          // If the request is successful, update the UI by removing the product row
+          const updatedProductData = [...selectedCaseData];
+          updatedProductData.splice(index, 1);
+          setSelectedCaseData(updatedProductData);
+        })
+        .catch((error) => {
+          console.error("Error deleting product:", error);
+          // Handle error (e.g., display error message to the user)
+        });
     }
   };
+  
 
   return (
     <IonPage>
@@ -126,12 +142,13 @@ const ViewProduct = () => {
                     <td>{product.purchased ? "true" : "false"}</td>
                     <td>{product.paymentStatus}</td>
                     <td>
-                      {/* Trash icon */}
-                      <ion-icon
-                        name="trash"
-                        onClick={() => confirmDelete(index)}
-                      />
-                    </td>
+  {/* Dustbin icon */}
+  <IonIcon
+    name="trash-bin"
+    onClick={() => confirmDelete(index)}
+  />
+</td>
+
                   </tr>
                 ))}
             </tbody>
