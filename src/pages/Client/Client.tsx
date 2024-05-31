@@ -24,13 +24,14 @@ const Client = () => {
     phoneNumber: "",
     address: "",
     city: "",
-    feedback: "", // Make sure 'feedback' key matches the input's name attribute
+    refrance: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
 
   const handleSubmit = async () => {
     console.log("Form data before submission:", formData); // Log form data
@@ -55,7 +56,7 @@ const Client = () => {
           phoneNumber: "",
           address: "",
           city: "",
-          feedback: "",
+          refrance: "",
         });
       } else {
         console.error("Failed to add client", response.statusText);
@@ -164,22 +165,19 @@ const Client = () => {
                     pattern="[A-Za-z ]*"
                   />
                 </IonItem>
-
-                <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">Feedback</IonLabel>
-                </div>
                 <IonItem
                   className="add-executive-item"
                   style={{ marginBottom: "50px" }}
                 >
                   <IonInput
-                    placeholder="Feedback"
+                    placeholder="Reference"
                     className="add-executive-input"
-                    name="feedback" // Ensure the name attribute matches the key in formData
-                    value={formData.feedback}
+                    name="refrance" // Ensure the name attribute matches the key in formData
+                    value={formData.refrance}
                     onIonChange={handleChange}
                   />
                 </IonItem>
+
 
 
                 <button

@@ -11,11 +11,12 @@ import {
   IonToolbar,
   IonInput,
   IonCheckbox,
+  IonButtons,
+  IonBackButton,
+  IonImg,
 } from "@ionic/react";
-import axios from 'axios';
 import logo from "../../Assets/pandit_shivkumar_logo.png";
-import "./AddProduct.css";
-import ToolBar from "../../components/ToolBar/ToolBar";
+import "./AddProduct.css"
 
 const AddProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
@@ -48,12 +49,17 @@ const AddProduct = () => {
   };
 
   const handleSaveProduct = () => {
-    setError("");
-  
+    if (!selectedCase || !productName || !categoryName) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    setError(""); // Clear any previous error messages
+
     const selectedCaseItem = caseData.find(
       (item) => item.caseLabel === selectedCase
     );
-  
+
     if (selectedCaseItem) {
       const { _id: caseID, client_id, executiveID } = selectedCaseItem;
       const data = {
@@ -62,53 +68,53 @@ const AddProduct = () => {
         exeID: executiveID,
         productName,
         productCategory: categoryName,
-        priority: priority ? "high" : "low",
+        priority,
       };
-  
-      console.log("Sending data to server:", data);
-  
-      axios.post("http://localhost:8888/api/addproduct", data, {
+
+      // Send a POST request to save the product data
+      fetch("http://localhost:8888/api/addproduct/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(data),
       })
-      .then((response) => {
-        console.log("Product saved successfully:", response.data);
-        setProductName("");
-        setCategoryName("");
-        setPriority(false);
-        setSuccessMessage("Product added successfully!");
-      })
-      .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.error("Error response:", error.response.data);
-          setError("Error saving product: " + error.response.data.message);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error("Error request:", error.request);
-          setError("Error saving product. Please try again.");
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error("Error:", error.message);
-          setError("Error saving product. Please try again.");
-        }
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Product saved successfully:", data);
+          // Clear the form fields after successful save
+          setProductName("");
+          setCategoryName("");
+          setPriority(false);
+          setSuccessMessage("Product added successfully!");
+        })
+        .catch((error) => {
+          console.error("Error saving product:", error);
+        });
     }
   };
 
   return (
     <IonPage>
       <IonHeader>
-       <ToolBar/>
-      </IonHeader>
+    <IonToolbar >
+      <IonButtons slot="start">
+        <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
+      </IonButtons>
+      {/* <IonTitle>Case</IonTitle> */}
+      <IonButtons slot="end">
+        <IonImg src={logo} alt="App Logo" />
+      </IonButtons>
+    </IonToolbar>
+  </IonHeader>
       <IonContent className="ion-padding">
-        <div style={{ paddingBottom: "10px" }}></div>
+        <div style={{ paddingBottom: "10px" }}>
+        </div>
         <IonItem className="add-executive-item">
           <IonLabel position="floating">Choose Case</IonLabel>
           <IonSelect
             interface="popover"
+            // placeholder="Choose Case"
             value={selectedCase}
             onIonChange={(e) => handleCaseSelection(e.detail.value)}
           >
@@ -120,14 +126,8 @@ const AddProduct = () => {
           </IonSelect>
         </IonItem>
 
-        <div
-          style={{
-            paddingBottom: "10px",
-            marginTop: "10px",
-            paddingLeft: "10px",
-          }}
-        >
-          <IonLabel position="stacked">Product Name</IonLabel>
+        <div style={{ paddingBottom: "10px" ,marginTop:"10px",paddingLeft:"10px"}}>
+          <IonLabel position="stacked" >Product Name</IonLabel>
         </div>
 
         <IonItem className="add-executive-item">
@@ -140,14 +140,8 @@ const AddProduct = () => {
           />
         </IonItem>
 
-        <div
-          style={{
-            paddingBottom: "10px",
-            marginTop: "10px",
-            paddingLeft: "10px",
-          }}
-        >
-          <IonLabel position="stacked">Category Name</IonLabel>
+        <div style={{ paddingBottom: "10px" ,marginTop:"10px" ,paddingLeft:"10px"}}>
+          <IonLabel position="stacked" >Category Name</IonLabel>
         </div>
 
         <IonItem className="add-executive-item">
@@ -163,6 +157,7 @@ const AddProduct = () => {
         <IonItem>
           <IonLabel>Priority</IonLabel>
           <IonCheckbox
+
             slot="start"
             checked={priority}
             onIonChange={(e) => setPriority(e.detail.checked)}
