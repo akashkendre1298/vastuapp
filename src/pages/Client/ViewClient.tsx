@@ -21,7 +21,7 @@ const ViewClientPage = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/clients");
+        const response = await fetch("https://vastu-web-app.onrender.com/api/clients");
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }

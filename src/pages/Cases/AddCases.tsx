@@ -26,7 +26,7 @@ const AddCasePage = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/clients");
+        const response = await fetch("https://vastu-web-app.onrender.com/api/clients");
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
@@ -41,7 +41,7 @@ const AddCasePage = () => {
 
     const fetchExecutives = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/executives");
+        const response = await fetch("https://vastu-web-app.onrender.com/api/executives");
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
@@ -79,7 +79,7 @@ const AddCasePage = () => {
 
       console.log("Data to be sent:", caseData);
 
-      const response = await fetch("http://localhost:8888/api/cases", {
+      const response = await fetch("https://vastu-web-app.onrender.com/api/cases", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

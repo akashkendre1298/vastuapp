@@ -39,7 +39,7 @@ const SignupPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8888/api/admin/signup", {
+      const response = await fetch("https://vastu-web-app.onrender.com/api/admin/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

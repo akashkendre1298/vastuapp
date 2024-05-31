@@ -12,7 +12,7 @@ const IndividualMeetingDetails = () => {
     // Fetch meeting details using the meeting ID
     const fetchMeetingDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8888/api/meetings/${meetingId}`);
+        const response = await fetch(`https://vastu-web-app.onrender.com/api/meetings/${meetingId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch meeting details");
         }

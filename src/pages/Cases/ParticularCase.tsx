@@ -10,7 +10,7 @@ const ParticularCase = () => {
 
   useEffect(() => {
     // Fetch case details using caseId from API
-    fetch(`http://localhost:8888/api/cases/${caseId}`)
+    fetch(`https://vastu-web-app.onrender.com/api/cases/${caseId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

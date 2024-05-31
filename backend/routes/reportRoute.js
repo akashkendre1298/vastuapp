@@ -6,11 +6,11 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         // Make a GET request to fetch all cases data
-        const responseCases = await axios.get('http://localhost:8888/api/cases');
+        const responseCases = await axios.get('https://vastu-web-app.onrender.com/api/cases');
         const casesData = responseCases.data.data; // Accessing the data property
 
         // Make a GET request to fetch all clients data
-        const responseClients = await axios.get('http://localhost:8888/api/clients');
+        const responseClients = await axios.get('https://vastu-web-app.onrender.com/api/clients');
         const clientsData = responseClients.data.data; // Accessing the data property
 
         // Group cases by client name

@@ -9,7 +9,6 @@ import {
   IonLabel,
   IonSelect,
   IonSelectOption,
-  IonTextarea,
   IonButton,
   IonInput,
   IonToast,
@@ -40,7 +39,7 @@ const AddMeeting = () => {
 
   const fetchExecutives = async () => {
     try {
-      const response = await fetch("http://localhost:8888/api/executives");
+      const response = await fetch("https://vastu-web-app.onrender.com/api/executives");
       if (!response.ok) {
         throw new Error("Failed to fetch executives");
       }
@@ -61,12 +60,15 @@ const AddMeeting = () => {
 
   const handleAddMeeting = async () => {
     try {
-      // Format the date before sending
+      if (!formData.details) {
+        alert("Details are required");
+        return;
+      }
       const formattedDate = formatDate(formData.date);
-      // Log the entered data before sending
+
       console.log("Entered Data:", { ...formData, date: formattedDate });
 
-      const response = await fetch("http://localhost:8888/api/meetings/post", {
+      const response = await fetch("https://vastu-web-app.onrender.com/api/meetings/post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,6 +116,7 @@ const AddMeeting = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(`Changing ${name} to ${value}`);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -148,7 +151,7 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Meeting Aim</IonLabel>
                 </div>
-                <IonItem className="add-executive-item"  style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonInput
                     name="meetingTitle"
                     value={formData.meetingTitle}
@@ -159,7 +162,6 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}></div>
                 <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonLabel position="floating">Executive Name</IonLabel>
-
                   <IonSelect
                     name="executiveID"
                     value={formData.executiveID}
@@ -200,7 +202,6 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}></div>
                 <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
                   <IonLabel position="floating">Conduction Mode</IonLabel>
-
                   <IonSelect
                     name="meetingMode"
                     value={formData.meetingMode}
@@ -215,11 +216,13 @@ const AddMeeting = () => {
                   <IonLabel position="floating">Other details</IonLabel>
                 </div>
                 <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
-                  <IonTextarea
+                  <textarea
                     name="details"
                     value={formData.details}
-                    onIonChange={(e) => handleChange(e)}
-                  ></IonTextarea>
+                    onChange={handleChange}
+                    required
+                    style={{ width: '100%', height: '100px', border: 'none', resize: 'none' }}
+                  ></textarea>
                 </IonItem>
                 <button
                   expand="full"

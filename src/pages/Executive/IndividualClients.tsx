@@ -35,7 +35,7 @@ const IndividualClients = () => {
 
   useEffect(() => {
     // Fetch executive details using executiveId
-    fetch(`http://localhost:8888/api/executives/${executiveId}`)
+    fetch(`https://vastu-web-app.onrender.com/api/executives/${executiveId}`)
       .then((response) => response.json())
       .then((data) => {
         setExecutive(data);
@@ -49,7 +49,7 @@ const IndividualClients = () => {
       });
 
     // Fetch client details using executiveId
-    fetch(`http://localhost:8888/api/cases/byExecutiveId/${executiveId}`)
+    fetch(`https://vastu-web-app.onrender.com/api/cases/byExecutiveId/${executiveId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Client details:", data); // Log the client details
@@ -89,7 +89,7 @@ const IndividualClients = () => {
     if (confirmed) {
       setIsDeleting(true);
       // Make DELETE request to delete executive
-      fetch(`http://localhost:8888/api/executives/${executiveId}`, {
+      fetch(`https://vastu-web-app.onrender.com/api/executives/${executiveId}`, {
         method: "DELETE",
       })
         .then(() => {
@@ -116,7 +116,7 @@ const IndividualClients = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Make PATCH request to update executive details
-    fetch(`http://localhost:8888/api/executives/${executiveId}`, {
+    fetch(`https://vastu-web-app.onrender.com/api/executives/${executiveId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

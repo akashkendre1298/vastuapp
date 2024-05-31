@@ -35,7 +35,7 @@ const AddExecutive = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8888/api/executives", {
+      const response = await fetch("https://vastu-web-app.onrender.com/api/executives", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

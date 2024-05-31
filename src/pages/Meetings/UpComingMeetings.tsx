@@ -41,12 +41,11 @@ const UpComingMeetings = () => {
     const [year, month, day] = date.split("-");
     return `${day}-${month}-${year}`;
   };
-  
 
   const fetchMeetings = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8888/api/meetings`);
+      const response = await fetch(`https://vastu-web-app.onrender.com/api/meetings`);
       if (!response.ok) {
         throw new Error("Failed to fetch meetings");
       }
@@ -65,7 +64,7 @@ const UpComingMeetings = () => {
     try {
       const formattedDate = formatDate(date);
       console.log("Formatted Date:", formattedDate); // Check the formatted date
-      const fullRoute = `http://localhost:8888/api/meetings/getbydate/${formattedDate}`;
+      const fullRoute = `https://vastu-web-app.onrender.com/api/meetings/getbydate/${formattedDate}`;
       console.log("Full API Route:", fullRoute); // Log the full API route
       const response = await fetch(fullRoute);
       if (!response.ok) {
@@ -108,7 +107,7 @@ const UpComingMeetings = () => {
                 onChange={(e) => {
                   setSelectedDate(e.target.value);
                   const formattedDate = formatDate(e.target.value);
-                  const fullRoute = `http://localhost:8888/api/meetings/getbydate/${formattedDate}`;
+                  const fullRoute = `https://vastu-web-app.onrender.com/api/meetings/getbydate/${formattedDate}`;
                   console.log("Full API Route:", fullRoute);
                 }}
                 style={{
@@ -138,8 +137,9 @@ const UpComingMeetings = () => {
                   >
                     <IonItem button detail={true}>
                       <IonLabel style={{ padding: "5px" }}>
-                        <p>{meeting.meetingTitle}</p>
-                        <p>{new Date(meeting.date).toLocaleString()}</p>
+                        <p><b>Meeting Aim:</b> &nbsp;&nbsp;{meeting.meetingTitle}</p>
+                        <p><b>Meeting Mode:</b> &nbsp;&nbsp;{meeting.meetingMode}</p>
+                        <p><b>Details:</b> &nbsp;&nbsp;{meeting.details}</p>
                       </IonLabel>
                     </IonItem>
                   </IonRouterLink>
@@ -160,8 +160,9 @@ const UpComingMeetings = () => {
                     >
                     <IonItem button detail={true}>
                       <IonLabel style={{ padding: "5px" }}>
-                        <p>{meeting.meetingTitle}</p>
-                        <p>{new Date(meeting.date).toLocaleString()}</p>
+                        <p><b>Meeting Aim:</b> &nbsp;&nbsp;{meeting.meetingTitle}</p>
+                        <p><b>Meeting Mode:</b> &nbsp;&nbsp;{meeting.meetingMode}</p>
+                        <p><b>Details:</b> &nbsp;&nbsp;{meeting.details}</p>
                       </IonLabel>
                     </IonItem>
                   </IonRouterLink>
@@ -182,7 +183,8 @@ const UpComingMeetings = () => {
             <Link to="/bottomtabs/addmeetings">
               <button className="add-meeting-btn">Add Meeting</button>
             </Link>
-          </div>
+         
+            </div>
         </IonGrid>
       </IonContent>
     </IonPage>

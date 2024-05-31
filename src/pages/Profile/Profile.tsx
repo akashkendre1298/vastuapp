@@ -31,7 +31,7 @@ const ProfilePage = () => {
 
         // Fetch user data from the API using the user ID
         const response = await fetch(
-          `http://localhost:8888/api/admin/${userId}`
+          `https://vastu-web-app.onrender.com/api/admin/${userId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user data");

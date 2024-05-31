@@ -36,7 +36,7 @@ const Client = () => {
   const handleSubmit = async () => {
     console.log("Form data before submission:", formData); // Log form data
     try {
-      const response = await fetch("http://localhost:8888/api/clients", {
+      const response = await fetch("https://vastu-web-app.onrender.com/api/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

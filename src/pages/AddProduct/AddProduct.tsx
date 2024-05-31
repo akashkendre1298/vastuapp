@@ -29,7 +29,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     // Fetch case data from API
-    fetch("http://localhost:8888/api/cases")
+    fetch("https://vastu-web-app.onrender.com/api/cases")
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {
@@ -72,7 +72,7 @@ const AddProduct = () => {
       };
 
       // Send a POST request to save the product data
-      fetch("http://localhost:8888/api/addproduct/", {
+      fetch("https://vastu-web-app.onrender.com/api/addproduct/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

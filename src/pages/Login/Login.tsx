@@ -19,7 +19,7 @@ const LoginPage = () => {
     };
   
     try {
-      const response = await fetch("http://localhost:8888/api/admin/login", {
+      const response = await fetch("https://vastu-web-app.onrender.com/api/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

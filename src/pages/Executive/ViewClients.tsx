@@ -13,7 +13,7 @@ function viewClients() {
       try {
         // Fetch data from the API
         const response = await fetch(
-          `http://localhost:8888/api/cases/byExecutiveId/${executiveId}`
+          `https://vastu-web-app.onrender.com/api/cases/byExecutiveId/${executiveId}`
         );
 
         // Check if the request was successful

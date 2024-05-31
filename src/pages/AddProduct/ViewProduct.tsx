@@ -26,7 +26,7 @@ const ViewProduct = () => {
 
   useEffect(() => {
     // Fetch case data from API
-    fetch("http://localhost:8888/api/cases")
+    fetch("https://vastu-web-app.onrender.com/api/cases")
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {
@@ -42,7 +42,7 @@ const ViewProduct = () => {
   }, []);
 
   const fetchProductData = (clientId, caseId) => {
-    fetch(`http://localhost:8888/api/addproduct/${clientId}/${caseId}`)
+    fetch(`https://vastu-web-app.onrender.com/api/addproduct/${clientId}/${caseId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched product data:", data);
@@ -78,7 +78,7 @@ const ViewProduct = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       // If the user confirms, send delete request to the server
       const productId = selectedCaseData[index]._id; // Assuming _id is the unique identifier of the product
-      fetch(`http://localhost:8888/api/addproduct/${productId}`, {
+      fetch(`https://vastu-web-app.onrender.com/api/addproduct/${productId}`, {
         method: "DELETE",
       })
         .then((response) => {

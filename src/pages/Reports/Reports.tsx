@@ -20,13 +20,13 @@ const ReportPage = () => {
 
     switch (type) {
       case 'clients':
-        apiUrl = 'http://localhost:8888/api/clients';
+        apiUrl = 'https://vastu-web-app.onrender.com/api/clients';
         break;
       case 'cases':
-        apiUrl = 'http://localhost:8888/api/cases';
+        apiUrl = 'https://vastu-web-app.onrender.com/api/cases';
         break;
       case 'executives': // Added case for executives
-        apiUrl = 'http://localhost:8888/api/executives';
+        apiUrl = 'https://vastu-web-app.onrender.com/api/executives';
         break;
       default:
         return;

@@ -16,7 +16,7 @@ const ViewCasesPage = () => {
 
   useEffect(() => {
     // Fetch case labels from API
-    fetch("http://localhost:8888/api/cases")
+    fetch("https://vastu-web-app.onrender.com/api/cases")
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {

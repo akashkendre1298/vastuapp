@@ -22,7 +22,7 @@ const history = useHistory();
   useEffect(() => {
     const fetchTotalAmount = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/cases/");
+        const response = await fetch("https://vastu-web-app.onrender.com/api/cases/");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }

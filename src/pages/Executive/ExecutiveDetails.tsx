@@ -21,7 +21,7 @@ const ExecutiveDetails = () => {
     const fetchExecutive = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8888/api/executives/${id}`
+          `https://vastu-web-app.onrender.com/api/executives/${id}`
         );
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
