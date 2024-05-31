@@ -7,7 +7,6 @@ import {
   IonCol,
   IonCardHeader,
   IonCardContent,
-  IonCard,
 } from "@ionic/react";
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -18,7 +17,7 @@ const ReportPage = () => {
   const generateReport = async (type) => {
     let apiUrl;
     let responseData;
-  
+
     switch (type) {
       case 'clients':
         apiUrl = 'http://localhost:8888/api/clients';
@@ -32,12 +31,12 @@ const ReportPage = () => {
       default:
         return;
     }
-  
+
     responseData = await fetchData(apiUrl);
-  
+
     if (responseData) {
       let filteredData = [];
-  
+
       switch (type) {
         case 'clients':
         case 'cases':
@@ -55,7 +54,7 @@ const ReportPage = () => {
         default:
           break;
       }
-  
+
       createExcelFile(type, filteredData);
     }
   };
@@ -75,10 +74,24 @@ const ReportPage = () => {
   };
 
   const createExcelFile = (type, data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const colWidths = Object.keys(data[0]).map(key => {
-      const maxLength = data.reduce((max, item) => Math.max(max, item[key]?.toString().length || 0), key.length);
-      return { wch: maxLength + 2 };
+    const headers = Object.keys(data[0]);
+    const worksheetData = [headers, [], ...data.map(Object.values)]; // Add an empty row after the headers
+
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+    // Apply bold style to the headers
+    headers.forEach((header, index) => {
+      const cellAddress = XLSX.utils.encode_cell({ r: 0, c: index });
+      worksheet[cellAddress].s = { font: { bold: true } };
+    });
+
+    // Adjust column widths
+    const colWidths = headers.map((header, colIndex) => {
+      const maxLength = Math.max(
+        header.length,
+        ...data.map(row => (row[header] ? row[header].toString().length : 0))
+      );
+      return { wch: maxLength + 6 }; // Adding some padding
     });
 
     worksheet['!cols'] = colWidths;
@@ -94,37 +107,36 @@ const ReportPage = () => {
   return (
     <IonPage>
       <ToolBar />
-      <IonContent >
+      <IonContent>
         <div className="main-card">
           <IonCardHeader className="report-header">
             <h1>Reports</h1>
           </IonCardHeader>
           <IonCardContent>
-  <IonGrid className="report-button-group">
-    <IonRow className="report-buttons">
-      <IonCol>
-        <button className="report-button" onClick={() => generateReport("clients")}>
-          Clients Report
-        </button>
-      </IonCol>
-    </IonRow>
-    <IonRow className="report-buttons">
-      <IonCol>
-        <button className="report-button" onClick={() => generateReport("cases")}>
-          Cases Report
-        </button>
-      </IonCol>
-    </IonRow>
-    <IonRow className="report-buttons">
-      <IonCol>
-        <button className="report-button" onClick={() => generateReport("executives")}>
-          Executives Report
-        </button>
-      </IonCol>
-    </IonRow>
-  </IonGrid>
-</IonCardContent>
-
+            <IonGrid className="report-button-group">
+              <IonRow className="report-buttons">
+                <IonCol>
+                  <button className="report-button" onClick={() => generateReport("clients")}>
+                    Clients Report
+                  </button>
+                </IonCol>
+              </IonRow>
+              <IonRow className="report-buttons">
+                <IonCol>
+                  <button className="report-button" onClick={() => generateReport("cases")}>
+                    Cases Report
+                  </button>
+                </IonCol>
+              </IonRow>
+              <IonRow className="report-buttons">
+                <IonCol>
+                  <button className="report-button" onClick={() => generateReport("executives")}>
+                    Executives Report
+                  </button>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonCardContent>
         </div>
       </IonContent>
     </IonPage>

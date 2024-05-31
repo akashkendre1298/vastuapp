@@ -175,7 +175,7 @@ const UpComingMeetings = () => {
               bottom: 5,
               width: "90%",
               zIndex: 1,
-              // padding:"10px 10px"
+              
               marginLeft: "12px",  
             }}
           >

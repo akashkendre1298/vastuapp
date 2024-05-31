@@ -100,6 +100,8 @@ const Client = () => {
                     name="firstName"
                     value={formData.firstName}
                     onIonChange={handleChange}
+                    pattern="[A-Za-z ]*"
+
                   />
                 </IonItem>
 
@@ -113,6 +115,8 @@ const Client = () => {
                     name="lastName"
                     value={formData.lastName}
                     onIonChange={handleChange}
+                    pattern="[A-Za-z ]*"
+
                   />
                 </IonItem>
 
@@ -141,6 +145,8 @@ const Client = () => {
                     name="phoneNumber"
                     value={formData.phoneNumber}
                     onIonChange={handleChange}
+                    pattern="[0-9]{10}"
+                    title="Please enter a 10-digit phone number"
                   />
                 </IonItem>
 
@@ -167,11 +173,12 @@ const Client = () => {
                     name="city"
                     value={formData.city}
                     onIonChange={handleChange}
+                    pattern="[A-Za-z ]*"
                   />
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">feedback</IonLabel>
+                  <IonLabel position="stacked"><F></F>eedback</IonLabel>
                 </div>
                 <IonItem
                   className="add-executive-item"
@@ -180,7 +187,7 @@ const Client = () => {
                   <IonInput
                     placeholder="feedback"
                     className="add-executive-input"
-                    name="feedback"
+                    name="Feedback"
                     value={formData.feedback}
                     onIonChange={handleChange}
                   />
