@@ -4,25 +4,14 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
-  IonButton,
   IonItem,
   IonLabel,
   IonInput,
-  IonFooter,
-  IonToolbar,
-  IonBackButton,
-  IonButtons,
-  IonImg,
   IonPage,
-  IonToast, 
+  IonToast,
 } from "@ionic/react";
 import "./Client.css";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
 const Client = () => {
@@ -35,7 +24,7 @@ const Client = () => {
     phoneNumber: "",
     address: "",
     city: "",
-    feedback: "",
+    feedback: "", // Make sure 'feedback' key matches the input's name attribute
   });
 
   const handleChange = (e) => {
@@ -44,6 +33,7 @@ const Client = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("Form data before submission:", formData); // Log form data
     try {
       const response = await fetch("http://localhost:8888/api/clients", {
         method: "POST",
@@ -57,7 +47,7 @@ const Client = () => {
         console.log("Client added successfully");
         // Display success message
         setShowToast(true);
-       
+
         setFormData({
           firstName: "",
           lastName: "",
@@ -68,13 +58,13 @@ const Client = () => {
           feedback: "",
         });
       } else {
-        console.error("Failed to add client");
+        console.error("Failed to add client", response.statusText);
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  
+
   return (
     <IonPage>
       <ToolBar />
@@ -95,13 +85,12 @@ const Client = () => {
                   }}
                 >
                   <IonInput
-                    placeholder="firstName"
+                    placeholder="First Name"
                     className="add-executive-input"
                     name="firstName"
                     value={formData.firstName}
                     onIonChange={handleChange}
                     pattern="[A-Za-z ]*"
-
                   />
                 </IonItem>
 
@@ -110,13 +99,12 @@ const Client = () => {
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
-                    placeholder="lastName"
+                    placeholder="Last Name"
                     className="add-executive-input"
                     name="lastName"
                     value={formData.lastName}
                     onIonChange={handleChange}
                     pattern="[A-Za-z ]*"
-
                   />
                 </IonItem>
 
@@ -125,7 +113,7 @@ const Client = () => {
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
-                    placeholder="email"
+                    placeholder="Email"
                     type="email"
                     className="add-executive-input"
                     name="email"
@@ -139,7 +127,7 @@ const Client = () => {
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
-                    placeholder="phoneNumber"
+                    placeholder="Phone Number"
                     type="tel"
                     className="add-executive-input"
                     name="phoneNumber"
@@ -155,7 +143,7 @@ const Client = () => {
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
-                    placeholder="address"
+                    placeholder="Address"
                     className="add-executive-input"
                     name="address"
                     value={formData.address}
@@ -168,7 +156,7 @@ const Client = () => {
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
-                    placeholder="city"
+                    placeholder="City"
                     className="add-executive-input"
                     name="city"
                     value={formData.city}
@@ -178,20 +166,21 @@ const Client = () => {
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked"><F></F>eedback</IonLabel>
+                  <IonLabel position="stacked">Feedback</IonLabel>
                 </div>
                 <IonItem
                   className="add-executive-item"
                   style={{ marginBottom: "50px" }}
                 >
                   <IonInput
-                    placeholder="feedback"
+                    placeholder="Feedback"
                     className="add-executive-input"
-                    name="Feedback"
+                    name="feedback" // Ensure the name attribute matches the key in formData
                     value={formData.feedback}
                     onIonChange={handleChange}
                   />
                 </IonItem>
+
 
                 <button
                   className="add-executive-button"
@@ -207,11 +196,11 @@ const Client = () => {
                   Add Client
                 </button>
                 <IonToast
-        isOpen={showToast}
-        onDidDismiss={() => setShowToast(false)}
-        message="Client added successfully"
-        duration={2000}
-      />
+                  isOpen={showToast}
+                  onDidDismiss={() => setShowToast(false)}
+                  message="Client added successfully"
+                  duration={2000}
+                />
               </IonCardContent>
             </IonCol>
           </IonRow>

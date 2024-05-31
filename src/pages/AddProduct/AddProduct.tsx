@@ -12,6 +12,7 @@ import {
   IonInput,
   IonCheckbox,
 } from "@ionic/react";
+import axios from 'axios';
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import "./AddProduct.css";
 import ToolBar from "../../components/ToolBar/ToolBar";
@@ -47,13 +48,8 @@ const AddProduct = () => {
   };
 
   const handleSaveProduct = () => {
-    if (!selectedCase || !productName || !categoryName) {
-      setError("Please fill in all required fields.");
-      return;
-    }
+    setError("");
   
-    setError(""); // Clear any previous error messages
-
     const selectedCaseItem = caseData.find(
       (item) => item.caseLabel === selectedCase
     );
@@ -66,35 +62,39 @@ const AddProduct = () => {
         exeID: executiveID,
         productName,
         productCategory: categoryName,
-        priority: priority ? "high" : "low", // Convert boolean to string
+        priority: priority ? "high" : "low",
       };
   
-      // Send a POST request to save the product data
-      fetch("http://localhost:8888/api/addproduct", {
-        method: "POST",
+      console.log("Sending data to server:", data);
+  
+      axios.post("http://localhost:8888/api/addproduct", data, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Product saved successfully:", data);
-          // Clear the form fields after successful save
-          setProductName("");
-          setCategoryName("");
-          setPriority(false);
-          setSuccessMessage("Product added successfully!");
-        })
-        .catch((error) => {
-          console.error("Error saving product:", error);
+      .then((response) => {
+        console.log("Product saved successfully:", response.data);
+        setProductName("");
+        setCategoryName("");
+        setPriority(false);
+        setSuccessMessage("Product added successfully!");
+      })
+      .catch((error) => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.error("Error response:", error.response.data);
+          setError("Error saving product: " + error.response.data.message);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error("Error request:", error.request);
           setError("Error saving product. Please try again.");
-        });
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.error("Error:", error.message);
+          setError("Error saving product. Please try again.");
+        }
+      });
     }
   };
 
