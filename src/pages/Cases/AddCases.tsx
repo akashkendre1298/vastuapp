@@ -8,7 +8,6 @@ import {
   IonInput,
   IonSelect,
   IonSelectOption,
-  IonTextarea,
   IonToast,
 } from "@ionic/react";
 import ToolBar from "../../components/ToolBar/ToolBar";
@@ -26,13 +25,14 @@ const AddCasePage = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch("https://vastu-web-app.onrender.com/api/clients");
+        const response = await fetch(
+          "https://backend.piyushshivkumarshhri.com/api/clients"
+        );
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         const data = await response.json(); // Parse the JSON response
         setClients(data.data); // Access the 'data' key to get the array of clients
-        // console.log('Clients:', data.data); // Log the fetched client data
       } catch (error) {
         console.error("Error fetching clients:", error);
         setClients([]); // Initialize clients state as empty array
@@ -41,13 +41,14 @@ const AddCasePage = () => {
 
     const fetchExecutives = async () => {
       try {
-        const response = await fetch("https://vastu-web-app.onrender.com/api/executives");
+        const response = await fetch(
+          "https://backend.piyushshivkumarshhri.com/api/executives"
+        );
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         const data = await response.json(); // Parse the JSON response
         setExecutives(data);
-        // console.log('Executives:', data); // Log the fetched executive data
       } catch (error) {
         console.error("Error fetching executives:", error);
         setExecutives([]); // Initialize executives state as empty array
@@ -60,10 +61,13 @@ const AddCasePage = () => {
 
   const handleAddCase = async () => {
     try {
-      // Get the selected client and executive names
-      const selectedClientName = clients.find(
+      // Get the selected client and executive details
+      const selectedClientObj = clients.find(
         (client) => client._id === selectedClient
-      )?.firstName;
+      );
+      const selectedClientName = selectedClientObj?.firstName;
+      const selectedClientPhoneNumber = selectedClientObj?.phoneNumber; // Assuming phone number field is phoneNumber
+
       const selectedExecutiveName = executives.find(
         (executive) => executive._id === selectedExecutive
       )?.firstName;
@@ -72,6 +76,7 @@ const AddCasePage = () => {
         caseLabel: caseName,
         client: selectedClientName,
         client_id: selectedClient, // Assuming client_id is the ID of the selected client
+        contactNumber: selectedClientPhoneNumber, // Include client's phone number
         executive: selectedExecutiveName,
         executiveID: selectedExecutive, // Assuming executiveID is the ID of the selected executive
         issues: issue,
@@ -79,13 +84,16 @@ const AddCasePage = () => {
 
       console.log("Data to be sent:", caseData);
 
-      const response = await fetch("https://vastu-web-app.onrender.com/api/cases", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(caseData),
-      });
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/cases",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(caseData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.status}`);
@@ -126,7 +134,10 @@ const AddCasePage = () => {
             <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
               Case Name
             </IonLabel>
-            <IonItem className="add-executive-item" style={{ marginTop: "10px" }}>
+            <IonItem
+              className="add-executive-item"
+              style={{ marginTop: "10px" }}
+            >
               <IonInput
                 value={caseName}
                 onIonChange={(e) => setCaseName(e.detail.value)}
@@ -145,12 +156,16 @@ const AddCasePage = () => {
                 interface="popover"
               >
                 {clients.map((client) => (
-                  <IonSelectOption key={client._id} value={client._id}>
-                    {client.firstName}
+                  <IonSelectOption
+                    key={client._id}
+                    value={client._id}
+                    style={{ fontSize: "24px" }}
+                  >
+                    {client.firstName} {client.lastName}
                   </IonSelectOption>
                 ))}
               </IonSelect>
-              <div class="select-arrow"></div>
+              <div className="select-arrow"></div>
             </IonItem>
           </div>
           <div>
@@ -168,34 +183,48 @@ const AddCasePage = () => {
                   </IonSelectOption>
                 ))}
               </IonSelect>
-              <div class="select-arrow"></div>
+              <div className="select-arrow"></div>
             </IonItem>
           </div>
           <div>
-            <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
+            {/* <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
               Add Image
-            </IonLabel>
-            <IonItem className="add-executive-item" style={{ marginTop: "10px" }}>
+            </IonLabel> */}
+            {/* <IonItem
+              className="add-executive-item"
+              style={{ marginTop: "10px" }}
+            >
               <input type="file" accept="image/*" />
-            </IonItem>
+            </IonItem> */}
           </div>
           <div>
             <IonLabel position="stacked" style={{ paddingLeft: "10px" }}>
               Issue
             </IonLabel>
-            <IonItem className="add-executive-item" style={{ marginTop: "10px" }}>
-              <IonTextarea
+            <IonItem
+              className="add-executive-item"
+              style={{ marginTop: "10px" }}
+            >
+              <textarea
                 value={issue}
-                onIonChange={(e) => {
-                  console.log("Issue change event:", e.detail.value);
-                  setIssue(e.detail.value);
+                onChange={(e) => {
+                  console.log("Issue change event:", e.target.value); // Use e.target.value for standard HTML textarea
+                  setIssue(e.target.value); // Use e.target.value for standard HTML textarea
                 }}
                 placeholder="Write Issue"
                 required
-              ></IonTextarea>
+                style={{
+                  width: "100%",
+                  height: "100px",
+                  border: "none",
+                  resize: "none",
+                }} // Optional styling
+              ></textarea>
             </IonItem>
           </div>
-          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <div
+            style={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
             <div>
               <button className="add-case-button" onClick={handleAddCase}>
                 Add Case
@@ -209,4 +238,3 @@ const AddCasePage = () => {
 };
 
 export default AddCasePage;
-

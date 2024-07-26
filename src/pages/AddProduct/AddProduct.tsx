@@ -16,7 +16,7 @@ import {
   IonImg,
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
-import "./AddProduct.css"
+import "./AddProduct.css";
 
 const AddProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
@@ -29,7 +29,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     // Fetch case data from API
-    fetch("https://vastu-web-app.onrender.com/api/cases")
+    fetch("https://backend.piyushshivkumarshhri.com/api/cases")
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {
@@ -72,7 +72,7 @@ const AddProduct = () => {
       };
 
       // Send a POST request to save the product data
-      fetch("https://vastu-web-app.onrender.com/api/addproduct/", {
+      fetch("https://backend.piyushshivkumarshhri.com/api/addproduct/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,19 +97,21 @@ const AddProduct = () => {
   return (
     <IonPage>
       <IonHeader>
-    <IonToolbar >
-      <IonButtons slot="start">
-        <IonBackButton defaultHref="#" className="back-button"></IonBackButton>
-      </IonButtons>
-      {/* <IonTitle>Case</IonTitle> */}
-      <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" />
-      </IonButtons>
-    </IonToolbar>
-  </IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton
+              defaultHref="#"
+              className="back-button"
+            ></IonBackButton>
+          </IonButtons>
+          {/* <IonTitle>Case</IonTitle> */}
+          <IonButtons slot="end">
+            <IonImg src={logo} alt="App Logo" />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonContent className="ion-padding">
-        <div style={{ paddingBottom: "10px" }}>
-        </div>
+        <div style={{ paddingBottom: "10px" }}></div>
         <IonItem className="add-executive-item">
           <IonLabel position="floating">Choose Case</IonLabel>
           <IonSelect
@@ -126,8 +128,14 @@ const AddProduct = () => {
           </IonSelect>
         </IonItem>
 
-        <div style={{ paddingBottom: "10px" ,marginTop:"10px",paddingLeft:"10px"}}>
-          <IonLabel position="stacked" >Product Name</IonLabel>
+        <div
+          style={{
+            paddingBottom: "10px",
+            marginTop: "10px",
+            paddingLeft: "10px",
+          }}
+        >
+          <IonLabel position="stacked">Product Name</IonLabel>
         </div>
 
         <IonItem className="add-executive-item">
@@ -140,8 +148,14 @@ const AddProduct = () => {
           />
         </IonItem>
 
-        <div style={{ paddingBottom: "10px" ,marginTop:"10px" ,paddingLeft:"10px"}}>
-          <IonLabel position="stacked" >Category Name</IonLabel>
+        <div
+          style={{
+            paddingBottom: "10px",
+            marginTop: "10px",
+            paddingLeft: "10px",
+          }}
+        >
+          <IonLabel position="stacked">Category Name</IonLabel>
         </div>
 
         <IonItem className="add-executive-item">
@@ -157,7 +171,6 @@ const AddProduct = () => {
         <IonItem>
           <IonLabel>Priority</IonLabel>
           <IonCheckbox
-
             slot="start"
             checked={priority}
             onIonChange={(e) => setPriority(e.detail.checked)}

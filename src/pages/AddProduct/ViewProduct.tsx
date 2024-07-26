@@ -26,7 +26,7 @@ const ViewProduct = () => {
 
   useEffect(() => {
     // Fetch case data from API
-    fetch("https://vastu-web-app.onrender.com/api/cases")
+    fetch("https://backend.piyushshivkumarshhri.com/api/cases")
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {
@@ -42,7 +42,9 @@ const ViewProduct = () => {
   }, []);
 
   const fetchProductData = (clientId, caseId) => {
-    fetch(`https://vastu-web-app.onrender.com/api/addproduct/${clientId}/${caseId}`)
+    fetch(
+      `https://backend.piyushshivkumarshhri.com/api/addproduct/${clientId}/${caseId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched product data:", data);
@@ -78,9 +80,12 @@ const ViewProduct = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       // If the user confirms, send delete request to the server
       const productId = selectedCaseData[index]._id; // Assuming _id is the unique identifier of the product
-      fetch(`https://vastu-web-app.onrender.com/api/addproduct/${productId}`, {
-        method: "DELETE",
-      })
+      fetch(
+        `https://backend.piyushshivkumarshhri.com/api/addproduct/${productId}`,
+        {
+          method: "DELETE",
+        }
+      )
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -96,7 +101,6 @@ const ViewProduct = () => {
         });
     }
   };
-  
 
   return (
     <IonPage>
@@ -142,13 +146,12 @@ const ViewProduct = () => {
                     <td>{product.purchased ? "true" : "false"}</td>
                     <td>{product.paymentStatus}</td>
                     <td>
-  {/* Dustbin icon */}
-  <IonIcon
-    name="trash-bin"
-    onClick={() => confirmDelete(index)}
-  />
-</td>
-
+                      {/* Dustbin icon */}
+                      <IonIcon
+                        name="trash-bin"
+                        onClick={() => confirmDelete(index)}
+                      />
+                    </td>
                   </tr>
                 ))}
             </tbody>

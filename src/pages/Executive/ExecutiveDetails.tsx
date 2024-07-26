@@ -21,7 +21,7 @@ const ExecutiveDetails = () => {
     const fetchExecutive = async () => {
       try {
         const response = await fetch(
-          `https://vastu-web-app.onrender.com/api/executives/${id}`
+          `https://backend.piyushshivkumarshhri.com/api/executives/${id}`
         );
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
@@ -40,8 +40,7 @@ const ExecutiveDetails = () => {
   return (
     <IonPage>
       <IonHeader>
-      <ToolBar/>
-
+        <ToolBar />
       </IonHeader>
 
       <IonContent>

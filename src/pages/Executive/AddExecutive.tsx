@@ -35,13 +35,16 @@ const AddExecutive = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://vastu-web-app.onrender.com/api/executives", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/executives",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         console.log("Executive added successfully");
@@ -89,7 +92,7 @@ const AddExecutive = () => {
   return (
     <IonPage>
       <ToolBar />
-      <IonContent className="add-executive" style={{  height: "100vh" }}>
+      <IonContent className="add-executive" style={{ height: "100vh" }}>
         <IonGrid>
           <IonRow>
             <IonCol>
@@ -143,19 +146,18 @@ const AddExecutive = () => {
                     <IonLabel position="stacked">Contact Number</IonLabel>
                   </div>
 
-                 <IonItem className="add-executive-item">
-  <IonInput
-    placeholder="Contact Number"
-    type="tel"
-    className="add-executive-input"
-    name="phoneNumber"
-    value={formData.phoneNumber}
-    onIonChange={handleChange}
-    pattern="[0-9]{10}"
-    title="Please enter a 10-digit phone number"
-  />
-</IonItem>
-
+                  <IonItem className="add-executive-item">
+                    <IonInput
+                      placeholder="Contact Number"
+                      type="tel"
+                      className="add-executive-input"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onIonChange={handleChange}
+                      pattern="[0-9]{10}"
+                      title="Please enter a 10-digit phone number"
+                    />
+                  </IonItem>
 
                   <div style={{ paddingBottom: "10px" }}>
                     <IonLabel position="stacked">Location</IonLabel>
@@ -188,7 +190,10 @@ const AddExecutive = () => {
                   <div style={{ paddingBottom: "10px" }}>
                     <IonLabel position="stacked">Password</IonLabel>
                   </div>
-                  <IonItem className="add-executive-item" style={{ marginBottom: "50px" }}>
+                  <IonItem
+                    className="add-executive-item"
+                    style={{ marginBottom: "50px" }}
+                  >
                     <IonInput
                       placeholder="password"
                       type="password"
@@ -204,9 +209,7 @@ const AddExecutive = () => {
                   </button>
                 </form>
                 {successMessage && (
-                  <div className="success-message">
-                    {successMessage}
-                  </div>
+                  <div className="success-message">{successMessage}</div>
                 )}
               </IonCardContent>
             </IonCol>

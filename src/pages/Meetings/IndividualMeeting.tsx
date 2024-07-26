@@ -12,7 +12,9 @@ const IndividualMeetingDetails = () => {
     // Fetch meeting details using the meeting ID
     const fetchMeetingDetails = async () => {
       try {
-        const response = await fetch(`https://vastu-web-app.onrender.com/api/meetings/${meetingId}`);
+        const response = await fetch(
+          `https://backend.piyushshivkumarshhri.com/api/meetings/${meetingId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch meeting details");
         }
@@ -27,30 +29,46 @@ const IndividualMeetingDetails = () => {
   }, [meetingId]);
 
   return (
-   
-   <>
-     <IonHeader>
+    <>
+      <IonHeader>
         <ToolBar />
       </IonHeader>
-   
-   <div style={{ padding: "20px", border: "1px solid #ccc", borderRadius: "5px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
-  <h2 style={{ marginBottom: "20px" }}>Meeting Details</h2>
-  {meetingDetails ? (
-    <div>
-      <p><strong>Meeting Title:</strong> {meetingDetails.meetingTitle}</p>
-      <p><strong>Executive Name:</strong> {meetingDetails.executiveName}</p>
-      <p><strong>Executive ID:</strong> {meetingDetails.executiveID}</p>
-      <p><strong>Meeting Mode:</strong> {meetingDetails.meetingMode}</p>
-      <p><strong>Date:</strong> {meetingDetails.date}</p>
-      <p><strong>Details:</strong> {meetingDetails.details}</p>
-    </div>
-  ) : (
-    <p>Loading meeting details...</p>
-  )}
-</div>
-   </>
-   
 
+      <div
+        style={{
+          padding: "20px",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2 style={{ marginBottom: "20px" }}>Meeting Details</h2>
+        {meetingDetails ? (
+          <div>
+            <p>
+              <strong>Meeting Title:</strong> {meetingDetails.meetingTitle}
+            </p>
+            <p>
+              <strong>Executive Name:</strong> {meetingDetails.executiveName}
+            </p>
+            <p>
+              <strong>Executive ID:</strong> {meetingDetails.executiveID}
+            </p>
+            <p>
+              <strong>Meeting Mode:</strong> {meetingDetails.meetingMode}
+            </p>
+            <p>
+              <strong>Date:</strong> {meetingDetails.date}
+            </p>
+            <p>
+              <strong>Details:</strong> {meetingDetails.details}
+            </p>
+          </div>
+        ) : (
+          <p>Loading meeting details...</p>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -12,21 +12,24 @@ const LoginPage = () => {
       setError("Both email and password are required.");
       return;
     }
-  
+
     const userData = {
       email,
       password,
     };
-  
+
     try {
-      const response = await fetch("https://vastu-web-app.onrender.com/api/admin/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-  
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/admin/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
       if (response.ok) {
         console.log("User logged in successfully");
         const responseData = await response.json();
@@ -45,7 +48,6 @@ const LoginPage = () => {
       setError("Network error. Please check your internet connection.");
     }
   };
-  
 
   return (
     <IonPage className="login-page">

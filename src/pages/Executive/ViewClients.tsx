@@ -1,4 +1,3 @@
-
 import { IonContent, IonPage } from "@ionic/react";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -13,7 +12,7 @@ function viewClients() {
       try {
         // Fetch data from the API
         const response = await fetch(
-          `https://vastu-web-app.onrender.com/api/cases/byExecutiveId/${executiveId}`
+          `https://backend.piyushshivkumarshhri.com/api/cases/byExecutiveId/${executiveId}`
         );
 
         // Check if the request was successful

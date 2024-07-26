@@ -21,7 +21,9 @@ const ViewClientPage = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch("https://vastu-web-app.onrender.com/api/clients");
+        const response = await fetch(
+          "https://backend.piyushshivkumarshhri.com/api/clients"
+        );
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
@@ -40,9 +42,10 @@ const ViewClientPage = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredClients = clients.filter((client) =>
-    client.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredClients = clients.filter(
+    (client) =>
+      client.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.lastName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -106,4 +109,3 @@ const ViewClientPage = () => {
 };
 
 export default ViewClientPage;
-

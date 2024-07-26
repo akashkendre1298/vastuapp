@@ -32,21 +32,23 @@ const Client = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-
   const handleSubmit = async () => {
     console.log("Form data before submission:", formData); // Log form data
     try {
-      const response = await fetch("https://vastu-web-app.onrender.com/api/clients", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/clients",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         console.log("Client added successfully");
-        // Display success message
+
         setShowToast(true);
 
         setFormData({
@@ -71,7 +73,7 @@ const Client = () => {
       <ToolBar />
 
       <IonContent style={{ paddingTop: "20px", height: "100vh" }}>
-        <IonGrid >
+        <IonGrid>
           <IonRow>
             <IonCol>
               <IonCardContent className="add-executive-card-content">
@@ -177,8 +179,6 @@ const Client = () => {
                     onIonChange={handleChange}
                   />
                 </IonItem>
-
-
 
                 <button
                   className="add-executive-button"

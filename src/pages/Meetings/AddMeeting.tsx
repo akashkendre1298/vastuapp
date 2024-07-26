@@ -39,7 +39,9 @@ const AddMeeting = () => {
 
   const fetchExecutives = async () => {
     try {
-      const response = await fetch("https://vastu-web-app.onrender.com/api/executives");
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/executives"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch executives");
       }
@@ -52,8 +54,8 @@ const AddMeeting = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
@@ -68,25 +70,30 @@ const AddMeeting = () => {
 
       console.log("Entered Data:", { ...formData, date: formattedDate });
 
-      const response = await fetch("https://vastu-web-app.onrender.com/api/meetings/post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          meetingTitle: formData.meetingTitle,
-          executiveName: formData.executiveName,
-          executiveID: formData.executiveID,
-          executivesEmail: formData.executivesEmail,
-          meetingMode: formData.meetingMode,
-          date: formattedDate,
-          details: formData.details,
-        }),
-      });
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/meetings/post",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            meetingTitle: formData.meetingTitle,
+            executiveName: formData.executiveName,
+            executiveID: formData.executiveID,
+            executivesEmail: formData.executivesEmail,
+            meetingMode: formData.meetingMode,
+            date: formattedDate,
+            details: formData.details,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to add meeting: ${response.status} ${errorText}`);
+        throw new Error(
+          `Failed to add meeting: ${response.status} ${errorText}`
+        );
       }
 
       // If the meeting was successfully added, reset the form fields
@@ -151,7 +158,10 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Meeting Aim</IonLabel>
                 </div>
-                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem
+                  className="add-executive-item"
+                  style={{ border: "1px solid black", marginBottom: "25px" }}
+                >
                   <IonInput
                     name="meetingTitle"
                     value={formData.meetingTitle}
@@ -160,7 +170,10 @@ const AddMeeting = () => {
                   ></IonInput>
                 </IonItem>
                 <div style={{ paddingBottom: "10px" }}></div>
-                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem
+                  className="add-executive-item"
+                  style={{ border: "1px solid black", marginBottom: "25px" }}
+                >
                   <IonLabel position="floating">Executive Name</IonLabel>
                   <IonSelect
                     name="executiveID"
@@ -169,7 +182,10 @@ const AddMeeting = () => {
                     interface="popover"
                   >
                     {executives.map((executive) => (
-                      <IonSelectOption key={executive._id} value={executive._id}>
+                      <IonSelectOption
+                        key={executive._id}
+                        value={executive._id}
+                      >
                         {`${executive.firstName} ${executive.lastName}`}
                       </IonSelectOption>
                     ))}
@@ -178,7 +194,10 @@ const AddMeeting = () => {
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Executive Email</IonLabel>
                 </div>
-                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem
+                  className="add-executive-item"
+                  style={{ border: "1px solid black", marginBottom: "25px" }}
+                >
                   <IonInput
                     type="email"
                     name="executivesEmail"
@@ -200,7 +219,10 @@ const AddMeeting = () => {
                   </div>
                 </div>
                 <div style={{ paddingBottom: "10px" }}></div>
-                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem
+                  className="add-executive-item"
+                  style={{ border: "1px solid black", marginBottom: "25px" }}
+                >
                   <IonLabel position="floating">Conduction Mode</IonLabel>
                   <IonSelect
                     name="meetingMode"
@@ -209,19 +231,29 @@ const AddMeeting = () => {
                     interface="popover"
                   >
                     <IonSelectOption value="Online">Online</IonSelectOption>
-                    <IonSelectOption value="In-person">In-person</IonSelectOption>
+                    <IonSelectOption value="In-person">
+                      In-person
+                    </IonSelectOption>
                   </IonSelect>
                 </IonItem>
                 <div style={{ paddingBottom: "10px" }}>
                   <IonLabel position="floating">Other details</IonLabel>
                 </div>
-                <IonItem className="add-executive-item" style={{ border: "1px solid black", marginBottom: "25px" }}>
+                <IonItem
+                  className="add-executive-item"
+                  style={{ border: "1px solid black", marginBottom: "25px" }}
+                >
                   <textarea
                     name="details"
                     value={formData.details}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', height: '100px', border: 'none', resize: 'none' }}
+                    style={{
+                      width: "100%",
+                      height: "100px",
+                      border: "none",
+                      resize: "none",
+                    }}
                   ></textarea>
                 </IonItem>
                 <button

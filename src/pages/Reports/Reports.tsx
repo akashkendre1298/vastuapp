@@ -8,8 +8,8 @@ import {
   IonCardHeader,
   IonCardContent,
 } from "@ionic/react";
-import { saveAs } from 'file-saver';
-import * as XLSX from 'xlsx';
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
 import "./Reports.css";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
@@ -19,14 +19,14 @@ const ReportPage = () => {
     let responseData;
 
     switch (type) {
-      case 'clients':
-        apiUrl = 'https://vastu-web-app.onrender.com/api/clients';
+      case "clients":
+        apiUrl = "https://vastu-web-app.onrender.com/api/clients";
         break;
-      case 'cases':
-        apiUrl = 'https://vastu-web-app.onrender.com/api/cases';
+      case "cases":
+        apiUrl = "https://vastu-web-app.onrender.com/api/cases";
         break;
-      case 'executives': // Added case for executives
-        apiUrl = 'https://vastu-web-app.onrender.com/api/executives';
+      case "executives": // Added case for executives
+        apiUrl = "https://vastu-web-app.onrender.com/api/executives";
         break;
       default:
         return;
@@ -38,15 +38,24 @@ const ReportPage = () => {
       let filteredData = [];
 
       switch (type) {
-        case 'clients':
-        case 'cases':
-          filteredData = responseData.data.map(item => {
-            const { _id, __v, exeId, client_id, executiveID, password, image, ...rest } = item;
+        case "clients":
+        case "cases":
+          filteredData = responseData.data.map((item) => {
+            const {
+              _id,
+              __v,
+              exeId,
+              client_id,
+              executiveID,
+              password,
+              image,
+              ...rest
+            } = item;
             return rest;
           });
           break;
-        case 'executives':
-          filteredData = responseData.map(item => {
+        case "executives":
+          filteredData = responseData.map((item) => {
             const { _id, __v, password, ...rest } = item;
             return rest;
           });
@@ -63,12 +72,12 @@ const ReportPage = () => {
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
+      console.error("There was a problem with the fetch operation:", error);
       return [];
     }
   };
@@ -89,17 +98,20 @@ const ReportPage = () => {
     const colWidths = headers.map((header, colIndex) => {
       const maxLength = Math.max(
         header.length,
-        ...data.map(row => (row[header] ? row[header].toString().length : 0))
+        ...data.map((row) => (row[header] ? row[header].toString().length : 0))
       );
       return { wch: maxLength + 6 }; // Adding some padding
     });
 
-    worksheet['!cols'] = colWidths;
+    worksheet["!cols"] = colWidths;
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, type);
 
-    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
     saveAs(blob, `${type}_report.xlsx`);
   };
@@ -116,21 +128,30 @@ const ReportPage = () => {
             <IonGrid className="report-button-group">
               <IonRow className="report-buttons">
                 <IonCol>
-                  <button className="report-button" onClick={() => generateReport("clients")}>
+                  <button
+                    className="report-button"
+                    onClick={() => generateReport("clients")}
+                  >
                     Clients Report
                   </button>
                 </IonCol>
               </IonRow>
               <IonRow className="report-buttons">
                 <IonCol>
-                  <button className="report-button" onClick={() => generateReport("cases")}>
+                  <button
+                    className="report-button"
+                    onClick={() => generateReport("cases")}
+                  >
                     Cases Report
                   </button>
                 </IonCol>
               </IonRow>
               <IonRow className="report-buttons">
                 <IonCol>
-                  <button className="report-button" onClick={() => generateReport("executives")}>
+                  <button
+                    className="report-button"
+                    onClick={() => generateReport("executives")}
+                  >
                     Executives Report
                   </button>
                 </IonCol>

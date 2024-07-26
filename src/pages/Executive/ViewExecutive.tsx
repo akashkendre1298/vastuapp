@@ -15,12 +15,14 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 
 const ViewExecutive = () => {
   const [executives, setExecutives] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchExecutives = async () => {
       try {
-        const response = await fetch("https://vastu-web-app.onrender.com/api/executives");
+        const response = await fetch(
+          "https://backend.piyushshivkumarshhri.com/api/executives"
+        );
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
@@ -34,11 +36,6 @@ const ViewExecutive = () => {
 
     fetchExecutives();
   }, []);
-
-  // Function to log executive data when clicked
-  const logExecutiveData = (executive) => {
-    console.log("Clicked Executive ID:", executive.id);
-  };
 
   // Function to handle search input
   const handleSearch = (event) => {
@@ -61,30 +58,33 @@ const ViewExecutive = () => {
           <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
         </div>
         <div style={{ marginBottom: "60px" }}>
-          {filteredExecutives.length > 0 && ( // Check if executives are available
+          {filteredExecutives.length > 0 && (
             <IonList inset={true}>
               {filteredExecutives.map((executive, index) => (
-                <IonItem
-                  key={index}
-                  button
-                  detail={true}
-                  style={{ border: "1px solid black", marginBottom: "25px", borderRadius: "10px" }}
-                  onClick={() => logExecutiveData(executive)}
+                <IonRouterLink
+                  routerLink={`/bottomtabs/individualclients/${executive._id}`}
                 >
-                  <IonRouterLink
-                    routerLink={`/bottomtabs/individualclients/${executive._id}`}
+                  <IonItem
+                    key={index}
+                    button
+                    detail={true}
+                    style={{
+                      border: "1px solid black",
+                      marginBottom: "25px",
+                      borderRadius: "10px",
+                    }}
                   >
                     <IonLabel style={{ padding: "10px" }}>
                       <h2>{executive.firstName}</h2>
                       <p>{executive.phoneNumber}</p>
                     </IonLabel>
-                  </IonRouterLink>
-                </IonItem>
+                  </IonItem>
+                </IonRouterLink>
               ))}
             </IonList>
           )}
         </div>
-        {/* Add Executive button */}
+
         <div
           style={{
             position: "fixed",

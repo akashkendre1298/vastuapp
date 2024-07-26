@@ -11,7 +11,7 @@ import {
   IonLabel,
   IonButton,
   IonLoading,
-  IonAlert
+  IonAlert,
 } from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import ToolBar from "../../components/ToolBar/ToolBar";
@@ -35,7 +35,9 @@ const IndividualClients = () => {
 
   useEffect(() => {
     // Fetch executive details using executiveId
-    fetch(`https://vastu-web-app.onrender.com/api/executives/${executiveId}`)
+    fetch(
+      `https://backend.piyushshivkumarshhri.com/api/executives/${executiveId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setExecutive(data);
@@ -49,7 +51,9 @@ const IndividualClients = () => {
       });
 
     // Fetch client details using executiveId
-    fetch(`https://vastu-web-app.onrender.com/api/cases/byExecutiveId/${executiveId}`)
+    fetch(
+      `https://backend.piyushshivkumarshhri.com/api/cases/byExecutiveId/${executiveId}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Client details:", data); // Log the client details
@@ -89,9 +93,12 @@ const IndividualClients = () => {
     if (confirmed) {
       setIsDeleting(true);
       // Make DELETE request to delete executive
-      fetch(`https://vastu-web-app.onrender.com/api/executives/${executiveId}`, {
-        method: "DELETE",
-      })
+      fetch(
+        `https://backend.piyushshivkumarshhri.com/api/executives/${executiveId}`,
+        {
+          method: "DELETE",
+        }
+      )
         .then(() => {
           setIsDeleting(false);
           console.log("Executive deleted successfully!");
@@ -116,13 +123,16 @@ const IndividualClients = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Make PATCH request to update executive details
-    fetch(`https://vastu-web-app.onrender.com/api/executives/${executiveId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedExecutive),
-    })
+    fetch(
+      `https://backend.piyushshivkumarshhri.com/api/executives/${executiveId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedExecutive),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         setExecutive(data);
@@ -138,14 +148,16 @@ const IndividualClients = () => {
   };
 
   return (
-    <IonPage >
+    <IonPage>
       <IonHeader>
         <ToolBar />
       </IonHeader>
       <IonContent className="main-content-individualclient">
-        <div style={{
-          padding:"0 20px"
-        }}>
+        <div
+          style={{
+            padding: "0 20px",
+          }}
+        >
           {executive && (
             <div>
               <div className="profile-details-div">
@@ -178,7 +190,9 @@ const IndividualClients = () => {
                         />
                       </label>
                     </div>
-                    <button type="submit" className="save-button">Save</button>
+                    <button type="submit" className="save-button">
+                      Save
+                    </button>
                   </form>
                 ) : (
                   <div>
@@ -220,34 +234,33 @@ const IndividualClients = () => {
                 </button>
               </div>
               <div>
-                <button className="delete-button" onClick={handleDelete}>Delete</button>
+                <button className="delete-button" onClick={handleDelete}>
+                  Delete
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <IonLoading
-          isOpen={isDeleting}
-          message={'Updating Executives...'}
-        />
+        <IonLoading isOpen={isDeleting} message={"Updating Executives..."} />
         <IonAlert
           isOpen={showConfirmation}
           onDidDismiss={() => setShowConfirmation(false)}
-          header={'Confirm Deletion'}
-          message={'Are you sure you want to delete this executive?'}
+          header={"Confirm Deletion"}
+          message={"Are you sure you want to delete this executive?"}
           buttons={[
             {
-              text: 'Cancel',
-              role: 'cancel',
+              text: "Cancel",
+              role: "cancel",
               handler: () => {
                 handleConfirmation(false);
-              }
+              },
             },
             {
-              text: 'Delete',
+              text: "Delete",
               handler: () => {
                 handleConfirmation(true);
-              }
-            }
+              },
+            },
           ]}
         />
       </IonContent>

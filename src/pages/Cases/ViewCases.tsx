@@ -5,6 +5,7 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonRouterLink,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
@@ -16,7 +17,7 @@ const ViewCasesPage = () => {
 
   useEffect(() => {
     // Fetch case labels from API
-    fetch("https://vastu-web-app.onrender.com/api/cases")
+    fetch("https://backend.piyushshivkumarshhri.com/api/cases")
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {
@@ -57,7 +58,10 @@ const ViewCasesPage = () => {
         {filteredCases.length > 0 ? (
           <IonList inset={true} style={{ marginBottom: "40px" }}>
             {filteredCases.map((caseItem) => (
-              <Link key={caseItem.id} to={`/bottomtabs/particularCase/${caseItem.id}`}>
+              <IonRouterLink
+                key={caseItem.id}
+                routerLink={`/bottomtabs/particularCase/${caseItem.id}`}
+              >
                 <IonItem
                   button
                   detail={true}
@@ -69,7 +73,7 @@ const ViewCasesPage = () => {
                 >
                   <IonLabel>{caseItem.label}</IonLabel>
                 </IonItem>
-              </Link>
+              </IonRouterLink>
             ))}
           </IonList>
         ) : (

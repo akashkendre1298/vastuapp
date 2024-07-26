@@ -39,13 +39,16 @@ const SignupPage = () => {
     };
 
     try {
-      const response = await fetch("https://vastu-web-app.onrender.com/api/admin/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/admin/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       if (response.ok) {
         console.log("User signed up successfully");
@@ -139,9 +142,14 @@ const SignupPage = () => {
           />
         </div>
         {error && <div className="error-message">{error}</div>}
-        {successMessage && <div className="success-message">{successMessage}</div>}
-        <div style={{display:"flex", justifyContent:"center"}}>
-          <button className="signUp-button signUp-button-signup " onClick={handleSubmit}>
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            className="signUp-button signUp-button-signup "
+            onClick={handleSubmit}
+          >
             Create Account
           </button>
         </div>

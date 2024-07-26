@@ -1,12 +1,36 @@
 .case-details-container {
-    padding: 20px;
-  }
-  
-  .case-details-label {
-    font-size: 18px;
-  }
-  
-  .case-details-label p {
-    margin: 5px 0;
-  }
-  
+  margin: 20px;
+  padding: 20px;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 10px; */
+  /* background-color: #f9f9f9; */
+}
+
+.case-details-label {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.case-details-label h2 {
+  margin-bottom: 10px;
+  color: #0056b3;
+}
+
+.case-details-label p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.recommended-products-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #00004D;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
