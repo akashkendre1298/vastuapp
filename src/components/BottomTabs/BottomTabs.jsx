@@ -30,17 +30,18 @@ import ViewProduct from "../../pages/AddProduct/ViewProduct";
 import ViewCasesPage from "../../pages/Cases/ViewCases";
 
 import ViewExecutive from "../../pages/Executive/ViewExecutive";
-import Revenue from "./../../pages/Revenue/Revenue";
-import Client from "./../../pages/Client/Client";
+import Revenue from "../../pages/Revenue/Revenue";
+import Client from "../../pages/Client/Client";
 import AddExecutive from "../../pages/Executive/AddExecutive";
-import IndividualMeeting from './../../pages/Meetings/IndividualMeeting';
-import AddProduct from './../../pages/AddProduct/AddProduct';
-import AddMeeting from './../../pages/Meetings/AddMeeting';
+import IndividualMeeting from "../../pages/Meetings/IndividualMeeting";
+import AddProduct from "../../pages/AddProduct/AddProduct";
+import AddMeeting from "../../pages/Meetings/AddMeeting";
 import IndividualClients from "../../pages/Executive/IndividualClients";
 import viewClients from "../../pages/Executive/ViewClients";
 import ParticularCase from "../../pages/Cases/ParticularCase";
 import ReportPage from "../../pages/Reports/Reports";
 import ViewClientPage from "../../pages/Client/ViewClient";
+// import ViewProduct from "./../../pages/AddProduct/ViewProduct";
 
 function BottomTabs() {
   return (
@@ -109,21 +110,30 @@ function BottomTabs() {
           <Route path="/bottomtabs/viewcases" component={ViewCasesPage} />
           <Route path="/bottomtabs/addcases" component={AddCasePage} />
           <Route path="/bottomtabs/viewexecutive" component={ViewExecutive} />
-          
+
           <Route path="/bottomtabs/revenue" component={Revenue} />
           <Route path="/bottomtabs/addclient" component={Client} />
           <Route path="/bottomtabs/addexecutive" component={AddExecutive} />
           <Route path="/bottomtabs/addmeetings" component={AddMeeting} />
           <Route path="/bottomtabs/addproduct" component={AddProduct} />
-          <Route path="/bottomtabs/individualclients/:executiveId" component={IndividualClients}/>
-          <Route path="/bottomtabs/client/:executiveId" component={viewClients} />
-          <Route path="/bottomtabs/particularCase/:caseId" component={ParticularCase}/>
-          <Route path="/bottomtabs/individualmeeting/:meetingId" component={IndividualMeeting} />
+          <Route
+            path="/bottomtabs/individualclients/:executiveId"
+            component={IndividualClients}
+          />
+          <Route
+            path="/bottomtabs/client/:executiveId"
+            component={viewClients}
+          />
+          <Route
+            path="/bottomtabs/particularCase/:caseId"
+            component={ParticularCase}
+          />
+          <Route
+            path="/bottomtabs/individualmeeting/:meetingId"
+            component={IndividualMeeting}
+          />
           <Route path="/bottomtabs/reports" component={ReportPage} />
           <Route path="/bottomtabs/viewclients" component={ViewClientPage} />
-      
-    
-
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom">

@@ -72,7 +72,10 @@ const Home = () => {
 
   return (
     <>
-      <IonPage style={{ backgroundColor: "#f0f0f0" }} className="home-page-main">
+      <IonPage
+        style={{ backgroundColor: "#f0f0f0" }}
+        className="home-page-main"
+      >
         <IonHeader>
           <IonToolbar
             style={{
@@ -84,7 +87,6 @@ const Home = () => {
             {" "}
             {/* Added flex styles */}
             {/* <IonProgressBar type="indeterminate"></IonProgressBar> */}
-          
             <IonIcon
               icon={personCircleOutline}
               style={{ fontSize: "35px" }}
@@ -95,7 +97,7 @@ const Home = () => {
               src={logo}
               alt="App Logo"
               slot="end"
-              style={{paddingRight:"10px"}}
+              style={{ paddingRight: "10px" }}
             />{" "}
             {/* Replace with your logo path */}
           </IonToolbar>
@@ -104,17 +106,15 @@ const Home = () => {
           <IonGrid
             style={{
               // paddingTop: "50px",
-              height:"84vh",
+              height: "84vh",
               background: "linear-gradient(135deg, #f5f7fa, #c3cfe2)",
             }}
           >
             <IonRow>
               <IonCol>
                 <IonCard
-                className="card-home"
-                
+                  className="card-home"
                   button
-                  
                   href="/bottomtabs/viewexecutive"
                 >
                   <IonCardHeader>
@@ -134,19 +134,15 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
-                      <p style={{textAlign:"center"}}>
-
-                      Executives
-                      </p>
+                      <p style={{ textAlign: "center" }}>Executives</p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
               <IonCol>
-                <IonCard 
-                className="card-home"
-                  
+                <IonCard
+                  className="card-home"
                   button
                   // onClick={() => handleButtonClick("cases")}
                   href="/bottomtabs/viewcases"
@@ -162,10 +158,7 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
-                      <p style={{textAlign:"center"}}> 
-
-                      Cases
-                      </p>
+                      <p style={{ textAlign: "center" }}>Cases</p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -190,10 +183,7 @@ const Home = () => {
                         }}
                       />
 
-                      <p style={{textAlign:"center"}}>
-
-                      Meetings
-                      </p>
+                      <p style={{ textAlign: "center" }}>Meetings</p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -217,10 +207,7 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />{" "}
-                     <p style={{textAlign:"center"}}>
-
-                      Revenue
-                     </p>
+                      <p style={{ textAlign: "center" }}>Revenue</p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -246,10 +233,7 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />
-                      <p style={{textAlign:"center"}}>
-
-                       Clients
-                      </p>
+                      <p style={{ textAlign: "center" }}>Clients</p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -257,7 +241,7 @@ const Home = () => {
               </IonCol>
               <IonCol>
                 <IonCard
-                   className="card-home"
+                  className="card-home"
                   button
                   href="/bottomtabs/reports"
                 >
@@ -272,10 +256,7 @@ const Home = () => {
                           paddingTop: "20%",
                         }}
                       />{" "}
-                     <p style={{textAlign:"center"}}>
-
-                      Reports
-                     </p>
+                      <p style={{ textAlign: "center" }}>Reports</p>
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent></IonCardContent>
@@ -284,7 +265,6 @@ const Home = () => {
             </IonRow>
           </IonGrid>
         </IonContent>
-        
       </IonPage>
     </>
   );
