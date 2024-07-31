@@ -16,6 +16,7 @@ import ToolBar from "../../components/ToolBar/ToolBar";
 
 const Client = () => {
   const [showToast, setShowToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -33,6 +34,29 @@ const Client = () => {
   };
 
   const handleSubmit = async () => {
+    // Validate input fields
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+      city,
+      refrance,
+    } = formData;
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phoneNumber ||
+      !address ||
+      !city ||
+      !refrance
+    ) {
+      setShowErrorToast(true);
+      return;
+    }
+
     console.log("Form data before submission:", formData); // Log form data
     try {
       const response = await fetch(
@@ -197,6 +221,12 @@ const Client = () => {
                   isOpen={showToast}
                   onDidDismiss={() => setShowToast(false)}
                   message="Client added successfully"
+                  duration={2000}
+                />
+                <IonToast
+                  isOpen={showErrorToast}
+                  onDidDismiss={() => setShowErrorToast(false)}
+                  message="All fields are required"
                   duration={2000}
                 />
               </IonCardContent>

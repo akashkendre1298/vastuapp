@@ -1,12 +1,32 @@
-import React, { useState } from "react";
-import "./Login.css"; // Import the CSS file
-import { IonPage, IonImg, IonLabel } from "@ionic/react";
+import React, { useState, useEffect } from "react";
+import "./Login.css";
+import {
+  IonPage,
+  IonImg,
+  IonButton,
+  IonLabel,
+  IonItem,
+  IonToast,
+} from "@ionic/react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
+import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      // Redirect to home page if user is logged in
+      history.push("/bottomtabs/home");
+    }
+  }, [history]);
+
   const handleSubmit = async () => {
     if (!email || !password) {
       setError("Both email and password are required.");
@@ -33,12 +53,12 @@ const LoginPage = () => {
       if (response.ok) {
         console.log("User logged in successfully");
         const responseData = await response.json();
-        // Save user data including email in local storage
+        // Save user data in local storage
         localStorage.setItem("userData", JSON.stringify(responseData));
         // Store the email separately in local storage
         localStorage.setItem("userEmail", email);
         // Redirect the user to the dashboard or home page
-        window.location.href = "/bottomtabs/home";
+        history.push("/bottomtabs/home");
       } else {
         console.error("Failed to log in");
         setError("Invalid email or password. Please try again.");
@@ -52,7 +72,6 @@ const LoginPage = () => {
   return (
     <IonPage className="login-page">
       <div className="login-container">
-        {/* Logo centered horizontally */}
         <div className="login-logo-div">
           <IonImg src={logo} className="login-logo" />
         </div>
@@ -60,9 +79,8 @@ const LoginPage = () => {
           <p>Login</p>
           <p className="para-after-login-title">Please sign in to continue</p>
         </div>
-        {/* Login form elements */}
         <div className="form-group">
-          <label>Email &nbsp; &nbsp; &nbsp; &nbsp;</label>
+          <label>Email</label>
           <input
             type="email"
             value={email}
@@ -81,10 +99,11 @@ const LoginPage = () => {
             className="login-input"
           />
         </div>
-        {/* Error message */}
         {error && <p className="error-message">{error}</p>}
-        {/* Forgot password and signup links */}
-        <a href="#" className="forgot-password">
+        <a
+          className="forgot-password"
+          onClick={() => history.push("/forgot-password")}
+        >
           Forgot Password?
         </a>
         <button onClick={handleSubmit} className="login-button">
@@ -94,6 +113,13 @@ const LoginPage = () => {
           Don't have an account? <a href="/signup">Sign Up</a>
         </p>
       </div>
+
+      <IonToast
+        isOpen={!!toastMessage}
+        message={toastMessage}
+        duration={2000}
+        onDidDismiss={() => setToastMessage("")}
+      />
     </IonPage>
   );
 };

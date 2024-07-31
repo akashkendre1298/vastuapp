@@ -20,6 +20,7 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 import "./theme/variables.css";
+import ForgotPasswordPage from "./pages/Login/ForgetPasswordPage";
 
 setupIonicReact();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
           <Route path="/bottomtabs" component={BottomTabs} />
+          <Route exact path="/forgot-password" component={ForgotPasswordPage} />
           <Redirect to="/login" />
         </Switch>
       </IonRouterOutlet>

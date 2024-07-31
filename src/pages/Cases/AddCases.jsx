@@ -21,6 +21,7 @@ const AddCasePage = () => {
   const [selectedExecutive, setSelectedExecutive] = useState("");
   const [issue, setIssue] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -60,12 +61,18 @@ const AddCasePage = () => {
   }, []);
 
   const handleAddCase = async () => {
+    // Validate input fields
+    if (!caseName || !selectedClient || !selectedExecutive || !issue) {
+      setShowErrorToast(true);
+      return;
+    }
+
     try {
       // Get the selected client and executive details
       const selectedClientObj = clients.find(
         (client) => client._id === selectedClient
       );
-      const selectedClientName = selectedClientObj?.firstName;
+      const selectedClientName = `${selectedClientObj?.firstName} ${selectedClientObj?.lastName}`;
       const selectedClientPhoneNumber = selectedClientObj?.phoneNumber; // Assuming phone number field is phoneNumber
 
       const selectedExecutiveName = executives.find(
@@ -127,6 +134,12 @@ const AddCasePage = () => {
           isOpen={showToast}
           onDidDismiss={() => setShowToast(false)}
           message="Case added successfully!"
+          duration={2000}
+        />
+        <IonToast
+          isOpen={showErrorToast}
+          onDidDismiss={() => setShowErrorToast(false)}
+          message="All fields are required!"
           duration={2000}
         />
         <div style={{ padding: "10px", marginTop: "25px", height: "80vh" }}>

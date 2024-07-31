@@ -8,6 +8,8 @@ import {
   IonInput,
   IonLabel,
   IonItem,
+  IonModal,
+  IonToast,
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
@@ -25,6 +27,13 @@ const ProfilePage = () => {
     email: "",
     phonenumber: "",
   });
+
+  // State for change password modal
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -109,6 +118,39 @@ const ProfilePage = () => {
     }
   };
 
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setToastMessage("New passwords do not match");
+      return;
+    }
+
+    try {
+      const userId = userData.userId;
+      const response = await fetch(
+        `https://backend.piyushshivkumarshhri.com/api/admin/change-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            currentPassword,
+            newPassword,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to change password");
+      }
+      setShowChangePasswordModal(false);
+      setToastMessage("Password changed successfully");
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setToastMessage("Failed to change password");
+    }
+  };
+
   return (
     <IonPage>
       <ToolBar />
@@ -180,6 +222,13 @@ const ProfilePage = () => {
               <IonButton expand="block" onClick={handleEdit}>
                 Edit
               </IonButton>
+              <IonButton
+                expand="block"
+                color="warning"
+                onClick={() => setShowChangePasswordModal(true)}
+              >
+                Change Password
+              </IonButton>
             </>
           )}
         </div>
@@ -194,6 +243,65 @@ const ProfilePage = () => {
             Logout
           </button>
         </div>
+
+        {/* Change Password Modal */}
+        <IonModal
+          isOpen={showChangePasswordModal}
+          onDidDismiss={() => setShowChangePasswordModal(false)}
+          cssClass="change-password-modal"
+        >
+          <div className="modal-content">
+            <h3 className="modal-title">Change Password</h3>
+            <IonItem>
+              <IonLabel position="stacked">Current Password</IonLabel>
+              <IonInput
+                type="password"
+                value={currentPassword}
+                onIonChange={(e) => setCurrentPassword(e.detail.value)}
+                placeholder="Enter current password"
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="stacked">New Password</IonLabel>
+              <IonInput
+                type="password"
+                value={newPassword}
+                onIonChange={(e) => setNewPassword(e.detail.value)}
+                placeholder="Enter new password"
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="stacked">Confirm New Password</IonLabel>
+              <IonInput
+                type="password"
+                value={confirmPassword}
+                onIonChange={(e) => setConfirmPassword(e.detail.value)}
+                placeholder="Confirm new password"
+              />
+            </IonItem>
+            <IonButton
+              expand="full"
+              onClick={handleChangePassword}
+              color="primary"
+            >
+              Change Password
+            </IonButton>
+            <IonButton
+              expand="full"
+              color="light"
+              onClick={() => setShowChangePasswordModal(false)}
+            >
+              Cancel
+            </IonButton>
+          </div>
+        </IonModal>
+
+        <IonToast
+          isOpen={!!toastMessage}
+          message={toastMessage}
+          duration={2000}
+          onDidDismiss={() => setToastMessage("")}
+        />
       </IonContent>
     </IonPage>
   );
