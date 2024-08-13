@@ -1,9 +1,10 @@
 .case-details-container {
   margin: 20px;
   padding: 20px;
+
   /* border: 1px solid #ccc; */
-  /* border-radius: 10px; */
-  /* background-color: #f9f9f9; */
+  border-radius: 14px;
+  background-color: #f9f9f9;
 }
 
 .case-details-label {
@@ -22,15 +23,21 @@
 }
 
 .recommended-products-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
   font-size: 18px;
-  color: #fff;
-  background-color: #00004D;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
   text-align: center;
+  background-color: #00004d;
+  height: 50px;
+  align-items: center;
+  color: white;
+  padding: 10px;
+  border-radius: 14px;
   text-decoration: none;
+  z-index: 1000;
 }

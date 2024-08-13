@@ -19,7 +19,7 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-import "./theme/variables.css";
+// import "./theme/variables.css";
 import ForgotPasswordPage from "./pages/Login/ForgetPasswordPage";
 
 setupIonicReact();

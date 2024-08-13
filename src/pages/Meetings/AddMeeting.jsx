@@ -146,17 +146,20 @@ const AddMeeting = () => {
   };
 
   return (
-    <IonPage style={{ backgroundColor: "rgba(192, 188, 188, 0.601)" }}>
+    <IonPage>
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent
+        className="ion-padding"
+        style={{ backgroundColor: "#e2dee9" }}
+      >
         <IonGrid>
           <IonRow>
             <IonCol>
               <div>
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="floating">Meeting Aim</IonLabel>
+                  {/* <IonLabel position="floating">Meeting Aim</IonLabel> */}
                 </div>
                 <IonItem
                   className="add-executive-item"
@@ -192,7 +195,7 @@ const AddMeeting = () => {
                   </IonSelect>
                 </IonItem>
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="floating">Executive Email</IonLabel>
+                  {/* <IonLabel position="floating">Executive Email</IonLabel> */}
                 </div>
                 <IonItem
                   className="add-executive-item"
@@ -201,18 +204,26 @@ const AddMeeting = () => {
                   <IonInput
                     type="email"
                     name="executivesEmail"
+                    placeholder="Executive Email"
                     value={formData.executivesEmail}
                     disabled
                   ></IonInput>
                 </IonItem>
                 <div className="date-div-meeting">
                   <div>
-                    <label htmlFor="Date">Date</label>
+                    <label htmlFor="Date" style={{ fontSize: "18px" }}>
+                      Date
+                    </label>
                   </div>
                   <div>
                     <input
                       type="date"
                       name="date"
+                      style={{
+                        color: "white",
+                        padding: "5px",
+                        borderRadius: "5px",
+                      }}
                       onChange={handleChange}
                       value={formData.date}
                     />
@@ -237,7 +248,7 @@ const AddMeeting = () => {
                   </IonSelect>
                 </IonItem>
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="floating">Other details</IonLabel>
+                  {/* <IonLabel position="floating">Other details</IonLabel> */}
                 </div>
                 <IonItem
                   className="add-executive-item"
@@ -245,6 +256,7 @@ const AddMeeting = () => {
                 >
                   <textarea
                     name="details"
+                    placeholder="Write Meeting Details...."
                     value={formData.details}
                     onChange={handleChange}
                     required
@@ -253,13 +265,19 @@ const AddMeeting = () => {
                       height: "100px",
                       border: "none",
                       resize: "none",
+                      backgroundColor: "#fff",
+                      // textAlign: "center", // Center the placeholder text horizontally
+                      verticalAlign: "middle", // Center the text vertically
+                      lineHeight: "80px", // Aligns the text vertically within the textarea
+                      outline: "none",
+                      scrollbar: "none",
                     }}
                   ></textarea>
                 </IonItem>
                 <button
                   expand="full"
                   onClick={handleAddMeeting}
-                  className="add-executive-btn"
+                  className="add-meeting-btn"
                 >
                   Add Meeting
                 </button>

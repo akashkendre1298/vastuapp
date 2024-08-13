@@ -10,8 +10,16 @@ import {
   IonItem,
   IonModal,
   IonToast,
+  IonImg,
+  IonGrid,
+  IonCol,
 } from "@ionic/react";
-import { personCircleOutline } from "ionicons/icons";
+import {
+  personCircleOutline,
+  pencilOutline,
+  lockClosedOutline,
+  logOutOutline,
+} from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
 import "./Profile.css";
@@ -28,12 +36,14 @@ const ProfilePage = () => {
     phonenumber: "",
   });
 
-  // State for change password modal
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [toastMessage, setToastMessage] = useState("");
+
+  // State for avatar image
+  const [avatarImage, setAvatarImage] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -65,6 +75,11 @@ const ProfilePage = () => {
           email: userDataResponse.email,
           phonenumber: userDataResponse.phonenumber,
         });
+
+        // Set the avatar image if available
+        if (userDataResponse.avatar) {
+          setAvatarImage(userDataResponse.avatar);
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
         setError("Failed to fetch user data");
@@ -151,97 +166,83 @@ const ProfilePage = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Create a URL for the file and set it as the avatar image
+      const imageUrl = URL.createObjectURL(file);
+      setAvatarImage(imageUrl);
+
+      // Optionally, you can upload the file to your server here
+      // using FormData and fetch.
+    }
+  };
+
   return (
     <IonPage>
       <ToolBar />
-      <IonContent className="ion-padding">
-        <IonRow className="avatar-row">
-          <div className="avatar-container">
-            <IonIcon icon={personCircleOutline} className="avatar-icon" />
-          </div>
-        </IonRow>
+      <IonContent
+        className="ion-padding"
+        style={{ backgroundColor: "#e2dee9" }}
+      >
+        <IonGrid>
+          <IonRow className="profile-header">
+            <IonCol size="auto">
+              <div className="avatar-container">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="avatar-upload"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+                <label htmlFor="avatar-upload">
+                  {avatarImage ? (
+                    <IonImg src={avatarImage} alt="Profile Avatar" />
+                  ) : (
+                    <IonIcon icon={personCircleOutline} className="icon" />
+                  )}
+                </label>
+              </div>
+            </IonCol>
+            <IonCol>
+              <h2 className="user-greeting">
+                Hello,{" "}
+                {userData
+                  ? `${userData.firstname} ${userData.lastname}`
+                  : "User"}
+              </h2>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
 
-        <div style={{ textAlign: "center", marginTop: "30px" }}>
-          {editMode ? (
-            <div>
-              <IonItem>
-                <IonLabel position="stacked">First Name</IonLabel>
-                <IonInput
-                  name="firstname"
-                  value={formState.firstname}
-                  onIonChange={handleInputChange}
-                />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="stacked">Last Name</IonLabel>
-                <IonInput
-                  name="lastname"
-                  value={formState.lastname}
-                  onIonChange={handleInputChange}
-                />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="stacked">Email</IonLabel>
-                <IonInput
-                  name="email"
-                  value={formState.email}
-                  onIonChange={handleInputChange}
-                />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="stacked">Phone Number</IonLabel>
-                <IonInput
-                  name="phonenumber"
-                  value={formState.phonenumber}
-                  onIonChange={handleInputChange}
-                />
-              </IonItem>
-              <IonButton expand="block" onClick={handleSave}>
-                Save
-              </IonButton>
-            </div>
-          ) : (
-            <>
-              {userData && (
-                <>
-                  <h2
-                    style={{
-                      fontSize: "30px",
-                      display: "block",
-                      textAlign: "center",
-                    }}
-                    className="text"
-                  >
-                    {userData.firstname} {userData.lastname}
-                  </h2>
-                  <p className="text">{userData.email}</p>
-                  <p className="text">{userData.phonenumber}</p>
-                </>
-              )}
-              {error && <p className="error-message">{error}</p>}
-              <IonButton expand="block" onClick={handleEdit}>
-                Edit
-              </IonButton>
-              <IonButton
-                expand="block"
-                color="warning"
-                onClick={() => setShowChangePasswordModal(true)}
-              >
-                Change Password
-              </IonButton>
-            </>
-          )}
-        </div>
-
-        <div className="logout-btn-div">
-          <button
-            className="logout-btn"
-            expand="block"
+        <div className="button-column">
+          <IonButton
+            expand="full"
+            onClick={handleEdit}
+            className="button-with-icon"
+          >
+            <IonIcon slot="start" icon={pencilOutline} />
+            Edit Profile
+          </IonButton>
+          <IonButton
+            expand="full"
+            color="warning"
+            onClick={() => setShowChangePasswordModal(true)}
+            className="button-with-icon"
+          >
+            <IonIcon slot="start" icon={lockClosedOutline} />
+            Change Password
+          </IonButton>
+          <IonButton
+            expand="full"
             color="danger"
             onClick={handleLogout}
+            className="button-with-icon"
           >
+            <IonIcon slot="start" icon={logOutOutline} />
             Logout
-          </button>
+          </IonButton>
         </div>
 
         {/* Change Password Modal */}
@@ -258,7 +259,6 @@ const ProfilePage = () => {
                 type="password"
                 value={currentPassword}
                 onIonChange={(e) => setCurrentPassword(e.detail.value)}
-                placeholder="Enter current password"
               />
             </IonItem>
             <IonItem>
@@ -267,7 +267,6 @@ const ProfilePage = () => {
                 type="password"
                 value={newPassword}
                 onIonChange={(e) => setNewPassword(e.detail.value)}
-                placeholder="Enter new password"
               />
             </IonItem>
             <IonItem>
@@ -276,31 +275,25 @@ const ProfilePage = () => {
                 type="password"
                 value={confirmPassword}
                 onIonChange={(e) => setConfirmPassword(e.detail.value)}
-                placeholder="Confirm new password"
               />
             </IonItem>
             <IonButton
-              expand="full"
+              expand="block"
               onClick={handleChangePassword}
-              color="primary"
+              style={{ marginTop: "20px" }}
             >
               Change Password
-            </IonButton>
-            <IonButton
-              expand="full"
-              color="light"
-              onClick={() => setShowChangePasswordModal(false)}
-            >
-              Cancel
             </IonButton>
           </div>
         </IonModal>
 
+        {/* Toast for feedback */}
         <IonToast
           isOpen={!!toastMessage}
+          onDidDismiss={() => setToastMessage("")}
           message={toastMessage}
           duration={2000}
-          onDidDismiss={() => setToastMessage("")}
+          color={toastMessage.includes("success") ? "success" : "danger"}
         />
       </IonContent>
     </IonPage>

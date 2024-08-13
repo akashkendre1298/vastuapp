@@ -3,16 +3,10 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonSelect,
-  IonSelectOption,
   IonLabel,
   IonItem,
-  IonButton,
-  IonButtons,
-  IonBackButton,
-  IonImg,
+  IonSelect,
+  IonSelectOption,
   IonIcon,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
@@ -22,7 +16,7 @@ import "./ViewProduct.css";
 const ViewProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
   const [caseData, setCaseData] = useState([]);
-  const [selectedCaseData, setSelectedCaseData] = useState(null);
+  const [selectedCaseData, setSelectedCaseData] = useState(null); // Initial state is null
 
   useEffect(() => {
     // Fetch case data from API
@@ -47,8 +41,6 @@ const ViewProduct = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched product data:", data);
-        // Check if data is an array
         if (Array.isArray(data)) {
           setSelectedCaseData(data);
         } else {
@@ -69,17 +61,15 @@ const ViewProduct = () => {
     );
     if (selectedCaseItem) {
       const { client_id, _id } = selectedCaseItem;
-      console.log("Selected Case Label:", selectedCaseLabel);
-      console.log("Selected Client ID:", client_id);
-      console.log("Selected ID:", _id);
       fetchProductData(client_id, _id);
+    } else {
+      setSelectedCaseData([]); // Set an empty array if no case is found
     }
   };
 
   const confirmDelete = (index) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      // If the user confirms, send delete request to the server
-      const productId = selectedCaseData[index]._id; // Assuming _id is the unique identifier of the product
+      const productId = selectedCaseData[index]._id;
       fetch(
         `https://backend.piyushshivkumarshhri.com/api/addproduct/${productId}`,
         {
@@ -90,14 +80,12 @@ const ViewProduct = () => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-          // If the request is successful, update the UI by removing the product row
           const updatedProductData = [...selectedCaseData];
           updatedProductData.splice(index, 1);
           setSelectedCaseData(updatedProductData);
         })
         .catch((error) => {
           console.error("Error deleting product:", error);
-          // Handle error (e.g., display error message to the user)
         });
     }
   };
@@ -107,11 +95,21 @@ const ViewProduct = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent>
-        <IonItem>
-          <IonLabel position="floating">Choose Case</IonLabel>
+      <IonContent style={{ backgroundColor: "#e2dee9" }}>
+        <IonItem
+          style={{
+            margin: "14px",
+
+            backgroundColor: "white",
+            borderRadius: "14px",
+          }}
+        >
+          <IonLabel position="floating" style={{ fontSize: "18px" }}>
+            Choose Case
+          </IonLabel>
           <IonSelect
             interface="popover"
+            style={{ fontSize: "18px" }}
             placeholder="Choose Case"
             value={selectedCase}
             onIonChange={(e) => handleCaseSelection(e.detail.value)}
@@ -137,7 +135,7 @@ const ViewProduct = () => {
               </tr>
             </thead>
             <tbody>
-              {selectedCaseData &&
+              {selectedCaseData && selectedCaseData.length > 0 ? (
                 selectedCaseData.map((product, index) => (
                   <tr key={index}>
                     <td>{product.productName}</td>
@@ -146,14 +144,20 @@ const ViewProduct = () => {
                     <td>{product.purchased ? "true" : "false"}</td>
                     <td>{product.paymentStatus}</td>
                     <td>
-                      {/* Dustbin icon */}
                       <IonIcon
                         name="trash-bin"
                         onClick={() => confirmDelete(index)}
                       />
                     </td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: "center" }}>
+                    No products available for the selected case
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

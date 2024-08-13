@@ -1,113 +1,72 @@
-.profile-page {
-  --background: #f0f2f5;
+/* Profile.css */
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
+
+/* Profile.css */
+
+/* Profile.css */
+
+/* Container for the profile image */
 .avatar-container {
   display: flex;
+  /* align-items: center; */
   justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 150px;
+  width: 120px; /* Adjust size as needed */
+  height: 120px; /* Adjust size as needed */
   border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  /* Adjust the shadow color based on dark mode */
-  /* box-shadow: var(--ion-color-medium-shade); */
-  border-left: 2px solid black;
-  border-right: 2px solid black;
-  box-shadow: 1px 6px 14px 2px gray;
+  overflow: hidden; /* Ensure the image is clipped to the circle */
+  background-color: #f0f0f0; /* Optional: Background color for placeholder */
+  border: 2px solid #ddd; /* Optional: Border for the profile picture */
+  position: relative; /* Ensures positioning for absolute child elements */
 }
 
-.avatar-icon {
-  font-size: 100px;
-  color: #ffffff; /* Adjust the color based on dark mode */
-}
-
-.avatar-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-}
-
-.avatar {
-  width: 120px;
-  height: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.avatar img {
+/* Style for the image inside the circle */
+.avatar-container img {
+  position: absolute; /* Allows precise control over positioning */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the image */
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain; /* Ensures the image covers the container and maintains its aspect ratio */
+  object-position: center; /* Centers the image within the container */
 }
 
-.avatar-icon {
-  position: absolute;
-  font-size: 4rem;
-  color: #4b7bec;
+/* Style for the placeholder icon */
+.avatar-container .icon {
+  font-size: 60px; /* Adjust size as needed */
+  color: #888; /* Adjust color as needed */
 }
 
-.info-row {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.name {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.contact,
-.email {
-  font-size: 1rem;
-  color: #777;
-  margin: 0.5rem 0;
-}
-.logout-btn-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 60px;
-}
-.logout-btn {
-  width: 100px;
-  height: 40px;
-  background-color: #f94848;
-  color: white;
-  border-radius: 50px;
-  font-size: 16px;
-}
-.text {
-  font-size: 20px;
-  letter-spacing: 2px;
-  text-shadow: 5px 5px 20px white;
-}
-.change-password-modal .modal-content {
-  padding: 20px;
-  border-radius: 10px;
-  background: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.change-password-modal .modal-title {
+.user-greeting {
   font-size: 24px;
-  font-weight: bold;
-  text-align: center;
+  margin-left: 20px;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.change-password-modal {
+  --width: 80%;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.modal-title {
   margin-bottom: 20px;
-}
-
-.change-password-modal .modal-content ion-item {
-  margin-bottom: 15px;
-}
-
-.change-password-modal .modal-content ion-button {
-  margin-top: 10px;
-  --border-radius: 8px;
 }

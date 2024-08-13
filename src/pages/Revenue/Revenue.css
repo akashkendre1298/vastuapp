@@ -1,15 +1,22 @@
 .total-revenue-div {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .div-revenue-first-section {
-    padding: 10px;
-  }
-  
-  .executive-revenue-div {
-    margin-top: 10px;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px 10px 14px;
+  background-color: #fff;
+  /* border: 1px solid black; */
+  border-radius: 14px;
+}
+
+.div-revenue-first-section {
+  padding: 10px 14px 18px 14px;
+
+  margin-top: 30px;
+  border-radius: 14px;
+
+  background-color: #fff;
+}
+
+.executive-revenue-div {
+  margin-top: 10px;
+  border-bottom: 1px solid rgba(39, 39, 39, 0.486);
+}

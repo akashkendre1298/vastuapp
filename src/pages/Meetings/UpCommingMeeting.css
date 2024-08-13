@@ -1,13 +1,21 @@
 .add-meeting-btn {
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  height: 50px;
-  font-size: 16px;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
   background-color: #00004d;
+  height: 50px;
+  align-items: center;
+  color: white;
+  padding: 10px;
+  border-radius: 14px;
+  text-decoration: none;
+  z-index: 1000;
 }
 .date-input {
   padding: 10px;
@@ -17,20 +25,49 @@
   width: 100%;
   box-sizing: border-box;
 }
-.meeting-details {
-  border-bottom: 1px solid black;
-  /* border-radius: 10px; */
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
-  /* max-height: 0; */
-  overflow: hidden;
-  transition: max-height 0.5s ease, padding 0.3s ease;
-}
 
 .meeting-details.expanded {
   /* max-height: 800px; */
   padding: 15px;
   color: black;
 }
+.meeting-details {
+  background-color: #ffffff;
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 4px; /* Slightly rounded corners */
+  margin-top: 10px; /* Space above the details */
+  padding: 10px; /* Padding inside the details */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
 
+.meeting-details p {
+  margin: 0; /* Remove default margins */
+  padding: 8px 0; /* Vertical padding for spacing */
+  border-bottom: 1px solid #eee; /* Light border between items */
+}
+
+.meeting-details p:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+.meeting-summary {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 4px; /* Slightly rounded corners */
+  margin-top: 10px; /* Space above the summary */
+  padding: 10px; /* Padding inside the summary */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.meeting-summary h3,
+.meeting-summary p {
+  margin: 0; /* Remove default margins */
+  padding: 8px 0; /* Vertical padding for spacing */
+}
+
+.meeting-summary p {
+  border-bottom: 1px solid #eee; /* Light border between items */
+}
+
+.meeting-summary p:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}

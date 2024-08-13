@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonImg,
-} from "@ionic/react";
+import { IonContent, IonHeader, IonPage } from "@ionic/react";
 import "./Revenue.css";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
 import { useHistory } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
 
@@ -29,8 +19,13 @@ const Revenue = () => {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        // Assuming 'grandTotalAmount' and 'executiveDetails' are properties in the response data
-        if (data && data.grandTotalAmount) {
+        console.log("API Response:", data);
+
+        if (
+          data &&
+          typeof data.grandTotalAmount !== "undefined" &&
+          data.executiveDetails
+        ) {
           setGrandTotalAmount(data.grandTotalAmount);
           setExecutives(data.executiveDetails);
         } else {
@@ -53,7 +48,10 @@ const Revenue = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent
+        className="ion-padding"
+        style={{ backgroundColor: "#e2dee9" }}
+      >
         <div className="total-revenue-div">
           <div>
             <p style={{ fontSize: "18px", fontWeight: "bold" }}>
@@ -81,8 +79,7 @@ const Revenue = () => {
                 }}
               >
                 {executive.executive}
-
-                <p>₹ {executive.statusCounts.amount}</p>
+                <span>₹ {executive.statusCounts.amount}</span>
               </p>
             </div>
           ))}

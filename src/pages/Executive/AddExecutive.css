@@ -1,36 +1,57 @@
 .add-executive {
-    /* background-color: aqua; */
+  background-color: #e2dee9;
+  margin-left: 14px;
+  margin-right: 14px;
 }
 
 .back-button {
-    --color: white;
+  --color: white;
 }
-
-.add-executive-button {
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    height: 50px;
-    width: 150px;
-    background-color: #00004D;
-    margin-top: 20px;
-    position: fixed;
-    bottom: 5px;
-    width: 86%;
-    z-index: 1;
+.add-executive-card-content .add-executive-button {
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 50px;
+  width: 150px;
+  background-color: #00004d;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: fixed;
+  bottom: 5px;
+  width: 86%;
+  z-index: 1;
 }
 
 .add-executive-item {
-    border: 1px solid black;
-    margin-bottom: 25px;
-    border-radius: 10px;
+  border: 1px solid black;
+  margin-bottom: 25px;
+  border-radius: 14px;
+  background-color: #fff;
+}
+.add-executive-input {
+  --padding-start: 0; /* Reset default padding */
+  padding-left: 0; /* No left padding */
+  padding-right: 0; /* No right padding */
+  padding-bottom: 4px; /* Adjust to move placeholder text to the bottom */
+  text-align: left; /* Ensure text is left-aligned */
+}
+.add-executive-input::placeholder {
+  vertical-align: bottom; /* Align placeholder text to bottom */
+  text-align: left; /* Ensure placeholder is left-aligned */
+  color: rgb(246, 13, 13); /* Adjust the placeholder color if needed */
+  position: absolute; /* Position the placeholder absolutely within the input */
+  bottom: 0; /* Position at the bottom of the input */
 }
 
 .success-message {
-    color: green;
-    margin-top: 20px;
-    text-align: center;
-    font-size: 16px;
+  color: green;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+.sc-ion-input-md-h {
+  --padding-top: 10px;
 }

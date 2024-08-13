@@ -6,8 +6,6 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonAccordion,
-  IonAccordionGroup,
 } from "@ionic/react";
 import ToolBar from "../../components/ToolBar/ToolBar";
 import "./ViewClient.css";
@@ -17,6 +15,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 const ViewClientPage = () => {
   const [clients, setClients] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [expandedClientId, setExpandedClientId] = useState(null);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -42,6 +41,10 @@ const ViewClientPage = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleClientClick = (clientId) => {
+    setExpandedClientId((prevId) => (prevId === clientId ? null : clientId));
+  };
+
   const filteredClients = clients.filter(
     (client) =>
       client.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -53,52 +56,58 @@ const ViewClientPage = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent>
+      <IonContent style={{ backgroundColor: "#e2dee9" }}>
         <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
-        <IonList style={{ marginBottom: "50px", padding: "10px 10px 0 10px" }}>
-          <IonAccordionGroup>
-            {filteredClients.map((client) => (
-              <IonAccordion key={client._id} value={client._id}>
-                <IonItem
-                  slot="header"
-                  className="ion-item-header"
-                  style={{
-                    border: "1px solid black",
-                    marginBottom: "25px",
-                    borderRadius: "10px",
-                    margin: "0 10px 20px 10px",
-                  }}
-                >
-                  <IonLabel>
-                    {client.firstName} {client.lastName}
-                  </IonLabel>
-                  <br />
-                  <IonLabel>{client.phoneNumber}</IonLabel>
-                </IonItem>
-                <div className="ion-padding" slot="content">
-                  <p>Email: {client.email}</p>
-                  <p>Address: {client.address}</p>
-                  <p>City: {client.city}</p>
-                  <p>
-                    Joining Date:{" "}
-                    {new Date(client.joiningDate).toLocaleDateString()}
-                  </p>
-                </div>
-              </IonAccordion>
-            ))}
-          </IonAccordionGroup>
+        <IonList style={{ marginBottom: "70px", padding: "10px 10px 0 10px" }}>
+          {filteredClients.map((client) => (
+            <IonItem
+              key={client._id}
+              onClick={() => handleClientClick(client._id)}
+              style={{
+                padding: "0",
+                margin: "14px",
+                cursor: "pointer",
+                marginBottom: "10px",
+                borderRadius: "14px",
+                backgroundColor:
+                  expandedClientId === client._id ? "#f5f5f5" : "#ffffff",
+              }}
+            >
+              <IonLabel
+                style={{
+                  display: "block",
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "14px",
+                }}
+              >
+                <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>
+                  {client.firstName} {client.lastName}
+                </h2>
+                <p>{client.phoneNumber}</p>
+                {expandedClientId === client._id && (
+                  <div
+                    style={{
+                      paddingTop: "20px",
+                    }}
+                  >
+                    <p style={{ fontSize: "16px" }}>Email: {client.email}</p>
+                    <p style={{ fontSize: "16px" }}>
+                      Address: {client.address}
+                    </p>
+                    <p style={{ fontSize: "16px" }}>City: {client.city}</p>
+                    <p style={{ fontSize: "16px" }}>
+                      Joining Date:{" "}
+                      {new Date(client.joiningDate).toLocaleDateString()}
+                    </p>
+                  </div>
+                )}
+              </IonLabel>
+            </IonItem>
+          ))}
         </IonList>
 
-        <div
-          style={{
-            position: "fixed",
-            bottom: 5,
-            width: "90%",
-            zIndex: 1,
-            marginTop: "20px",
-            marginLeft: "18px",
-          }}
-        >
+        <div>
           <Link to="/bottomtabs/addclient">
             <button className="add-client-btn">Add Client</button>
           </Link>

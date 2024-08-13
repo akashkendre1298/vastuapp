@@ -96,13 +96,19 @@ const Client = () => {
     <IonPage>
       <ToolBar />
 
-      <IonContent style={{ paddingTop: "20px", height: "100vh" }}>
+      <IonContent
+        style={{
+          paddingTop: "20px",
+          height: "100vh",
+          backgroundColor: "#e2dee9",
+        }}
+      >
         <IonGrid>
           <IonRow>
             <IonCol>
               <IonCardContent className="add-executive-card-content">
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">First Name</IonLabel>
+                  {/* <IonLabel position="stacked">First Name</IonLabel> */}
                 </div>
                 <IonItem
                   className="add-executive-item"
@@ -122,7 +128,7 @@ const Client = () => {
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">Last Name</IonLabel>
+                  {/* <IonLabel position="stacked">Last Name</IonLabel> */}
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
@@ -136,7 +142,7 @@ const Client = () => {
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">Email Address</IonLabel>
+                  {/* <IonLabel position="stacked">Email Address</IonLabel> */}
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
@@ -150,7 +156,7 @@ const Client = () => {
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">Contact Number</IonLabel>
+                  {/* <IonLabel position="stacked">Contact Number</IonLabel> */}
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
@@ -166,7 +172,7 @@ const Client = () => {
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">Location</IonLabel>
+                  {/* <IonLabel position="stacked">Location</IonLabel> */}
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput
@@ -179,7 +185,7 @@ const Client = () => {
                 </IonItem>
 
                 <div style={{ paddingBottom: "10px" }}>
-                  <IonLabel position="stacked">City</IonLabel>
+                  {/* <IonLabel position="stacked">City</IonLabel> */}
                 </div>
                 <IonItem className="add-executive-item">
                   <IonInput

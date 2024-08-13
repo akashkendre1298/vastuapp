@@ -110,7 +110,10 @@ const AddProduct = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent
+        className="ion-padding"
+        style={{ backgroundColor: "#e2dee9" }}
+      >
         <div style={{ paddingBottom: "10px" }}></div>
         <IonItem className="add-executive-item">
           <IonLabel position="floating">Choose Case</IonLabel>
@@ -135,7 +138,7 @@ const AddProduct = () => {
             paddingLeft: "10px",
           }}
         >
-          <IonLabel position="stacked">Product Name</IonLabel>
+          {/* <IonLabel position="stacked">Product Name</IonLabel> */}
         </div>
 
         <IonItem className="add-executive-item">
@@ -155,7 +158,7 @@ const AddProduct = () => {
             paddingLeft: "10px",
           }}
         >
-          <IonLabel position="stacked">Category Name</IonLabel>
+          {/* <IonLabel position="stacked">Category Name</IonLabel> */}
         </div>
 
         <IonItem className="add-executive-item">
@@ -168,7 +171,7 @@ const AddProduct = () => {
           />
         </IonItem>
 
-        <IonItem>
+        <IonItem className="add-executive-item">
           <IonLabel>Priority</IonLabel>
           <IonCheckbox
             slot="start"
@@ -187,7 +190,7 @@ const AddProduct = () => {
         )}
 
         <div className="btn-div">
-          <button className="signUp-button" onClick={handleSaveProduct}>
+          <button className="save-product-button" onClick={handleSaveProduct}>
             Save Product
           </button>
         </div>

@@ -105,7 +105,6 @@ const Home = () => {
         <IonContent style={{ paddingTop: "100px", backgroundColor: "#f0f0f0" }}>
           <IonGrid
             style={{
-              // paddingTop: "50px",
               height: "84vh",
               background: "linear-gradient(135deg, #f5f7fa, #c3cfe2)",
             }}
@@ -117,12 +116,19 @@ const Home = () => {
                   button
                   href="/bottomtabs/viewexecutive"
                 >
-                  <IonCardHeader>
+                  <IonCardHeader
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <IonCardTitle
                       style={{
-                        display: "block",
+                        display: "flex",
+                        flexDirection: "column",
                         justifyContent: "center",
-                        alignItem: "center",
+                        alignItems: "center",
                       }}
                     >
                       <IonIcon
@@ -130,136 +136,183 @@ const Home = () => {
                         style={{
                           fontSize: "35px",
                           marginBottom: "10px",
-                          paddingLeft: "30%",
-                          paddingTop: "20%",
                         }}
                       />
                       <p style={{ textAlign: "center" }}>Executives</p>
                     </IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
+
               <IonCol>
                 <IonCard
                   className="card-home"
                   button
-                  // onClick={() => handleButtonClick("cases")}
                   href="/bottomtabs/viewcases"
                 >
-                  <IonCardHeader>
-                    <IonCardTitle>
+                  <IonCardHeader
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IonCardTitle
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <IonIcon
                         icon={folderOpen}
                         style={{
                           fontSize: "35px",
                           marginBottom: "10px",
-                          paddingLeft: "30%",
-                          paddingTop: "20%",
                         }}
                       />
                       <p style={{ textAlign: "center" }}>Cases</p>
                     </IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
+
               <IonCol>
                 <IonCard
                   className="card-home"
                   button
-                  // onClick={() => handleButtonClick("meetings")}
                   href="/bottomtabs/upcomingmeetings"
                 >
-                  <IonCardHeader>
-                    <IonCardTitle>
+                  <IonCardHeader
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IonCardTitle
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <IonIcon
                         icon={calendar}
                         style={{
                           fontSize: "35px",
                           marginBottom: "10px",
-                          paddingLeft: "30%",
-                          paddingTop: "20%",
                         }}
                       />
-
                       <p style={{ textAlign: "center" }}>Meetings</p>
                     </IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
+
               <IonCol>
                 <IonCard
                   className="card-home"
                   button
-                  // onClick={() => handleButtonClick("revenue")}
                   href="/bottomtabs/revenue"
                 >
-                  <IonCardHeader>
-                    <IonCardTitle>
+                  <IonCardHeader
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IonCardTitle
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <IonIcon
                         icon={barChartSharp}
                         style={{
                           fontSize: "35px",
                           marginBottom: "10px",
-                          paddingLeft: "30%",
-                          paddingTop: "20%",
                         }}
-                      />{" "}
+                      />
                       <p style={{ textAlign: "center" }}>Revenue</p>
                     </IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
             </IonRow>
+
             <IonRow className="add-card-row">
               <IonCol>
                 <IonCard
                   className="card-home"
                   button
-                  // onClick={() => handleButtonClick("client")}
                   href="/bottomtabs/viewclients"
                 >
-                  <IonCardHeader>
-                    <IonCardTitle>
+                  <IonCardHeader
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IonCardTitle
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <IonIcon
                         icon={personAdd}
                         style={{
                           fontSize: "35px",
                           marginBottom: "10px",
-                          paddingLeft: "30%",
-                          paddingTop: "20%",
                         }}
                       />
                       <p style={{ textAlign: "center" }}>Clients</p>
                     </IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
+
               <IonCol>
                 <IonCard
                   className="card-home"
                   button
                   href="/bottomtabs/reports"
                 >
-                  <IonCardHeader>
-                    <IonCardTitle>
+                  <IonCardHeader
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IonCardTitle
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <IonIcon
                         icon={fileTrayFullSharp}
                         style={{
                           fontSize: "35px",
                           marginBottom: "10px",
-                          paddingLeft: "30%",
-                          paddingTop: "20%",
                         }}
-                      />{" "}
+                      />
                       <p style={{ textAlign: "center" }}>Reports</p>
                     </IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent></IonCardContent>
                 </IonCard>
               </IonCol>
             </IonRow>

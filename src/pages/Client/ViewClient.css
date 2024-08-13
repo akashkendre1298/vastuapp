@@ -1,27 +1,42 @@
-
 .ion-accordion {
-    width: 100%;
-  }
-  
+  width: 100%;
+}
 
-  /* .ion-item-header {
+/* .ion-item-header {
     display: flex;
     align-items: center;
   } */
-  
-  
-  .ion-item-header .ion-label {
-    /* width: 100%; */
-    margin: 0 10px 0 10px; 
-  }
-  .add-client-btn{
-    color: #fff;
-    /* padding: 10px 20px; */
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    height: 50px;
-    width: 100%;
-    background-color: #00004D;
-    margin-top: 20px;
-  }
+
+.add-client-btn {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
+  background-color: #00004d;
+  height: 50px;
+  align-items: center;
+  color: white;
+  padding: 10px;
+  border-radius: 14px;
+  text-decoration: none;
+  z-index: 1000;
+}
+/* ViewClient.css */
+.custom-accordion {
+  --ion-item-background: transparent; /* Remove default background */
+  --padding-start: 0; /* Remove padding */
+}
+
+.custom-accordion .accordion-icon {
+  display: none; /* Hide default icon */
+}
+
+.ion-item-header {
+  --inner-padding-end: 0; /* Adjust as needed */
+  --inner-padding-start: 0; /* Adjust as needed */
+}

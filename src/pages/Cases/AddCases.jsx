@@ -129,7 +129,7 @@ const AddCasePage = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent>
+      <IonContent style={{ backgroundColor: "#e2dee9" }}>
         <IonToast
           isOpen={showToast}
           onDidDismiss={() => setShowToast(false)}
@@ -144,9 +144,9 @@ const AddCasePage = () => {
         />
         <div style={{ padding: "10px", marginTop: "25px", height: "80vh" }}>
           <div>
-            <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
+            {/* <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
               Case Name
-            </IonLabel>
+            </IonLabel> */}
             <IonItem
               className="add-executive-item"
               style={{ marginTop: "10px" }}
@@ -211,9 +211,9 @@ const AddCasePage = () => {
             </IonItem> */}
           </div>
           <div>
-            <IonLabel position="stacked" style={{ paddingLeft: "10px" }}>
+            {/* <IonLabel position="stacked" style={{ paddingLeft: "10px" }}>
               Issue
-            </IonLabel>
+            </IonLabel> */}
             <IonItem
               className="add-executive-item"
               style={{ marginTop: "10px" }}
@@ -221,17 +221,23 @@ const AddCasePage = () => {
               <textarea
                 value={issue}
                 onChange={(e) => {
-                  console.log("Issue change event:", e.target.value); // Use e.target.value for standard HTML textarea
-                  setIssue(e.target.value); // Use e.target.value for standard HTML textarea
+                  console.log("Issue change event:", e.target.value);
+                  setIssue(e.target.value);
                 }}
-                placeholder="Write Issue"
+                placeholder="Write Issue...."
                 required
                 style={{
                   width: "100%",
                   height: "100px",
                   border: "none",
                   resize: "none",
-                }} // Optional styling
+                  backgroundColor: "white",
+                  // textAlign: "center", // Center the placeholder text horizontally
+                  verticalAlign: "middle", // Center the text vertically
+                  lineHeight: "80px", // Aligns the text vertically within the textarea
+                  outline: "none", // Removes the outline when focused
+                  scrollbar: "none",
+                }}
               ></textarea>
             </IonItem>
           </div>

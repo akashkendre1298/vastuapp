@@ -73,7 +73,7 @@ const ParticularCase = () => {
   return (
     <IonPage>
       <ToolBar />
-      <IonContent>
+      <IonContent style={{ backgroundColor: "#e2dee9" }}>
         {/* Display error message if there's an error */}
         {error && <div>Error: {error.message}</div>}
         {/* Display success message */}
@@ -128,7 +128,7 @@ const ParticularCase = () => {
           to="/bottomtabs/viewproduct"
           className="recommended-products-button"
         >
-          Recommended Products
+          Recommend Products
         </Link>
       </IonContent>
     </IonPage>

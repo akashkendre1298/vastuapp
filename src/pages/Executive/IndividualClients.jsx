@@ -153,51 +153,85 @@ const IndividualClients = () => {
         <ToolBar />
       </IonHeader>
       <IonContent className="main-content-individualclient">
-        <div
-          style={{
-            padding: "0 20px",
-          }}
-        >
+        <div>
           {executive && (
             <div>
               <div className="profile-details-div">
                 {isEditing ? (
-                  <form onSubmit={handleFormSubmit}>
-                    <div>
-                      <label>
-                        Name:
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={editedExecutive.firstName}
-                          onChange={handleInputChange}
-                          required
-                          pattern="[A-Za-z ]*"
-                        />
-                      </label>
+                  <form onSubmit={handleFormSubmit} className="ionic-form">
+                    <div className="ionic-form-group">
+                      <label className="ionic-label">Name:</label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={editedExecutive.firstName}
+                        onChange={handleInputChange}
+                        required
+                        pattern="[A-Za-z ]*"
+                        className="ionic-input"
+                      />
                     </div>
-                    <div>
-                      <label>
-                        Phone Number:
-                        <input
-                          type="text"
-                          name="phoneNumber"
-                          value={editedExecutive.phoneNumber}
-                          onChange={handleInputChange}
-                          required
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit phone number"
-                        />
-                      </label>
+                    <div className="ionic-form-group">
+                      <label className="ionic-label">Phone Number:</label>
+                      <input
+                        type="text"
+                        name="phoneNumber"
+                        value={editedExecutive.phoneNumber}
+                        onChange={handleInputChange}
+                        required
+                        pattern="[0-9]{10}"
+                        title="Please enter a 10-digit phone number"
+                        className="ionic-input"
+                      />
                     </div>
-                    <button type="submit" className="save-button">
-                      Save
-                    </button>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div>
+                        <button type="submit" className="ionic-save-button">
+                          Save
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          type="button"
+                          className="ionic-cancel-button"
+                          onClick={() => setIsEditing(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
                   </form>
                 ) : (
-                  <div>
-                    <p style={{ fontSize: "30px" }}>{executive.firstName}</p>
-                    <p style={{ fontSize: "30px" }}>{executive.phoneNumber}</p>
+                  <div className="executive-details">
+                    <div>
+                      <p>Name : {executive.firstName}</p>
+                      <p> Contact: {executive.phoneNumber}</p>
+                    </div>
+
+                    <div>
+                      <div>
+                        <button
+                          className="edit-button"
+                          onClick={handleEditClick}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className="delete-button"
+                          onClick={handleDelete}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -221,26 +255,14 @@ const IndividualClients = () => {
                       <p>Client Name: {client.client}</p>
                       <p>Case Label: {client.caseLabel}</p>
                       <p>Contact Number: {client.contactNumber}</p>
-                      {/* Render additional client details as needed */}
                     </IonLabel>
                   </IonItem>
                 ))}
               </IonList>
             )}
-            <div className="button-group">
-              <div>
-                <button className="edit-button" onClick={handleEditClick}>
-                  Edit
-                </button>
-              </div>
-              <div>
-                <button className="delete-button" onClick={handleDelete}>
-                  Delete
-                </button>
-              </div>
-            </div>
           </div>
         </div>
+
         <IonLoading isOpen={isDeleting} message={"Updating Executives..."} />
         <IonAlert
           isOpen={showConfirmation}

@@ -59,7 +59,7 @@ const ViewExecutive = () => {
         </div>
         <div style={{ marginBottom: "60px" }}>
           {filteredExecutives.length > 0 && (
-            <IonList inset={true}>
+            <IonList>
               {filteredExecutives.map((executive, index) => (
                 <IonRouterLink
                   routerLink={`/bottomtabs/individualclients/${executive._id}`}
@@ -67,15 +67,26 @@ const ViewExecutive = () => {
                   <IonItem
                     key={index}
                     button
-                    detail={true}
+                    // detail={true}
                     style={{
-                      border: "1px solid black",
-                      marginBottom: "25px",
                       borderRadius: "10px",
+                      paddingLeft: "14px",
+                      paddingRight: "14px",
                     }}
                   >
-                    <IonLabel style={{ padding: "10px" }}>
-                      <h2>{executive.firstName}</h2>
+                    <IonLabel
+                      style={{
+                        padding: "10px",
+                        // border: "1px solid black",
+                        boxshadow: "0 0 0 4px",
+                        backgroundColor: "#FFFFFF",
+                        color: "black",
+                        borderRadius: "14px",
+                      }}
+                    >
+                      <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                        {executive.firstName}
+                      </h2>
                       <p>{executive.phoneNumber}</p>
                     </IonLabel>
                   </IonItem>

@@ -3,98 +3,78 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonLabel,
   IonItem,
   IonList,
-  IonButtons,
-  IonBackButton,
-  IonImg,
-  IonButton,
-  IonRouterLink,
-  IonGrid,
 } from "@ionic/react";
-import logo from "../../Assets/pandit_shivkumar_logo.png";
-import "./UpCommingMeeting.css";
-
-import BottomTabs from "../../components/BottomTabs/BottomTabs";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import { Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import "./UpCommingMeeting.css";
+import { Link } from "react-router-dom";
 
 const UpComingMeetings = () => {
   const [meetings, setMeetings] = useState([]);
-  const [selectedDateMeetings, setSelectedDateMeetings] = useState([]);
+  const [filteredMeetings, setFilteredMeetings] = useState([]);
+  const [todaysMeetings, setTodaysMeetings] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [loading, setLoading] = useState(false);
-  const [noMeetingsToday, setNoMeetingsToday] = useState(false);
-  const [expandedMeeting, setExpandedMeeting] = useState(null);
+  const [expandedMeetingId, setExpandedMeetingId] = useState(null);
 
   useEffect(() => {
+    const fetchMeetings = async () => {
+      try {
+        const response = await fetch(
+          "https://backend.piyushshivkumarshhri.com/api/meetings"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        // console.log("Fetched data:", data); // Debugging: Check fetched data
+        setMeetings(data);
+        filterMeetings(data, selectedDate);
+        filterTodaysMeetings(data);
+      } catch (error) {
+        // console.error("Error fetching meetings:", error);
+      }
+    };
+
     fetchMeetings();
-    fetchMeetingsByDate(selectedDate);
   }, [selectedDate]);
 
-  const formatDate = (date) => {
-    const [year, month, day] = date.split("-");
-    return `${day}-${month}-${year}`;
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split("-").map(Number);
+    return new Date(year, month - 1, day);
   };
 
-  const fetchMeetings = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://backend.piyushshivkumarshhri.com/api/meetings`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch meetings");
-      }
-      const data = await response.json();
-      const sortedMeetings = data.sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
-      );
-      setMeetings(sortedMeetings);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching meetings:", error);
-      setLoading(false);
-    }
+  const filterMeetings = (meetings, date) => {
+    const today = new Date(date);
+    today.setHours(0, 0, 0, 0); // Normalize time part for accurate comparison
+
+    const filtered = meetings.filter(
+      (meeting) => parseDate(meeting.date) >= today
+    );
+    setFilteredMeetings(filtered);
   };
 
-  const fetchMeetingsByDate = async (date) => {
-    setLoading(true);
-    try {
-      const formattedDate = formatDate(date);
-      console.log("Formatted Date:", formattedDate); // Check the formatted date
-      const fullRoute = `https://backend.piyushshivkumarshhri.com/api/meetings/getbydate/${formattedDate}`;
-      console.log("Full API Route:", fullRoute); // Log the full API route
-      const response = await fetch(fullRoute);
-      if (!response.ok) {
-        throw new Error("Failed to fetch meetings for selected date");
-      }
-      const data = await response.json();
-      console.log("Meetings for Selected Date:", data); // Check the data received for the selected date
-      const sortedMeetings = data.sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
-      );
-      setSelectedDateMeetings(sortedMeetings);
-      setLoading(false);
-      if (sortedMeetings.length === 0) {
-        setNoMeetingsToday(true);
-      } else {
-        setNoMeetingsToday(false);
-      }
-    } catch (error) {
-      console.error("Error fetching meetings:", error);
-      setLoading(false);
-    }
+  const filterTodaysMeetings = (meetings) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize time part for accurate comparison
+
+    const todays = meetings.filter(
+      (meeting) => parseDate(meeting.date).getTime() === today.getTime()
+    );
+    setTodaysMeetings(todays);
   };
 
-  const toggleExpand = (meetingId) => {
-    setExpandedMeeting((prev) => (prev === meetingId ? null : meetingId));
+  const handleDateChange = (e) => {
+    const newDate = e.target.value;
+    setSelectedDate(newDate);
+    filterMeetings(meetings, newDate);
+  };
+
+  const handleMeetingClick = (meetingId) => {
+    setExpandedMeetingId((prevId) => (prevId === meetingId ? null : meetingId));
   };
 
   return (
@@ -102,151 +82,131 @@ const UpComingMeetings = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent>
-        <IonGrid>
-          <div style={{ textAlign: "right", marginRight: "10px" }}>
-            <div style={{ paddingBottom: "10px", paddingLeft: "10px" }}>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => {
-                  setSelectedDate(e.target.value);
-                  const formattedDate = formatDate(e.target.value);
-                  const fullRoute = `https://backend.piyushshivkumarshhri.com/api/meetings/getbydate/${formattedDate}`;
-                  console.log("Full API Route:", fullRoute);
-                }}
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border: "1px solid #ccc",
-                  fontSize: "16px",
-                  width: "50%",
-                  boxSizing: "border-box",
-                }}
-              />
-            </div>
-          </div>
-
-          <div style={{ marginBottom: "20px" }}>
-            <IonList>
-              <p style={{ paddingLeft: "10px" }}>Meetings on {selectedDate}</p>
-
-              {noMeetingsToday && <IonItem>No meetings for today</IonItem>}
-              {loading && <IonItem>Loading...</IonItem>}
-              {!loading &&
-                selectedDateMeetings.length > 0 &&
-                selectedDateMeetings.map((meeting) => (
-                  <div key={meeting._id}>
-                    <IonItem
-                      button
-                      detail={true}
-                      onClick={() => toggleExpand(meeting._id)}
-                      style={{
-                        border: "1px solid black",
-                        marginBottom: "25px",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      <IonLabel style={{ padding: "5px" }}>
-                        <p>
-                          <b>Meeting Aim:</b> &nbsp;&nbsp;{meeting.meetingTitle}
-                        </p>
-                        <p>
-                          <b>Meeting Mode:</b> &nbsp;&nbsp;{meeting.meetingMode}
-                        </p>
-                      </IonLabel>
-                    </IonItem>
-                    {expandedMeeting === meeting._id && (
-                      <div className="meeting-details">
-                        <IonLabel>
-                          <p>
-                            <b>Executive Name:</b> &nbsp;&nbsp;
-                            {meeting.executiveName}
-                          </p>
-                          <p>
-                            <b>Executive Email:</b> &nbsp;&nbsp;
-                            {meeting.executivesEmail}
-                          </p>
-                          <p>
-                            <b>Date:</b> &nbsp;&nbsp;{meeting.date}
-                          </p>
-                          <p>
-                            <b>Details:</b> &nbsp;&nbsp;{meeting.details}
-                          </p>
-                        </IonLabel>
-                      </div>
-                    )}
-                  </div>
-                ))}
-            </IonList>
-          </div>
-
+      <IonContent style={{ backgroundColor: "#e2dee9" }}>
+        <div style={{ margin: "14px 14px 0 14px" }}>
           <div>
-            <IonList style={{ paddingBottom: "50px" }}>
-              <p style={{ paddingLeft: "10px" }}>Upcoming Meetings</p>
-              {loading && <IonItem>Loading...</IonItem>}
-              {!loading &&
-                meetings.length > 0 &&
-                meetings.map((meeting) => (
-                  <div key={meeting._id}>
-                    <IonItem
-                      button
-                      detail={true}
-                      onClick={() => toggleExpand(meeting._id)}
+            <h2>Today's Meetings</h2>
+          </div>
+          <IonList>
+            {todaysMeetings.length > 0 ? (
+              todaysMeetings.map((meeting) => (
+                <IonItem
+                  key={meeting._id}
+                  onClick={() => handleMeetingClick(meeting._id)}
+                >
+                  <IonLabel>
+                    <div
                       style={{
+                        backgroundColor: "white",
                         border: "1px solid black",
-                        marginBottom: "25px",
+                        padding: "10px",
                         borderRadius: "10px",
+                        marginBottom: "10px",
+                        cursor: "pointer",
                       }}
                     >
-                      <IonLabel style={{ padding: "5px" }}>
-                        <p>
-                          <b>Meeting Aim:</b> &nbsp;&nbsp;{meeting.meetingTitle}
-                        </p>
-                        <p>
-                          <b>Meeting Mode:</b> &nbsp;&nbsp;{meeting.meetingMode}
-                        </p>
-                      </IonLabel>
-                    </IonItem>
-                    {expandedMeeting === meeting._id && (
+                      <h3>{meeting.meetingTitle}</h3>
+                      <p>{parseDate(meeting.date).toDateString()}</p>
+                    </div>
+                    {expandedMeetingId === meeting._id && (
                       <div className="meeting-details">
-                        <IonLabel>
-                          <p>
-                            <b>Executive Name:</b> &nbsp;&nbsp;
-                            {meeting.executiveName}
-                          </p>
-                          <p>
-                            <b>Executive Email:</b> &nbsp;&nbsp;
-                            {meeting.executivesEmail}
-                          </p>
-                          <p>
-                            <b>Date:</b> &nbsp;&nbsp;{meeting.date}
-                          </p>
-                          <p>
-                            <b>Details:</b> &nbsp;&nbsp;{meeting.details}
-                          </p>
-                        </IonLabel>
+                        <p>
+                          <strong>Executive Name:</strong>{" "}
+                          {meeting.executiveName}
+                        </p>
+                        <p>
+                          <strong>Executive Email:</strong>{" "}
+                          {meeting.executivesEmail}
+                        </p>
+                        <p>
+                          <strong>Meeting Mode:</strong> {meeting.meetingMode}
+                        </p>
+                        <p>
+                          <strong>Details:</strong> {meeting.details}
+                        </p>
                       </div>
                     )}
-                  </div>
-                ))}
-            </IonList>
-          </div>
+                  </IonLabel>
+                </IonItem>
+              ))
+            ) : (
+              <IonItem>No meetings today</IonItem>
+            )}
+          </IonList>
+        </div>
 
-          <div
-            style={{
-              position: "fixed",
-              bottom: 5,
-              width: "90%",
-              zIndex: 1,
-              marginLeft: "12px",
-            }}
-          >
-            <Link to="/bottomtabs/addmeetings">
-              <button className="add-meeting-btn">Add Meeting</button>
-            </Link>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            margin: "14px 14px 0 14px",
+          }}
+        >
+          <div>
+            <h2>Upcoming Meetings</h2>
           </div>
-        </IonGrid>
+          <div>
+            <input
+              style={{ color: "white", padding: "5px", borderRadius: "5px" }}
+              type="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+          </div>
+        </div>
+
+        <IonList style={{ marginBottom: "70px" }}>
+          {filteredMeetings.length > 0 ? (
+            filteredMeetings.map((meeting) => (
+              <IonItem
+                key={meeting._id}
+                onClick={() => handleMeetingClick(meeting._id)}
+              >
+                <IonLabel>
+                  <div
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid black",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      marginBottom: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <h3>{meeting.meetingTitle}</h3>
+                    <p>{parseDate(meeting.date).toDateString()}</p>
+                  </div>
+                  {expandedMeetingId === meeting._id && (
+                    <div className="meeting-details">
+                      <p>
+                        <strong>Executive Name:</strong> {meeting.executiveName}
+                      </p>
+                      <p>
+                        <strong>Executive Email:</strong>{" "}
+                        {meeting.executivesEmail}
+                      </p>
+                      <p>
+                        <strong>Meeting Mode:</strong> {meeting.meetingMode}
+                      </p>
+                      <p>
+                        <strong>Details:</strong> {meeting.details}
+                      </p>
+                    </div>
+                  )}
+                </IonLabel>
+              </IonItem>
+            ))
+          ) : (
+            <IonItem>No upcoming meetings</IonItem>
+          )}
+        </IonList>
+
+        <div>
+          <Link to="/bottomtabs/addmeetings">
+            <button className="add-meeting-btn">Add Meeting</button>
+          </Link>
+        </div>
       </IonContent>
     </IonPage>
   );
