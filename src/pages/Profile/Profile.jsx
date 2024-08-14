@@ -180,7 +180,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <IonPage>
+    <IonPage  style={{ backgroundColor: "#e2dee9" }}>
       <ToolBar />
       <IonContent
         className="ion-padding"
