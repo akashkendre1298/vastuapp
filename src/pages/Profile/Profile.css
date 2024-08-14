@@ -51,10 +51,20 @@
   gap: 10px;
 }
 
+
 .button-with-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 14px;
+  padding: 5px 20px 5px 20px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+}
+
+.profile-icon{
+  font-size: 20px;
 }
 
 .change-password-modal {
@@ -85,10 +95,9 @@
 .modal-content {
   max-width: 90vw; 
   width: 100%;
-  height: 100%;
   max-height: 90vh; 
   overflow: auto; 
-  background-color: white;
+  background-color: #e2dee9;
   border-radius: 8px; 
   padding: 20px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
@@ -109,31 +118,30 @@
 
 /* Responsive button styling */
 .ion-button {
-  width: 100%; /* Full width for button */
+  width: 100%; 
 }
 
 /* Media Queries for Responsive Design */
 @media (max-width: 600px) {
   .modal-content {
-    padding: 15px; /* Reduce padding on smaller screens */
+    padding: 15px; 
   }
 
   .modal-title {
-    font-size: 1.2em; /* Smaller title font size on small screens */
+    font-size: 1.2em; 
   }
 
   .modal-content input[type="password"],
   .modal-content ion-input {
-    font-size: 0.9em; /* Adjust font size inside inputs */
+    font-size: 0.9em; 
   }
 
   .ion-item {
-    margin-bottom: 10px; /* Reduce space between input fields */
+    margin-bottom: 10px;
   }
 
   .ion-button {
-    font-size: 0.9em; /* Slightly smaller button font size */
-  }
+    font-size: 0.9em; 
 }
 
 .modal-content-heading{
@@ -141,4 +149,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+}
+
+/* profile buttons css  */
+
+.profile-button-contents{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 14px;
 }

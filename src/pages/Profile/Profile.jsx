@@ -214,32 +214,41 @@ const ProfilePage = () => {
         </IonGrid>
 
         <div className="button-column">
-          <IonButton
+          <button
             expand="full"
             onClick={handleEdit}
             className="button-with-icon"
           >
-            <IonIcon slot="start" icon={pencilOutline} />
-            Edit Profile
-          </IonButton>
-          <IonButton
+            <div className="profile-button-contents">
+              <p>Edit Profile</p>
+              <IonIcon className="profile-icon" slot="start" icon={pencilOutline} />
+            </div>
+            
+          </button>
+
+          <button
             expand="full"
             color="warning"
             onClick={() => setShowChangePasswordModal(true)}
             className="button-with-icon"
           >
-            <IonIcon slot="start" icon={lockClosedOutline} />
-            Change Password
-          </IonButton>
-          <IonButton
+            <div className="profile-button-contents">
+              <p> Change Password</p>
+              <IonIcon className="profile-icon" slot="start" icon={lockClosedOutline} />
+            </div>
+          </button>
+
+          <button
             expand="full"
             color="danger"
             onClick={handleLogout}
             className="button-with-icon"
           >
-            <IonIcon slot="start" icon={logOutOutline} />
-            Logout
-          </IonButton>
+            <div className="profile-button-contents">
+            <p>Logout</p> 
+            <IonIcon className="profile-icon" icon={logOutOutline} />
+            </div>
+          </button>
         </div>
 
         {/* Change Password Modal */}
@@ -256,27 +265,30 @@ const ProfilePage = () => {
             <RxCross2 size={20} onClick={()=>setShowChangePasswordModal(false)}/>
             </div>
             
-            <IonItem>
-              <IonLabel position="stacked">Current Password</IonLabel>
+            <IonItem className="add-executive-item">
+              {/* <IonLabel position="stacked">Current Password</IonLabel> */}
               <IonInput
                 type="password"
+                placeholder="Enter your current password"
                 value={currentPassword}
                 onIonChange={(e) => setCurrentPassword(e.detail.value)}
                 
               />
             </IonItem>
-            <IonItem>
-              <IonLabel position="stacked">New Password</IonLabel>
+            <IonItem className="add-executive-item">
+              {/* <IonLabel position="stacked">New Password</IonLabel> */}
               <IonInput
                 type="password"
+                placeholder="Enter your new password"
                 value={newPassword}
                 onIonChange={(e) => setNewPassword(e.detail.value)}
               />
             </IonItem>
-            <IonItem>
-              <IonLabel position="stacked">Confirm New Password</IonLabel>
+            <IonItem className="add-executive-item">
+              {/* <IonLabel position="stacked">Confirm New Password</IonLabel> */}
               <IonInput
                 type="password"
+                placeholder="Confirm password"
                 value={confirmPassword}
                 onIonChange={(e) => setConfirmPassword(e.detail.value)}
               />
