@@ -23,3 +23,9 @@ ion-content {
   text-decoration: none;
   z-index: 1000;
 }
+
+.caseItemContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

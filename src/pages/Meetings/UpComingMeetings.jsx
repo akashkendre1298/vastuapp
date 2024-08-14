@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RiArrowDownSLine } from "react-icons/ri";
 import {
   IonContent,
   IonHeader,
@@ -105,6 +106,7 @@ const UpComingMeetings = () => {
                         cursor: "pointer",
                       }}
                     >
+
                       <h3>{meeting.meetingTitle}</h3>
                       <p>{parseDate(meeting.date).toDateString()}</p>
                     </div>
@@ -174,8 +176,15 @@ const UpComingMeetings = () => {
                       cursor: "pointer",
                     }}
                   >
+                    <div className="upComingMeetingContent">
+                      <div>
                     <h3>{meeting.meetingTitle}</h3>
                     <p>{parseDate(meeting.date).toDateString()}</p>
+                    </div>
+                    <div>
+                    <RiArrowDownSLine size={20}/>
+                    </div>
+                    </div>
                   </div>
                   {expandedMeetingId === meeting._id && (
                     <div className="meeting-details">

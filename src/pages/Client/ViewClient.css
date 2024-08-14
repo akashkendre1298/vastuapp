@@ -40,3 +40,9 @@
   --inner-padding-end: 0; /* Adjust as needed */
   --inner-padding-start: 0; /* Adjust as needed */
 }
+
+.viewClientContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

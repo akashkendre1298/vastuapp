@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RiArrowDownSLine } from "react-icons/ri";
 import {
   IonPage,
   IonHeader,
@@ -81,10 +82,17 @@ const ViewClientPage = () => {
                   borderRadius: "14px",
                 }}
               >
-                <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>
+                <div className="viewClientContent">
+                  <div>
+                <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>                  
                   {client.firstName} {client.lastName}
                 </h2>
                 <p>{client.phoneNumber}</p>
+                </div>
+                <div>
+                <RiArrowDownSLine size={20}/> 
+                </div>
+                </div>
                 {expandedClientId === client._id && (
                   <div
                     style={{

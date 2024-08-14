@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import {
   IonPage,
   IonHeader,
@@ -84,10 +85,17 @@ const ViewExecutive = () => {
                         borderRadius: "14px",
                       }}
                     >
+                    <div className="viewExecutiveContent">
+                      <div>
                       <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
                         {executive.firstName}
                       </h2>
                       <p>{executive.phoneNumber}</p>
+                      </div>
+                      <div>
+                      <MdKeyboardArrowRight size={20}/>
+                      </div>
+                    </div>
                     </IonLabel>
                   </IonItem>
                 </IonRouterLink>

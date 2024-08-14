@@ -71,3 +71,9 @@
 .meeting-summary p:last-child {
   border-bottom: none; /* Remove border for the last item */
 }
+
+.upComingMeetingContent{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

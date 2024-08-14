@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RxCross2 } from "react-icons/rx";
 import {
   IonPage,
   IonContent,
@@ -242,19 +243,26 @@ const ProfilePage = () => {
         </div>
 
         {/* Change Password Modal */}
+        <div style={{display:"flex", justifyContent:"center",alignItems:"center "}}>
+         
         <IonModal
           isOpen={showChangePasswordModal}
           onDidDismiss={() => setShowChangePasswordModal(false)}
-          cssClass="change-password-modal"
+          style={{display:"flex", justifyContent:"center", alignItems:"center"}}
         >
           <div className="modal-content">
-            <h3 className="modal-title">Change Password</h3>
+            <div className="modal-content-heading">
+            <h3 className="model-title">Change Password</h3>
+            <RxCross2 size={20} onClick={()=>setShowChangePasswordModal(false)}/>
+            </div>
+            
             <IonItem>
               <IonLabel position="stacked">Current Password</IonLabel>
               <IonInput
                 type="password"
                 value={currentPassword}
                 onIonChange={(e) => setCurrentPassword(e.detail.value)}
+                
               />
             </IonItem>
             <IonItem>
@@ -282,6 +290,7 @@ const ProfilePage = () => {
             </IonButton>
           </div>
         </IonModal>
+        </div>
 
         {/* Toast for feedback */}
         <IonToast
