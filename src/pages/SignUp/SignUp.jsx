@@ -1,194 +1,169 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { IonPage, IonImg, IonContent } from "@ionic/react";
+import axios from "axios";
 import "./SignUp.css";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 
 const SignupPage = () => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phonenumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const history = useHistory();
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phonenumber: "",
+    password: "",
+    image: null,
+  });
+  const [messages, setMessages] = useState(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-    // Check if any field is empty
-    if (!firstname || !lastname || !email || !phonenumber || !password) {
-      setError("All fields are mandatory.");
-      return;
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      image: file,
+    });
+
+    // Log the URL of the image to the console
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      console.log("Image URL:", imageUrl);
     }
+  };
 
-    // Validate phone number
-    const phoneRegex = /^[1-9]\d{9}$/;
-    if (!phoneRegex.test(phonenumber)) {
-      setError("Invalid phone number. Please enter a 10-digit number.");
-      return;
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("firstname", formData.firstname);
+    form.append("lastname", formData.lastname);
+    form.append("email", formData.email);
+    form.append("phonenumber", formData.phonenumber);
+    form.append("password", formData.password);
+    form.append("image", formData.image);
 
     try {
-      // Check if email is already registered
-      const emailCheckResponse = await fetch(
-        "https://backend.piyushshivkumarshhri.com/api/admin",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }), // Adjust according to the API specification
-        }
-      );
-
-      if (emailCheckResponse.ok) {
-        const emailCheckResult = await emailCheckResponse.json();
-        // Adjust the condition based on the response structure
-        if (emailCheckResult.some((user) => user.email === email)) {
-          setError(
-            "Email is already registered. Please use a different email."
-          );
-          return;
-        }
-      } else {
-        setError("Failed to check email. Please try again.");
-        return;
-      }
-
-      // Proceed with user registration
-      const userData = {
-        firstname,
-        lastname,
-        email,
-        phonenumber,
-        password,
-      };
-
-      const response = await fetch(
+      const response = await axios.post(
         "https://backend.piyushshivkumarshhri.com/api/admin/signup",
+        form,
         {
-          method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
-          body: JSON.stringify(userData),
         }
       );
-
-      if (response.ok) {
-        console.log("User signed up successfully");
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPhoneNumber("");
-        setPassword("");
-        setSuccessMessage(
-          "User signed up successfully. Redirecting to login..."
-        );
-        setTimeout(() => {
-          setSuccessMessage("");
-          history.push("/");
-        }, 3000);
-      } else {
-        setError("Failed to sign up user. Please try again.");
-      }
+      setMessages({ type: "success", text: response.data.message });
     } catch (error) {
-      console.error("Error:", error);
-      setError("Network error. Please check your internet connection.");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setMessages({ type: "error", text: error.response.data.message });
+      } else {
+        setMessages({ type: "error", text: "An unexpected error occurred." });
+      }
     }
   };
 
   return (
-    <IonPage>
-      <IonContent fullscreen className="ion-padding">
-        <div className="signup-page">
-          <div className="signupdiv-for-logo">
-            <IonImg src={logo} className="signup-logo" />
+    <>
+      <div className="signup-container">
+        <div className="signup-form-container">
+          <div className="signup-logo-container">
+            <img src={logo} alt="Logo" className="signup-logo" />
           </div>
-          <div className="signup-heading">
-            <p>Sign Up</p>
-            <p className="para-after-signup-heading">
-              Please enter details to create an account
-            </p>
-          </div>
-          <div className="input-div">
-            <label htmlFor="firstname" className="label-signup">
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstname"
-              placeholder="First Name"
-              className="input-signup"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <label htmlFor="lastname" className="label-signup">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastname"
-              placeholder="Last Name"
-              className="input-signup"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            <label htmlFor="email" className="label-signup">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              className="input-signup"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label htmlFor="phonenumber" className="label-signup">
-              Contact Number
-            </label>
-            <input
-              type="tel"
-              id="phonenumber"
-              placeholder="Phone number"
-              className="input-signup"
-              value={phonenumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <label htmlFor="password" className="label-signup">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Create password"
-              className="input-signup"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          {error && <div className="error-message">{error}</div>}
-          {successMessage && (
-            <div className="success-message">{successMessage}</div>
+          <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
+            Register
+          </h1>
+          {messages && (
+            <div className={`signup-toast ${messages.type}`}>
+              {messages.text}
+            </div>
           )}
-          <button
-            className="signUp-button signUp-button-signup"
-            onClick={handleSubmit}
-          >
-            Create Account
-          </button>
-          <p className="login-link">
-            Already have an account?{" "}
-            <a href="/" onClick={() => history.push("/")}>
-              Log in
+          <form onSubmit={handleSubmit} className="signup-form">
+            <div className="signup-input-item">
+              {/* <label className="signup-label">First Name</label> */}
+              <input
+                type="text"
+                name="firstname"
+                placeholder="First Name"
+                value={formData.firstname}
+                onChange={handleChange}
+                className="signup-input"
+              />
+            </div>
+            <div className="signup-input-item">
+              {/* <label className="signup-label">Last Name</label> */}
+              <input
+                type="text"
+                name="lastname"
+                placeholder="Last Name"
+                value={formData.lastname}
+                onChange={handleChange}
+                className="signup-input"
+              />
+            </div>
+            <div className="signup-input-item">
+              {/* <label className="signup-label">Email</label> */}
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email address"
+                value={formData.email}
+                onChange={handleChange}
+                className="signup-input"
+              />
+            </div>
+            <div className="signup-input-item">
+              {/* <label className="signup-label">Phone Number</label> */}
+              <input
+                type="text"
+                name="phonenumber"
+                placeholder="Phone Number"
+                value={formData.phonenumber}
+                onChange={handleChange}
+                className="signup-input"
+              />
+            </div>
+            <div className="signup-input-item">
+              {/* <label className="signup-label">Password</label> */}
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                className="signup-input"
+              />
+            </div>
+            <div className="signup-input-item">
+              {/* <label className="signup-label">Profile Picture</label> */}
+              <input
+                type="file"
+                name="image"
+                onChange={handleFileChange}
+                className="signup-file-input"
+              />
+            </div>
+            <button type="submit" className="signup-submit-button">
+              Submit
+            </button>
+          </form>
+
+          <div className="signup-link-container">
+            <a href="/" className="signup-link">
+              Already have an account? Log in
             </a>
-          </p>
+          </div>
         </div>
-      </IonContent>
-    </IonPage>
+      </div>
+    </>
   );
 };
 

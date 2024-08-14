@@ -197,11 +197,7 @@ const ProfilePage = () => {
                   style={{ display: "none" }}
                 />
                 <label htmlFor="avatar-upload">
-                  {avatarImage ? (
-                    <IonImg src={avatarImage} alt="Profile Avatar" />
-                  ) : (
-                    <IonIcon icon={personCircleOutline} className="icon" />
-                  )}
+                  <IonImg src={avatarImage} />
                 </label>
               </div>
             </IonCol>

@@ -70,7 +70,7 @@ const LoginPage = () => {
   };
 
   return (
-    <IonPage className="login-page">
+    <div className="login-page">
       <div className="login-container">
         <div className="login-logo-div">
           <IonImg src={logo} className="login-logo" />
@@ -80,7 +80,7 @@ const LoginPage = () => {
           <p className="para-after-login-title">Please sign in to continue</p>
         </div>
         <div className="form-group">
-          <label>Email</label>
+          {/* <label>Email</label> */}
           <input
             type="email"
             value={email}
@@ -90,7 +90,7 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-group">
-          <label>Password</label>
+          {/* <label>Password</label> */}
           <input
             type="password"
             placeholder="Enter your password"
@@ -120,7 +120,7 @@ const LoginPage = () => {
         duration={2000}
         onDidDismiss={() => setToastMessage("")}
       />
-    </IonPage>
+    </div>
   );
 };
 

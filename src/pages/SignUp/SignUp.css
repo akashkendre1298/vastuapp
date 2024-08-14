@@ -1,72 +1,62 @@
-.signup-page {
+/* SignUp.css */
+.signup-container {
+  background: linear-gradient(to bottom, #00004d, #fff);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Change height to min-height */
-  background-image: linear-gradient(to bottom, #00004d, #fff);
-  padding: 30px;
+  height: 100vh;
+  padding: 20px;
 }
 
-.signupdiv-for-logo {
+.signup-logo-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
   margin-bottom: 20px;
 }
 
 .signup-logo {
-  width: 100px;
-  height: 100px;
+  /* width: 150px;
+  height: 100px; */
+  /* border-radius: 50%; */
 }
 
-.signup-heading {
-  font-size: 30px;
-  font-weight: 600;
-  line-height: 10px;
-  margin-bottom: 10px;
-  /* color: #fff; */
+.signup-form-container {
+  /* background: #ffffff; */
+  /* border-radius: 10px; */
+  padding: 20px;
+  width: 100%;
+  /* max-width: 400px; */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   /* text-align: center; */
 }
 
-.para-after-signup-heading {
-  font-size: 15px;
-  font-weight: 400;
-  margin-bottom: 20px;
-  /* color: #fff; */
-  /* text-align: center; */
-}
-
-.input-div {
-  background: transparent;
+.signup-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 400px;
 }
 
-.input-signup {
-  padding: 10px;
-  margin-bottom: 15px;
-  margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 30px;
-  background-color: #fff;
-  width: 100%; /* Adjust width as needed */
-  color: black;
-  padding-left: 10px;
+.signup-input-item {
+  margin-bottom: 30px;
 }
 
-.label-signup {
-  align-self: flex-start;
-  margin-left: 20px;
+.signup-label {
+  display: block;
   margin-bottom: 5px;
-  /* color: black; */
-  margin-right: 10px;
+  font-weight: bold;
 }
 
-.signUp-button {
+.signup-input,
+.signup-file-input {
+  width: 100%;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+  padding: 14px;
+}
+
+.signup-submit-button {
   margin-top: 10px;
   color: #fff;
   padding: 10px 20px;
@@ -77,29 +67,21 @@
   font-size: 16px;
   width: 150px;
   background-color: #00004d;
+  margin-bottom: 20px;
 }
 
-.signUp-button-signup {
-  margin-top: 15px;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  height: 50px;
-  font-size: 16px;
-  width: 190px;
-  background-color: #00004d;
+.signup-toast {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.success-message {
-  color: green;
-  font-size: 20px;
-  margin-top: 10px;
+.signup-toast.success {
+  background-color: #d4edda;
+  color: #155724;
 }
 
-.error-message {
-  color: red;
-  font-size: 20px;
-  margin-top: 10px;
+.signup-toast.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
