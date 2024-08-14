@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import {
   IonPage,
   IonContent,
@@ -68,9 +69,12 @@ const ViewCasesPage = () => {
                       borderRadius: "14px",
                     }}
                   >
+                    <div className="caseItemContent">
                     <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
                       {caseItem.label}
                     </h2>
+                    <MdKeyboardArrowRight size={20} />
+                    </div>
                   </IonLabel>
 
                   {/* <IonIcon

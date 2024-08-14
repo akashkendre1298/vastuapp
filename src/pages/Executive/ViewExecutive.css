@@ -32,3 +32,9 @@ ion-searchbar.custom {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.viewExecutiveContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
