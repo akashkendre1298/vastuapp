@@ -1,167 +1,118 @@
-/* Profile.css */
+/* Global styles or within a specific CSS module */
+.ion-page {
+  --ion-background-color: #e2dee9;
+}
 
-.profile-header {
+.user-profile-container {
   display: flex;
+  /* flex-direction: column; */
   align-items: center;
-  margin-bottom: 20px;
+  margin-top: 70px;
+  /* text-align: center; */
 }
 
-/* Profile.css */
-
-/* Container for the profile image */
-.avatar-container {
-  display: flex;
-  /* align-items: center; */
-  justify-content: center;
-  width: 120px; /* Adjust size as needed */
-  height: 120px; /* Adjust size as needed */
+.user-avatar {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  overflow: hidden; /* Ensure the image is clipped to the circle */
-  background-color: #f0f0f0; /* Optional: Background color for placeholder */
-  border: 2px solid #ddd; /* Optional: Border for the profile picture */
-  position: relative; /* Ensures positioning for absolute child elements */
-}
-
-/* Style for the image inside the circle */
-.avatar-container img {
-  position: absolute; /* Allows precise control over positioning */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Centers the image */
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Ensures the image covers the container and maintains its aspect ratio */
-  object-position: center; /* Centers the image within the container */
-}
-
-/* Style for the placeholder icon */
-.avatar-container .icon {
-  font-size: 60px; /* Adjust size as needed */
-  color: #888; /* Adjust color as needed */
+  overflow: hidden;
+  margin-bottom: 15px;
 }
 
 .user-greeting {
-  font-size: 24px;
+  margin: 10px 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+.user-details {
   margin-left: 20px;
 }
-
-.button-column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-.button-with-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 14px;
-  padding: 5px 20px 5px 20px;
-  font-size: 16px;
+/* .ProfileInput {
   background-color: white;
   color: black;
+  border: "none";
+  outline: "none";
+} */
+.profile-label {
+  margin-bottom: 20px;
+}
+.user-email {
+  color: #666;
+  font-size: 1em;
 }
 
-.profile-icon{
-  font-size: 20px;
+.profile-actions {
+  margin-top: 20px;
+  width: 100%;
 }
 
-.change-password-modal {
-  --width: 90%;
-  height: 60%;
-  top: 20%;
-  display: flex;justify-content: center;align-items: center;
-  border-radius: 14px;
-  background-color: white;
-  border: 1px solid black;
+.profile-actions ion-item {
+  --background: #fff;
+  border-radius: 10px;
+  margin: 10px 15px;
+  --padding-start: 15px;
+  --inner-padding-end: 15px;
 }
 
-.modal-content {
+.profile-actions ion-icon {
+  color: #333;
+}
+
+.profile-actions ion-item:last-child {
+  --color: #f53d3d;
+}
+
+.profile-form {
   padding: 20px;
 }
 
-.model-title {
-  margin-bottom: 20px;
-  text-align: left;
-  margin-left: 15px;
-  font-size: 1.5em;
+.profile-form ion-item {
+  --background: transparent;
+  --border-radius: 10px;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin: 10px 0;
 }
 
-
-
-/* change password css  */
-
-.modal-content {
-  max-width: 90vw; 
-  width: 100%;
-  max-height: 90vh; 
-  overflow: auto; 
-  background-color: white;
-  border-radius: 8px; 
-  padding: 20px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.profile-form ion-button {
+  margin-top: 20px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.changepass-cancel-btn {
+  background-color: #eb445a;
+  color: white;
+  width: 90%;
+  height: 50px;
   margin: auto;
-  justify-content: center;
-}
-
-
-
-/* Styling for IonItem components containing input fields */
-.modal-content ion-item {
-  width: 100%; 
-  margin-bottom: 15px; 
-}
-
-/* Responsive button styling */
-.ion-button {
-  width: 100%; 
-}
-
-/* Media Queries for Responsive Design */
-@media (max-width: 600px) {
-  .modal-content {
-    padding: 15px; 
-  }
-
-  .modal-title {
-    font-size: 1.2em; 
-  }
-
-  .modal-content input[type="password"],
-  .modal-content ion-input {
-    font-size: 0.9em; 
-  }
-
-  .ion-item {
-    margin-bottom: 10px;
-  }
-
-  .ion-button {
-    font-size: 0.9em; 
-}
-
-.modal-content-heading{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-}
-
-/* profile buttons css  */
-
-.profile-button-contents{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  font-size: 18px;
   border-radius: 14px;
 }
-
-.ion-page{
-  background-color: #e2dee9;
+.changepass-btn {
+  background-color: #00004d;
+  color: white;
+  width: 90%;
+  height: 50px;
+  margin: auto;
+  font-size: 18px;
+  border-radius: 14px;
+}
+.save-btn-profile {
+  background-color: #00004d;
+  color: white;
+  width: 100%;
+  height: 50px;
+  margin: auto;
+  font-size: 18px;
+  border-radius: 14px;
+}
+.changepass-cancel-btn-edit {
+  background-color: #eb445a;
+  color: white;
+  width: 100%;
+  height: 50px;
+  margin: auto;
+  font-size: 18px;
+  border-radius: 14px;
 }

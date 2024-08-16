@@ -34,7 +34,7 @@ const ForgotPasswordPage = () => {
 
     try {
       const response = await fetch(
-        "https://backend.piyushshivkumarshhri.com/api/admin/forgot-password",
+        "https://backend.piyushshivkumarshhri.com/api/admin/forgot-pass",
         {
           method: "POST",
           headers: {
@@ -63,7 +63,7 @@ const ForgotPasswordPage = () => {
 
     try {
       const response = await fetch(
-        "https://backend.piyushshivkumarshhri.com/api/admin/reset-password",
+        "https://backend.piyushshivkumarshhri.com/api/admin/forgot-pass/verify",
         {
           method: "POST",
           headers: {
@@ -72,7 +72,7 @@ const ForgotPasswordPage = () => {
           body: JSON.stringify({
             email: forgotPasswordEmail,
             otp,
-            newPassword,
+            password: newPassword,
           }),
         }
       );
@@ -98,8 +98,8 @@ const ForgotPasswordPage = () => {
   return (
     <IonPage className="forgot-password-page">
       <div className="form-container">
-        <h2 className="forgetpass-heading">Forgot Password</h2>
-        <IonItem>
+        <h2 className="heading">Forgot Password</h2>
+        <IonItem className="form-item">
           <IonLabel position="stacked">Registered Email</IonLabel>
           <IonInput
             type="email"
@@ -107,14 +107,18 @@ const ForgotPasswordPage = () => {
             onIonChange={(e) => setForgotPasswordEmail(e.detail.value)}
           />
         </IonItem>
-        <IonButton expand="full" onClick={handleSendOtp}>
+        <IonButton
+          className="action-button"
+          expand="full"
+          onClick={handleSendOtp}
+        >
           Send OTP
         </IonButton>
 
         {/* Additional fields after sending OTP */}
         {forgotPasswordEmail && (
           <div className="reset-password-fields">
-            <IonItem>
+            <IonItem className="form-item">
               <IonLabel position="stacked">Enter OTP</IonLabel>
               <IonInput
                 type="text"
@@ -122,7 +126,7 @@ const ForgotPasswordPage = () => {
                 onIonChange={(e) => setOtp(e.detail.value)}
               />
             </IonItem>
-            <IonItem>
+            <IonItem className="form-item">
               <IonLabel position="stacked">New Password</IonLabel>
               <IonInput
                 type="password"
@@ -130,7 +134,7 @@ const ForgotPasswordPage = () => {
                 onIonChange={(e) => setNewPassword(e.detail.value)}
               />
             </IonItem>
-            <IonItem>
+            <IonItem className="form-item">
               <IonLabel position="stacked">Confirm New Password</IonLabel>
               <IonInput
                 type="password"
@@ -138,13 +142,22 @@ const ForgotPasswordPage = () => {
                 onIonChange={(e) => setConfirmNewPassword(e.detail.value)}
               />
             </IonItem>
-            <IonButton expand="full" onClick={handleResetPassword}>
+            <IonButton
+              className="action-button"
+              expand="full"
+              onClick={handleResetPassword}
+            >
               Reset Password
             </IonButton>
           </div>
         )}
 
-        <IonButton expand="full" color="medium" onClick={handleCancel}>
+        <IonButton
+          className="cancel-button"
+          expand="full"
+          color="medium"
+          onClick={handleCancel}
+        >
           Cancel
         </IonButton>
 
