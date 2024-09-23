@@ -6,6 +6,7 @@ import {
   IonLabel,
   IonItem,
   IonToast,
+  IonContent,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import "./ForgotPasswordPage.css";
@@ -97,77 +98,184 @@ const ForgotPasswordPage = () => {
 
   return (
     <IonPage className="forgot-password-page">
-      <div className="form-container">
-        <h2 className="heading">Forgot Password</h2>
-        <IonItem className="form-item">
-          <IonLabel position="stacked">Registered Email</IonLabel>
-          <IonInput
+      <IonContent
+        style={{
+          backgroundColor: "#e2dee9",
+        }}
+      >
+        {/* <div className="form-container">
+          <h2 className="heading">Forgot Password</h2>
+
+          <input
             type="email"
-            value={forgotPasswordEmail}
-            onIonChange={(e) => setForgotPasswordEmail(e.detail.value)}
+            style={{
+              width: "100%",
+              backgroundColor: "white",
+              color: "black",
+              height: "40px",
+              borderRadius: "5px",
+              paddingLeft: "10px",
+              fontSize: "16px",
+              marginBottom: "15px",
+              outline: "none",
+            }}
+            placeholder="Enter Your Registered Email Address"
           />
-        </IonItem>
-        <IonButton
-          className="action-button"
-          expand="full"
-          onClick={handleSendOtp}
-        >
-          Send OTP
-        </IonButton>
+          <IonButton
+            className="action-button"
+            expand="full"
+            onClick={handleSendOtp}
+          >
+            Send OTP
+          </IonButton>
 
-        {/* Additional fields after sending OTP */}
-        {forgotPasswordEmail && (
-          <div className="reset-password-fields">
-            <IonItem className="form-item">
-              <IonLabel position="stacked">Enter OTP</IonLabel>
-              <IonInput
-                type="text"
-                value={otp}
-                onIonChange={(e) => setOtp(e.detail.value)}
+          {forgotPasswordEmail && (
+            <div className="reset-password-fields">
+              <IonItem className="form-item">
+                <IonLabel position="stacked">Enter OTP</IonLabel>
+                <IonInput
+                  type="text"
+                  value={otp}
+                  onIonChange={(e) => setOtp(e.detail.value)}
+                />
+              </IonItem>
+              <IonItem className="form-item">
+                <IonLabel position="stacked">New Password</IonLabel>
+                <IonInput
+                  type="password"
+                  value={newPassword}
+                  onIonChange={(e) => setNewPassword(e.detail.value)}
+                />
+              </IonItem>
+              <IonItem className="form-item">
+                <IonLabel position="stacked">Confirm New Password</IonLabel>
+                <IonInput
+                  type="password"
+                  value={confirmNewPassword}
+                  onIonChange={(e) => setConfirmNewPassword(e.detail.value)}
+                />
+              </IonItem>
+              <IonButton
+                className="action-button"
+                expand="full"
+                onClick={handleResetPassword}
+              >
+                Reset Password
+              </IonButton>
+            </div>
+          )}
+
+          <IonButton
+            className="cancel-button"
+            expand="full"
+            color="medium"
+            onClick={handleCancel}
+          >
+            Cancel
+          </IonButton>
+
+          <IonToast
+            isOpen={!!toastMessage}
+            message={toastMessage}
+            duration={2000}
+            onDidDismiss={() => setToastMessage("")}
+          />
+        </div> */}
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <div
+            style={{
+              width: "90%",
+              // padding: "20px",
+              backgroundColor: "white",
+              borderRadius: "10px",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <div className="form-container">
+              <h2 className="heading">Forgot Password</h2>
+
+              <input
+                type="email"
+                style={{
+                  width: "100%",
+                  backgroundColor: "white",
+                  color: "black",
+                  height: "50px",
+                  borderRadius: "5px",
+                  paddingLeft: "10px",
+                  fontSize: "16px",
+                  marginBottom: "15px",
+                  // border: "none",
+                  outline: "none",
+                }}
+                placeholder="Enter Your Registered Email Address"
               />
-            </IonItem>
-            <IonItem className="form-item">
-              <IonLabel position="stacked">New Password</IonLabel>
-              <IonInput
-                type="password"
-                value={newPassword}
-                onIonChange={(e) => setNewPassword(e.detail.value)}
+              <button className="action-button" onClick={handleSendOtp}>
+                Send OTP
+              </button>
+
+              {/* Additional fields after sending OTP */}
+              {forgotPasswordEmail && (
+                <div className="reset-password-fields">
+                  <IonItem className="form-item">
+                    <IonLabel position="stacked">Enter OTP</IonLabel>
+                    <IonInput
+                      type="text"
+                      value={otp}
+                      onIonChange={(e) => setOtp(e.detail.value)}
+                    />
+                  </IonItem>
+                  <IonItem className="form-item">
+                    <IonLabel position="stacked">New Password</IonLabel>
+                    <IonInput
+                      type="password"
+                      value={newPassword}
+                      onIonChange={(e) => setNewPassword(e.detail.value)}
+                    />
+                  </IonItem>
+                  <IonItem className="form-item">
+                    <IonLabel position="stacked">Confirm New Password</IonLabel>
+                    <IonInput
+                      type="password"
+                      value={confirmNewPassword}
+                      onIonChange={(e) => setConfirmNewPassword(e.detail.value)}
+                    />
+                  </IonItem>
+                  <IonButton
+                    className="action-button"
+                    expand="full"
+                    onClick={handleResetPassword}
+                  >
+                    Reset Password
+                  </IonButton>
+                </div>
+              )}
+
+              <button className="cancel-button" onClick={handleCancel}>
+                Cancel
+              </button>
+
+              <IonToast
+                isOpen={!!toastMessage}
+                message={toastMessage}
+                duration={2000}
+                onDidDismiss={() => setToastMessage("")}
               />
-            </IonItem>
-            <IonItem className="form-item">
-              <IonLabel position="stacked">Confirm New Password</IonLabel>
-              <IonInput
-                type="password"
-                value={confirmNewPassword}
-                onIonChange={(e) => setConfirmNewPassword(e.detail.value)}
-              />
-            </IonItem>
-            <IonButton
-              className="action-button"
-              expand="full"
-              onClick={handleResetPassword}
-            >
-              Reset Password
-            </IonButton>
+            </div>
           </div>
-        )}
-
-        <IonButton
-          className="cancel-button"
-          expand="full"
-          color="medium"
-          onClick={handleCancel}
-        >
-          Cancel
-        </IonButton>
-
-        <IonToast
-          isOpen={!!toastMessage}
-          message={toastMessage}
-          duration={2000}
-          onDidDismiss={() => setToastMessage("")}
-        />
-      </div>
+        </div>
+      </IonContent>
     </IonPage>
   );
 };
