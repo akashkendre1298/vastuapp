@@ -44,69 +44,6 @@ const ReportPage = () => {
     setFileType("xlsx");
   };
 
-  const generateReport = async () => {
-    let apiUrl;
-    let responseData;
-
-    switch (selectedReport) {
-      case "clients":
-        apiUrl =
-          "https://backend.piyushshivkumarshhri.com/api/clients/bymonth/08/09";
-        break;
-      case "cases":
-        apiUrl = "https://vastu-web-app.onrender.com/api/cases";
-        break;
-      case "executives":
-        apiUrl = "https://vastu-web-app.onrender.com/api/executives";
-        break;
-      default:
-        return;
-    }
-
-    responseData = await fetchData(apiUrl);
-
-    if (responseData) {
-      let filteredData = [];
-
-      switch (selectedReport) {
-        case "clients":
-        case "cases":
-          filteredData = responseData.data.map((item) => {
-            const {
-              _id,
-              __v,
-              exeId,
-              client_id,
-              executiveID,
-              password,
-              image,
-              ...rest
-            } = item;
-            return rest;
-          });
-          break;
-        case "executives":
-          filteredData = responseData.map((item) => {
-            const { _id, __v, password, ...rest } = item;
-            return rest;
-          });
-          break;
-        default:
-          break;
-      }
-
-      // Apply date filtering here if necessary
-
-      if (fileType === "xlsx") {
-        createExcelFile(filteredData);
-      } else if (fileType === "pdf") {
-        createPDF(filteredData);
-      }
-
-      closeModal();
-    }
-  };
-
   const handleGenerateReport = () => {
     if (startDate) {
       const startMonth = parseInt(startDate.split("-")[1]);
@@ -121,6 +58,7 @@ const ReportPage = () => {
     // Continue with the report generation process
     generateReport();
   };
+
   const fetchData = async (apiUrl) => {
     try {
       const response = await fetch(apiUrl);
@@ -133,6 +71,13 @@ const ReportPage = () => {
       console.error("There was a problem with the fetch operation:", error);
       return [];
     }
+  };
+
+  const generateReport = async () => {
+    // This will redirect to google.com when clicked
+    window.location.href = "http://localhost:3000/";
+
+    closeModal();
   };
 
   const createExcelFile = (data) => {

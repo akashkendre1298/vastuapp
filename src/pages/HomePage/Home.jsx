@@ -70,6 +70,31 @@ const Home = () => {
     history.push("/bottomtabs/profile");
   };
 
+  const Report = () => {
+    // Get the user data from local storage
+    const userData = localStorage.getItem("userData");
+
+    if (!userData) {
+      // If no user data found, user is not logged in
+      alert("You must log in first");
+      return;
+    }
+
+    // Parse the userData to get the token
+    const { token } = JSON.parse(userData);
+
+    if (!token) {
+      // If no token found, show login alert
+      alert("You must log in first");
+      return;
+    }
+
+    // If token exists, navigate to the report page
+    window.location.href = "http://reports.piyushshivkumarshhri.com/";
+
+    closeModal();
+  };
+
   return (
     <>
       <IonPage
@@ -283,11 +308,7 @@ const Home = () => {
               </IonCol>
 
               <IonCol>
-                <IonCard
-                  className="card-home"
-                  button
-                  href="/bottomtabs/reports"
-                >
+                <IonCard className="card-home" button onClick={Report}>
                   <IonCardHeader
                     style={{
                       display: "flex",
