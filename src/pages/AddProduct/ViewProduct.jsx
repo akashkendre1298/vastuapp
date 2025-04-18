@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import React, { useState, useEffect } from "react";
 import trashBin from '../../../src/Assets/icon-delete.svg';
 import {
