@@ -89,7 +89,7 @@ const AddCasePage = () => {
         issues: issue,
       };
 
-      console.log("Data to be sent:", caseData);
+      // console.log("Data to be sent:", caseData);
 
       const response = await fetch(
         "https://backend.piyushshivkumarshhri.com/api/cases",
@@ -110,7 +110,7 @@ const AddCasePage = () => {
       console.log("Response from server:", responseData);
 
       // Case added successfully
-      console.log("Case added successfully");
+      // console.log("Case added successfully");
       setShowToast(true);
 
       // Clear all fields
@@ -168,15 +168,18 @@ const AddCasePage = () => {
                 onIonChange={(e) => setSelectedClient(e.detail.value)}
                 interface="popover"
               >
-                {clients.map((client) => (
-                  <IonSelectOption
-                    key={client._id}
-                    value={client._id}
-                    style={{ fontSize: "24px" }}
-                  >
-                    {client.firstName} {client.lastName}
-                  </IonSelectOption>
-                ))}
+                {clients
+                  .slice() // Create a shallow copy to avoid mutating the original array
+                  .reverse()
+                  .map((client) => (
+                    <IonSelectOption
+                      key={client._id}
+                      value={client._id}
+                      style={{ fontSize: "24px" }}
+                    >
+                      {client.firstName} {client.lastName}
+                    </IonSelectOption>
+                  ))}
               </IonSelect>
               <div className="select-arrow"></div>
             </IonItem>
@@ -190,38 +193,27 @@ const AddCasePage = () => {
                 onIonChange={(e) => setSelectedExecutive(e.detail.value)}
                 interface="popover"
               >
-                {executives.map((executive) => (
-                  <IonSelectOption key={executive._id} value={executive._id}>
-                    {executive.firstName}
-                  </IonSelectOption>
-                ))}
+                {executives
+                  .slice() // Create a shallow copy to avoid mutating the original array
+                  .reverse()
+                  .map((executive) => (
+                    <IonSelectOption key={executive._id} value={executive._id}>
+                      {executive.firstName}
+                    </IonSelectOption>
+                  ))}
               </IonSelect>
               <div className="select-arrow"></div>
             </IonItem>
           </div>
+          <div></div>
           <div>
-            {/* <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
-              Add Image
-            </IonLabel> */}
-            {/* <IonItem
-              className="add-executive-item"
-              style={{ marginTop: "10px" }}
-            >
-              <input type="file" accept="image/*" />
-            </IonItem> */}
-          </div>
-          <div>
-            {/* <IonLabel position="stacked" style={{ paddingLeft: "10px" }}>
-              Issue
-            </IonLabel> */}
             <IonItem
               className="add-executive-item"
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: "10px", marginBottom: "40px" }}
             >
               <textarea
                 value={issue}
                 onChange={(e) => {
-                  console.log("Issue change event:", e.target.value);
                   setIssue(e.target.value);
                 }}
                 placeholder="Write Issue...."
@@ -232,7 +224,7 @@ const AddCasePage = () => {
                   border: "none",
                   resize: "none",
                   backgroundColor: "white",
-                  // textAlign: "center", // Center the placeholder text horizontally
+
                   verticalAlign: "middle", // Center the text vertically
                   lineHeight: "80px", // Aligns the text vertically within the textarea
                   outline: "none", // Removes the outline when focused
@@ -241,15 +233,23 @@ const AddCasePage = () => {
               ></textarea>
             </IonItem>
           </div>
-          <div
-            style={{ display: "flex", justifyContent: "center", width: "100%" }}
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            onClick={handleAddCase}
+            style={{
+              width: "90%",
+              height: "50px",
+              backgroundColor: "#00004d",
+              color: "white",
+              borderRadius: "10px",
+              fontSize: "18px",
+              marginBottom: "10px",
+            }}
           >
-            <div>
-              <button className="add-case-button" onClick={handleAddCase}>
-                Add Case
-              </button>
-            </div>
-          </div>
+            Add Case
+          </button>
         </div>
       </IonContent>
     </IonPage>

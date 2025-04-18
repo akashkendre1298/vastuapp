@@ -56,7 +56,7 @@ const IndividualClients = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Client details:", data); // Log the client details
+        // console.log("Client details:", data); // Log the client details
         // Find the count object in the data array
         const countObject = data.find((item) => item.count !== undefined);
         // Extract the count value
@@ -101,7 +101,7 @@ const IndividualClients = () => {
       )
         .then(() => {
           setIsDeleting(false);
-          console.log("Executive deleted successfully!");
+          // console.log("Executive deleted successfully!");
           history.goBack();
         })
         .catch((error) => {

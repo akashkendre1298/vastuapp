@@ -47,7 +47,7 @@ const AddExecutive = () => {
       );
 
       if (response.ok) {
-        console.log("Executive added successfully");
+        // console.log("Executive added successfully");
         setFormData({
           firstName: "",
           lastName: "",
@@ -100,7 +100,7 @@ const AddExecutive = () => {
                 {/* <IonCardTitle>Add Executive</IonCardTitle> */}
               </IonCardHeader>
               <IonCardContent className="add-executive-card-content">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} style={{ marginBottom: "30px" }}>
                   <div style={{ paddingBottom: "10px" }}>
                     {/* <IonLabel position="stacked">First Name</IonLabel> */}
                   </div>
@@ -203,11 +203,8 @@ const AddExecutive = () => {
                       onIonChange={handleChange}
                     />
                   </IonItem>
-
-                  <button className="add-executive-button">
-                    Add Executive
-                  </button>
                 </form>
+
                 {successMessage && (
                   <div className="success-message">{successMessage}</div>
                 )}
@@ -215,6 +212,26 @@ const AddExecutive = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            style={{
+              width: "90%",
+              height: "50px",
+              backgroundColor: "#00004d",
+              color: "white",
+              borderRadius: "10px",
+              fontSize: "16px",
+              fontWeight: "bold",
+              position: "fixed",
+              bottom: "10px",
+              right: "20px",
+              cursor: "pointer",
+              zIndex: "100",
+            }}
+          >
+            Add Executive
+          </button>
+        </div>
       </IonContent>
     </IonPage>
   );

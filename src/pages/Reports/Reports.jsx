@@ -47,12 +47,12 @@ const ReportPage = () => {
   const handleGenerateReport = () => {
     if (startDate) {
       const startMonth = parseInt(startDate.split("-")[1]);
-      console.log("Selected Start Month:", startMonth);
+      // console.log("Selected Start Month:", startMonth);
     }
 
     if (endDate) {
       const endMonth = parseInt(endDate.split("-")[1]);
-      console.log("Selected End Month:", endMonth);
+      // console.log("Selected End Month:", endMonth);
     }
 
     // Continue with the report generation process

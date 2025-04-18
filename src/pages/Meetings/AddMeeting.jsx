@@ -27,7 +27,7 @@ const AddMeeting = () => {
     executiveID: "",
     executivesEmail: "",
     meetingMode: "",
-    date: "",
+    date: new Date().toISOString().split("T")[0], // Default to today's date in YYYY-MM-DD format
     details: "",
   });
   const [showToast, setShowToast] = useState(false);
@@ -62,13 +62,24 @@ const AddMeeting = () => {
 
   const handleAddMeeting = async () => {
     try {
+      const selectedDate = new Date(formData.date);
+      const today = new Date();
+
+      today.setHours(0, 0, 0, 0);
+      selectedDate.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        setToastMessage("Please select a valid date (today or future).");
+        setShowToast(true);
+        return;
+      }
+
       if (!formData.details) {
         alert("Details are required");
         return;
       }
-      const formattedDate = formatDate(formData.date);
 
-      console.log("Entered Data:", { ...formData, date: formattedDate });
+      const formattedDate = formatDate(formData.date);
 
       const response = await fetch(
         "https://backend.piyushshivkumarshhri.com/api/meetings/post",
@@ -78,13 +89,8 @@ const AddMeeting = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            meetingTitle: formData.meetingTitle,
-            executiveName: formData.executiveName,
-            executiveID: formData.executiveID,
-            executivesEmail: formData.executivesEmail,
-            meetingMode: formData.meetingMode,
+            ...formData,
             date: formattedDate,
-            details: formData.details,
           }),
         }
       );
@@ -96,26 +102,20 @@ const AddMeeting = () => {
         );
       }
 
-      // If the meeting was successfully added, reset the form fields
       setFormData({
         meetingTitle: "",
         executiveName: "",
         executiveID: "",
         executivesEmail: "",
         meetingMode: "",
-        date: "",
+        date: new Date().toISOString().split("T")[0], // Reset to today's date
         details: "",
       });
 
-      // Show success toast
       setToastMessage("Meeting added successfully!");
       setShowToast(true);
-
-      // Log success message or handle further actions
-      console.log("Meeting added successfully!");
     } catch (error) {
       console.error("Error adding meeting:", error);
-      // Show error toast
       setToastMessage("Failed to add meeting");
       setShowToast(true);
     }
@@ -123,7 +123,6 @@ const AddMeeting = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Changing ${name} to ${value}`);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -158,9 +157,6 @@ const AddMeeting = () => {
           <IonRow>
             <IonCol>
               <div>
-                <div style={{ paddingBottom: "10px" }}>
-                  {/* <IonLabel position="floating">Meeting Aim</IonLabel> */}
-                </div>
                 <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
@@ -172,7 +168,7 @@ const AddMeeting = () => {
                     placeholder="Meeting Aim"
                   ></IonInput>
                 </IonItem>
-                <div style={{ paddingBottom: "10px" }}></div>
+
                 <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
@@ -184,19 +180,20 @@ const AddMeeting = () => {
                     onIonChange={handleExecutiveChange}
                     interface="popover"
                   >
-                    {executives.map((executive) => (
-                      <IonSelectOption
-                        key={executive._id}
-                        value={executive._id}
-                      >
-                        {`${executive.firstName} ${executive.lastName}`}
-                      </IonSelectOption>
-                    ))}
+                    {executives
+                      .slice() // Create a shallow copy to avoid mutating the original array
+                      .reverse()
+                      .map((executive) => (
+                        <IonSelectOption
+                          key={executive._id}
+                          value={executive._id}
+                        >
+                          {`${executive.firstName} ${executive.lastName}`}
+                        </IonSelectOption>
+                      ))}
                   </IonSelect>
                 </IonItem>
-                <div style={{ paddingBottom: "10px" }}>
-                  {/* <IonLabel position="floating">Executive Email</IonLabel> */}
-                </div>
+
                 <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
@@ -209,6 +206,7 @@ const AddMeeting = () => {
                     disabled
                   ></IonInput>
                 </IonItem>
+
                 <div className="date-div-meeting">
                   <div>
                     <label htmlFor="Date" style={{ fontSize: "18px" }}>
@@ -225,11 +223,11 @@ const AddMeeting = () => {
                         borderRadius: "5px",
                       }}
                       onChange={handleChange}
-                      value={formData.date}
+                      value={formData.date} // Prefill with today's date
                     />
                   </div>
                 </div>
-                <div style={{ paddingBottom: "10px" }}></div>
+
                 <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
@@ -245,11 +243,12 @@ const AddMeeting = () => {
                     <IonSelectOption value="In-person">
                       In-person
                     </IonSelectOption>
+                     <IonSelectOption value="Office/Site">
+                     Office/Site
+                    </IonSelectOption>
                   </IonSelect>
                 </IonItem>
-                <div style={{ paddingBottom: "10px" }}>
-                  {/* <IonLabel position="floating">Other details</IonLabel> */}
-                </div>
+
                 <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
@@ -266,21 +265,13 @@ const AddMeeting = () => {
                       border: "none",
                       resize: "none",
                       backgroundColor: "#fff",
-                      // textAlign: "center", // Center the placeholder text horizontally
-                      verticalAlign: "middle", // Center the text vertically
-                      lineHeight: "80px", // Aligns the text vertically within the textarea
+                      verticalAlign: "middle",
+                      lineHeight: "80px",
                       outline: "none",
                       scrollbar: "none",
                     }}
                   ></textarea>
                 </IonItem>
-                <button
-                  expand="full"
-                  onClick={handleAddMeeting}
-                  className="add-meeting-btn"
-                >
-                  Add Meeting
-                </button>
               </div>
             </IonCol>
           </IonRow>
@@ -292,6 +283,13 @@ const AddMeeting = () => {
           duration={2000}
         />
       </IonContent>
+      <button
+        expand="full"
+        onClick={handleAddMeeting}
+        className="add-meeting-btn"
+      >
+        Add Meeting
+      </button>
     </IonPage>
   );
 };

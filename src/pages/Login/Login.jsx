@@ -7,13 +7,16 @@ import {
   IonLabel,
   IonItem,
   IonToast,
+  IonIcon,
 } from "@ionic/react";
+import { eye, eyeOff } from "ionicons/icons"; // Import icons for eye and eyeOff
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
   const [error, setError] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const history = useHistory();
@@ -51,7 +54,7 @@ const LoginPage = () => {
       );
 
       if (response.ok) {
-        console.log("User logged in successfully");
+        // console.log("User logged in successfully");
         const responseData = await response.json();
         // Save user data in local storage
         localStorage.setItem("userData", JSON.stringify(responseData));
@@ -69,6 +72,11 @@ const LoginPage = () => {
     }
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -80,7 +88,6 @@ const LoginPage = () => {
           <p className="para-after-login-title">Please sign in to continue</p>
         </div>
         <div className="form-group">
-          {/* <label>Email</label> */}
           <input
             type="email"
             value={email}
@@ -90,14 +97,28 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-group">
-          {/* <label>Password</label> */}
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="login-input"
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={passwordVisible ? "text" : "password"} // Toggle between text and password types
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="login-input"
+            />
+            <IonIcon
+              icon={passwordVisible ? eyeOff : eye}
+              onClick={togglePasswordVisibility}
+              style={{
+                position: "absolute",
+                top: "50%",
+                right: "20px",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "black",
+                fontSize: "24px",
+              }}
+            />
+          </div>
         </div>
         {error && <p className="error-message">{error}</p>}
         <a

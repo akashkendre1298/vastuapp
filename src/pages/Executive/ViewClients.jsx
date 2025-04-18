@@ -22,7 +22,7 @@ function viewClients() {
 
         // Parse the JSON response
         const data = await response.json();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
         // Set the fetched clients in state
         setClients(data);
       } catch (error) {

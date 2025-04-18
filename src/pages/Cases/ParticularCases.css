@@ -41,3 +41,10 @@
   text-decoration: none;
   z-index: 1000;
 }
+
+.feedback-popup .feedback-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 10px;
+}

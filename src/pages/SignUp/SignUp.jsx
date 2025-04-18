@@ -29,10 +29,9 @@ const SignupPage = () => {
       image: file,
     });
 
-    // Log the URL of the image to the console
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      console.log("Image URL:", imageUrl);
+      // console.log("Image URL:", imageUrl);
     }
   };
 

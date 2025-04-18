@@ -1,19 +1,18 @@
 /* AddClientPage.css */
 
 .add-client-page {
-    --ion-background-color: #f0f2f5;
-  }
-  
-  .add-client-form {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  .add-client-form ion-input {
-    margin-bottom: 10px;
-  }
-  
-  .add-client-form ion-button {
-    width: 100%;
-  }
-  
+  --ion-background-color: #f0f2f5;
+}
+
+.add-client-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.add-client-form ion-input {
+  margin-bottom: 10px;
+}
+
+.add-client-form ion-button {
+  width: 100%;
+}

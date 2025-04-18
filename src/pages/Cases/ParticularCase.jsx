@@ -6,6 +6,10 @@ import {
   IonSelect,
   IonSelectOption,
   IonAlert,
+  IonTextarea,
+  IonItem,
+  IonInput,
+  IonToast,
 } from "@ionic/react";
 import { useParams, Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
@@ -16,6 +20,9 @@ const ParticularCase = () => {
   const [status, setStatus] = useState(""); // State for status
   const [error, setError] = useState(null); // Initialize error state
   const [showSuccess, setShowSuccess] = useState(false); // State for success message
+  const [showFeedback, setShowFeedback] = useState(false); // State for feedback popup
+  const [rating, setRating] = useState(""); // State for rating
+  const [feedback, setFeedback] = useState(""); // State for feedback
   const { caseId } = useParams(); // Get caseId from URL parameter
 
   useEffect(() => {
@@ -28,7 +35,7 @@ const ParticularCase = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Data fetched from API:", data);
+        // console.log("Data fetched from API:", data);
         setCaseDetails(data);
         setStatus(data.status); // Set initial status from fetched data
       })
@@ -57,17 +64,27 @@ const ParticularCase = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Status updated:", data);
+        // console.log("Status updated:", data);
         setCaseDetails((prevDetails) => ({
           ...prevDetails,
           status: newStatus,
         }));
         setShowSuccess(true); // Show success message
+        if (newStatus === "closed") {
+          setShowFeedback(true); // Show feedback popup if status is closed
+        }
       })
       .catch((error) => {
         console.error("Error updating status:", error);
         setError(error); // Set error state if an error occurs
       });
+  };
+
+  const handleFeedbackSubmit = () => {
+    // Handle feedback submission logic here
+    console.log("Rating:", rating);
+    console.log("Feedback:", feedback);
+    setShowFeedback(false); // Close feedback popup
   };
 
   return (
@@ -77,12 +94,51 @@ const ParticularCase = () => {
         {/* Display error message if there's an error */}
         {error && <div>Error: {error.message}</div>}
         {/* Display success message */}
-        <IonAlert
+        <IonToast
           isOpen={showSuccess}
           onDidDismiss={() => setShowSuccess(false)}
-          header={"Success"}
           message={"Status updated successfully!"}
-          buttons={["OK"]}
+          duration={2000}
+        />
+        {/* Display feedback popup */}
+        <IonAlert
+          isOpen={showFeedback}
+          onDidDismiss={() => setShowFeedback(false)}
+          header={"Feedback"}
+          cssClass="feedback-popup"
+          inputs={[
+            {
+              name: "rating",
+              type: "number",
+              min: 1,
+              max: 5,
+              placeholder: "Rating (1-5)",
+              value: rating,
+              onIonChange: (e) => setRating(e.detail.value),
+              cssClass: "feedback-input",
+            },
+            {
+              name: "feedback",
+              type: "textarea",
+              placeholder: "Write your feedback here...",
+              value: feedback,
+              onIonChange: (e) => setFeedback(e.detail.value),
+              cssClass: "feedback-input",
+            },
+          ]}
+          buttons={[
+            {
+              text: "Cancel",
+              role: "cancel",
+              handler: () => {
+                setShowFeedback(false);
+              },
+            },
+            {
+              text: "Submit",
+              handler: handleFeedbackSubmit,
+            },
+          ]}
         />
         {/* Display case details */}
         <div className="case-details-container">
@@ -107,8 +163,9 @@ const ParticularCase = () => {
               <b>Contact Number:</b> {caseDetails.contactNumber}
             </p>
             <p>
-              <b>First Meeting Date:</b> {caseDetails.firstMeetingDate}
+              {/* <b>First Meeting Date:</b> {caseDetails.firstMeetingDate} */}
             </p>
+            
             <p>
               <b>Status:</b>
               <IonSelect

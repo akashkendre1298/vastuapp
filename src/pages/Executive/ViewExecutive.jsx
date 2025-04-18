@@ -61,45 +61,48 @@ const ViewExecutive = () => {
         <div style={{ marginBottom: "60px" }}>
           {filteredExecutives.length > 0 && (
             <IonList>
-              {filteredExecutives.map((executive, index) => (
-                <IonRouterLink
-                  routerLink={`/bottomtabs/individualclients/${executive._id}`}
-                >
-                  <IonItem
-                    key={index}
-                    button
-                    // detail={true}
-                    style={{
-                      borderRadius: "10px",
-                      paddingLeft: "14px",
-                      paddingRight: "14px",
-                    }}
+              {filteredExecutives
+                .slice() // Create a shallow copy of the array
+                .reverse() // Reverse the array order
+                .map((executive, index) => (
+                  <IonRouterLink
+                    routerLink={`/bottomtabs/individualclients/${executive._id}`}
                   >
-                    <IonLabel
+                    <IonItem
+                      key={index}
+                      button
                       style={{
-                        padding: "10px",
-                        // border: "1px solid black",
-                        boxshadow: "0 0 0 4px",
-                        backgroundColor: "#FFFFFF",
-                        color: "black",
-                        borderRadius: "14px",
+                        borderRadius: "10px",
+                        paddingLeft: "14px",
+                        paddingRight: "14px",
                       }}
                     >
-                    <div className="viewExecutiveContent">
-                      <div>
-                      <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
-                        {executive.firstName}
-                      </h2>
-                      <p>{executive.phoneNumber}</p>
-                      </div>
-                      <div>
-                      <MdKeyboardArrowRight size={20}/>
-                      </div>
-                    </div>
-                    </IonLabel>
-                  </IonItem>
-                </IonRouterLink>
-              ))}
+                      <IonLabel
+                        style={{
+                          padding: "10px",
+
+                          backgroundColor: "#FFFFFF",
+                          color: "black",
+                          borderRadius: "14px",
+                        }}
+                      >
+                        <div className="viewExecutiveContent">
+                          <div>
+                            <h2
+                              style={{ fontSize: "20px", fontWeight: "bold" }}
+                            >
+                              {executive.firstName}
+                            </h2>
+                            <p>{executive.phoneNumber}</p>
+                          </div>
+                          <div>
+                            <MdKeyboardArrowRight size={20} />
+                          </div>
+                        </div>
+                      </IonLabel>
+                    </IonItem>
+                  </IonRouterLink>
+                ))}
             </IonList>
           )}
         </div>

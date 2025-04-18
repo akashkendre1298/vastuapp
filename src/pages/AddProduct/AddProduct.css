@@ -1,19 +1,25 @@
-.save-product-button {
+.ion-padding {
+  padding-bottom: 70px; /* Adjust padding to avoid overlap with the fixed button */
+}
+
+.btn-div {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e2dee9;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  font-size: 18px;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  text-align: center;
+}
+
+.save-product-button {
   background-color: #00004d;
-  height: 50px;
-  align-items: center;
   color: white;
-  padding: 10px;
-  border-radius: 14px;
-  text-decoration: none;
-  z-index: 1000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }

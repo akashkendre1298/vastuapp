@@ -1,38 +1,61 @@
 import {
   IonBackButton,
   IonButtons,
-  IonContent,
-  IonHeader,
   IonImg,
-  IonPage,
-  IonTitle,
   IonToolbar,
+  IonSpinner,
 } from "@ionic/react";
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import { useHistory } from "react-router-dom";
 
 import "./ToolBar.css";
+
 const ToolBar = () => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   const goBack = () => {
-    history.goBack();
-  };
-  return (
-    <IonToolbar>
-      <IonButtons slot="start">
-        <IonBackButton
-          defaultHref="#"
-          onClick={goBack}
-          className="back-button"
-        ></IonBackButton>
-      </IonButtons>
+    setLoading(true); // Start loading spinner
 
-      <IonButtons slot="end">
-        <IonImg src={logo} alt="App Logo" style={{ paddingRight: "15px" }} />
-      </IonButtons>
-    </IonToolbar>
+    history.goBack();
+
+    setTimeout(() => {
+      window.location.reload(); // Hard refresh the page after a short delay
+    }, 500);
+  };
+
+  return (
+    <>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton
+            defaultHref="#"
+            onClick={goBack}
+            className="back-button"
+          ></IonBackButton>
+        </IonButtons>
+
+        <IonButtons slot="end">
+          {loading ? ( // Show spinner when loading
+            <IonSpinner name="crescent" />
+          ) : (
+            <IonImg
+              src={logo}
+              alt="App Logo"
+              style={{ paddingRight: "15px" }}
+            />
+          )}
+        </IonButtons>
+      </IonToolbar>
+
+      {/* Transparent white overlay when loading */}
+      {loading && (
+        <div className="loading-overlay">
+          <IonSpinner name="crescent" />
+        </div>
+      )}
+    </>
   );
 };
 

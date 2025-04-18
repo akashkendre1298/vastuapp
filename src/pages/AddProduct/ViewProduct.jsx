@@ -114,11 +114,14 @@ const ViewProduct = () => {
             value={selectedCase}
             onIonChange={(e) => handleCaseSelection(e.detail.value)}
           >
-            {caseData.map((item, index) => (
-              <IonSelectOption key={index} value={item.caseLabel}>
-                {item.caseLabel}
-              </IonSelectOption>
-            ))}
+            {caseData
+              .slice() // Create a shallow copy to avoid mutating the original array
+              .reverse()
+              .map((item, index) => (
+                <IonSelectOption key={index} value={item.caseLabel}>
+                  {item.caseLabel}
+                </IonSelectOption>
+              ))}
           </IonSelect>
         </IonItem>
 
