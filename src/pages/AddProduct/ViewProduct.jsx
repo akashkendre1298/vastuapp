@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import trashBin from '../../../src/Assets/icon-delete.svg';
 import {
   IonContent,
   IonHeader,
@@ -114,14 +115,11 @@ const ViewProduct = () => {
             value={selectedCase}
             onIonChange={(e) => handleCaseSelection(e.detail.value)}
           >
-            {caseData
-              .slice() // Create a shallow copy to avoid mutating the original array
-              .reverse()
-              .map((item, index) => (
-                <IonSelectOption key={index} value={item.caseLabel}>
-                  {item.caseLabel}
-                </IonSelectOption>
-              ))}
+            {caseData.map((item, index) => (
+              <IonSelectOption key={index} value={item.caseLabel}>
+                {item.caseLabel}
+              </IonSelectOption>
+            ))}
           </IonSelect>
         </IonItem>
 
@@ -130,7 +128,7 @@ const ViewProduct = () => {
             <thead>
               <tr>
                 <th>Product</th>
-                <th>Category</th>
+                <th>Yantra</th>
                 <th>Priority</th>
                 <th>Purchased</th>
                 <th>Payment Status</th>
@@ -141,14 +139,16 @@ const ViewProduct = () => {
               {selectedCaseData && selectedCaseData.length > 0 ? (
                 selectedCaseData.map((product, index) => (
                   <tr key={index}>
-                    <td>{product.productName}</td>
-                    <td>{product.productCategory}</td>
+                    <td>{Array.isArray(product.productName) ? product.productName.join(", ") : product.productName}</td>
+                    <td>{Array.isArray(product.yantraName) ? product.yantraName.join(", ") : product.yantraName}</td>
                     <td>{product.priority ? "true" : "false"}</td>
                     <td>{product.purchased ? "true" : "false"}</td>
                     <td>{product.paymentStatus}</td>
                     <td>
-                      <IonIcon
-                        name="trash-bin"
+                      <img
+                        src={trashBin}
+                        alt="Delete"
+                        style={{ width: "20px", cursor: "pointer" }}
                         onClick={() => confirmDelete(index)}
                       />
                     </td>

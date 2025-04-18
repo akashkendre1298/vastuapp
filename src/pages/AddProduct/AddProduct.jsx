@@ -21,11 +21,31 @@ import "./AddProduct.css";
 const AddProduct = () => {
   const [selectedCase, setSelectedCase] = useState("");
   const [caseData, setCaseData] = useState([]);
-  const [productName, setProductName] = useState("");
+  const [productName, setProductName] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [priority, setPriority] = useState(true);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const [yantraName, setYantraName] = useState([]);
+
+
+
+  const [selectedProductNames, setselectedProductNames] = useState([]);
+  const [selectedYantraNames, setSelectedYantraNames] = useState([]);
+
+
+  const handleProductSelection = (selectedValues) => {
+    setselectedProductNames(selectedValues);
+    console.log("Selected cases:", selectedValues);
+  };
+
+  const handleYantraSelection = (selectedValues) => {
+    setSelectedYantraNames(selectedValues);
+    console.log("Selected cases:", selectedValues);
+  };
+
+
 
   useEffect(() => {
     // Fetch case data from API
@@ -42,14 +62,46 @@ const AddProduct = () => {
       .catch((error) => {
         console.error("Error fetching cases:", error);
       });
+
+
+    fetch("https://backend.piyushshivkumarshhri.com/api/master/products")
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (data && Array.isArray(data)) {
+          // Set case data
+          setProductName(data);
+        } else {
+          console.error("Error: Data is not in the expected format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cases:", error);
+      });
+
+    fetch("https://backend.piyushshivkumarshhri.com/api/master/yantra")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && Array.isArray(data)) {
+          // Set case data
+          setYantraName(data);
+        } else {
+          console.error("Error: Data is not in the expected format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cases:", error);
+      });
+
   }, []);
+
 
   const handleCaseSelection = (selectedCaseLabel) => {
     setSelectedCase(selectedCaseLabel);
   };
 
   const handleSaveProduct = () => {
-    if (!selectedCase || !productName || !categoryName) {
+    if (!selectedCase || !selectedProductNames) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -66,9 +118,12 @@ const AddProduct = () => {
         clientID: client_id,
         CaseID: caseID,
         exeID: executiveID,
-        productName,
-        productCategory: categoryName,
+        // productName,
+        productName: selectedProductNames,
+        yantraName: selectedYantraNames,
+        // productCategory: categoryName,
         priority,
+        purchased: false
       };
 
       // Send a POST request to save the product data
@@ -83,7 +138,8 @@ const AddProduct = () => {
         .then((data) => {
           console.log("Product saved successfully:", data);
           // Clear the form fields after successful save
-          setProductName("");
+          setselectedProductNames([]);
+          setSelectedYantraNames([]);
           setCategoryName("");
           setPriority(false);
           setSuccessMessage("Product added successfully!");
@@ -141,7 +197,7 @@ const AddProduct = () => {
           {/* <IonLabel position="stacked">Product Name</IonLabel> */}
         </div>
 
-        <IonItem className="add-executive-item">
+        {/* <IonItem className="add-executive-item">
           <IonInput
             placeholder="Product Name"
             className="add-executive-input"
@@ -149,7 +205,39 @@ const AddProduct = () => {
             value={productName}
             onIonChange={(e) => setProductName(e.detail.value)}
           />
+        </IonItem> */}
+        <IonItem className="add-executive-item">
+          <IonLabel position="floating">Product name</IonLabel>
+          <IonSelect
+            multiple={true}
+            interface="popover"
+            value={selectedProductNames}
+            onIonChange={(e) => handleProductSelection(e.detail.value)}
+          >
+            {productName.map((item, index) => (
+              <IonSelectOption key={index} value={item.name}>
+                {item.name}
+              </IonSelectOption>
+            ))}
+          </IonSelect>
         </IonItem>
+
+        <IonItem className="add-executive-item">
+          <IonLabel position="floating">Yantra name</IonLabel>
+          <IonSelect
+            multiple={true}
+            interface="popover"
+            value={selectedYantraNames}
+            onIonChange={(e) => handleYantraSelection(e.detail.value)}
+          >
+            {yantraName.map((item, index) => (
+              <IonSelectOption key={index} value={item.name}>
+                {item.name}
+              </IonSelectOption>
+            ))}
+          </IonSelect>
+        </IonItem>
+
 
         <div
           style={{
@@ -161,7 +249,7 @@ const AddProduct = () => {
           {/* <IonLabel position="stacked">Category Name</IonLabel> */}
         </div>
 
-        <IonItem className="add-executive-item">
+        {/* <IonItem className="add-executive-item">
           <IonInput
             placeholder="Category Name"
             className="add-executive-input"
@@ -169,7 +257,7 @@ const AddProduct = () => {
             value={categoryName}
             onIonChange={(e) => setCategoryName(e.detail.value)}
           />
-        </IonItem>
+        </IonItem> */}
 
         <IonItem className="add-executive-item">
           <IonLabel>Priority</IonLabel>
