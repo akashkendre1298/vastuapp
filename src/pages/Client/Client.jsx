@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   IonContent,
   IonGrid,
@@ -8,87 +8,90 @@ import {
   IonItem,
   IonLabel,
   IonPage,
-  IonToast,
-} from "@ionic/react";
-import "./Client.css";
-import ToolBar from "../../components/ToolBar/ToolBar";
+  IonToast
+} from '@ionic/react'
+import './Client.css'
+import ToolBar from '../../components/ToolBar/ToolBar'
 
 const Client = () => {
-  const [showToast, setShowToast] = useState(false);
-  const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showToast, setShowToast] = useState(false)
+  const [showErrorToast, setShowErrorToast] = useState(false)
+  const [showDuplicateToast, setShowDuplicateToast] = useState(false)
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    address: "",
-    city: "",
-    refrance: "",
-  });
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    address: '',
+    city: '',
+    refrance: ''
+  })
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleChange = e => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   const handleSubmit = async () => {
-    const {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      address,
-      city,
-      refrance,
-    } = formData;
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phoneNumber ||
-      !address ||
-      !city ||
-      !refrance
-    ) {
+    const { firstName, lastName, phoneNumber, address, city, refrance, email } = formData;
+    if (!firstName || !lastName || !phoneNumber || !address || !city || !refrance) {
       setShowErrorToast(true);
       return;
     }
 
-    console.log("Form data before submission:", formData); // Log form data
     try {
+      // Check if phone number already exists (handle both string and number types)
+      const checkResponse = await fetch('https://backend.piyushshivkumarshhri.com/api/clients');
+      const clients = await checkResponse.json();
+      console.log('All clients fetched for phone check:', clients);
+      if (clients && Array.isArray(clients.data)) {
+        const phoneExists = clients.data.some(client => {
+          const clientPhone = String(client.phoneNumber).trim();
+          const inputPhone = String(phoneNumber).trim();
+          console.log('Comparing:', clientPhone, 'vs', inputPhone);
+          return clientPhone === inputPhone;
+        });
+        if (phoneExists) {
+          setShowDuplicateToast(true);
+          return;
+        }
+      }
+
+      // Proceed to add client
       const response = await fetch(
-        "https://backend.piyushshivkumarshhri.com/api/clients",
+        'https://backend.piyushshivkumarshhri.com/api/clients',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formData)
         }
       );
 
       if (response.ok) {
-        console.log("Client added successfully");
-
         setShowToast(true);
-
         setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phoneNumber: "",
-          address: "",
-          city: "",
-          refrance: "",
+          firstName: '',
+          lastName: '',
+          phoneNumber: '',
+          address: '',
+          city: '',
+          refrance: '',
+
         });
       } else {
-        console.error("Failed to add client", response.statusText);
+        const errorData = await response.json().catch(() => null);
+        if (errorData && errorData.message && errorData.message.includes('phone')) {
+          setShowDuplicateToast(true);
+        } else {
+          setShowErrorToast(true);
+        }
       }
     } catch (error) {
-      console.error("Error:", error);
+      setShowErrorToast(true);
     }
-  };
+  }
 
   return (
     <IonPage>
@@ -96,65 +99,63 @@ const Client = () => {
 
       <IonContent
         style={{
-          paddingTop: "20px",
-          height: "100vh",
-          backgroundColor: "#e2dee9",
+          paddingTop: '20px',
+          height: '100vh',
+          backgroundColor: '#e2dee9'
         }}
       >
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonCardContent className="add-executive-card-content">
-                <div style={{ paddingBottom: "10px" }}>
+              <IonCardContent className='add-executive-card-content'>
+                <div style={{ paddingBottom: '10px' }}>
                   {/* <IonLabel position="stacked">First Name</IonLabel> */}
                 </div>
                 <IonItem
-                  className="add-executive-item"
+                  className='add-executive-item'
                   style={{
-                    border: "1px solid black",
-                    marginBottom: "25px",
+                    border: '1px solid black',
+                    marginBottom: '25px'
                   }}
                 >
                   <input
                     style={{
-                      width: "100%",
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      outline: "none",
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                      outline: 'none'
                     }}
-                    placeholder="First Name"
-                    name="firstName"
+                    placeholder='First Name'
+                    name='firstName'
                     value={formData.firstName}
                     onChange={handleChange}
-                    pattern="[A-Za-z ]*"
+                    pattern='[A-Za-z ]*'
                   />
                 </IonItem>
 
-                <div style={{ paddingBottom: "10px" }}>
+                <div style={{ paddingBottom: '10px' }}>
                   {/* <IonLabel position="stacked">Last Name</IonLabel> */}
                 </div>
-                <IonItem className="add-executive-item">
+                <IonItem className='add-executive-item'>
                   <input
                     style={{
-                      width: "100%",
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      outline: "none",
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                      outline: 'none'
                     }}
-                    placeholder="Last Name"
-                    name="lastName"
+                    placeholder='Last Name'
+                    name='lastName'
                     value={formData.lastName}
                     onChange={handleChange}
-                    pattern="[A-Za-z ]*"
+                    pattern='[A-Za-z ]*'
                   />
                 </IonItem>
 
-                {/* <div style={{ paddingBottom: "10px" }}>
-                
-                </div>
-                <IonItem className="add-executive-item">
+
+                {/* <IonItem className="add-executive-item">
                   <input
                     style={{
                       width: "100%",
@@ -171,80 +172,80 @@ const Client = () => {
                   />
                 </IonItem> */}
 
-                <div style={{ paddingBottom: "10px" }}>
+                <div style={{ paddingBottom: '10px' }}>
                   {/* <IonLabel position="stacked">Contact Number</IonLabel> */}
                 </div>
-                <IonItem className="add-executive-item">
+                <IonItem className='add-executive-item'>
                   <input
                     style={{
-                      width: "100%",
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      outline: "none",
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                      outline: 'none'
                     }}
-                    placeholder="Phone Number"
-                    type="tel"
-                    name="phoneNumber"
+                    placeholder='Phone Number'
+                    type='tel'
+                    name='phoneNumber'
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    pattern="[0-9]{10}"
-                    title="Please enter a 10-digit phone number"
+                    pattern='[0-9]{10}'
+                    title='Please enter a 10-digit phone number'
                   />
                 </IonItem>
 
-                <div style={{ paddingBottom: "10px" }}>
+                <div style={{ paddingBottom: '10px' }}>
                   {/* <IonLabel position="stacked">Location</IonLabel> */}
                 </div>
-                <IonItem className="add-executive-item">
+                <IonItem className='add-executive-item'>
                   <input
                     style={{
-                      width: "100%",
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      outline: "none",
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                      outline: 'none'
                     }}
-                    placeholder="Address"
-                    name="address"
+                    placeholder='Address'
+                    name='address'
                     value={formData.address}
                     onChange={handleChange}
                   />
                 </IonItem>
 
-                <div style={{ paddingBottom: "10px" }}>
+                <div style={{ paddingBottom: '10px' }}>
                   {/* <IonLabel position="stacked">City</IonLabel> */}
                 </div>
-                <IonItem className="add-executive-item">
+                <IonItem className='add-executive-item'>
                   <input
                     style={{
-                      width: "100%",
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      outline: "none",
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                      outline: 'none'
                     }}
-                    placeholder="City"
-                    name="city"
+                    placeholder='City'
+                    name='city'
                     value={formData.city}
                     onChange={handleChange}
-                    pattern="[A-Za-z ]*"
+                    pattern='[A-Za-z ]*'
                   />
                 </IonItem>
                 <IonItem
-                  className="add-executive-item"
-                  style={{ marginBottom: "50px" }}
+                  className='add-executive-item'
+                  style={{ marginBottom: '50px' }}
                 >
                   <input
                     style={{
-                      width: "100%",
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      outline: "none",
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                      outline: 'none'
                     }}
-                    placeholder="About Client"
-                    name="refrance" 
+                    placeholder='About Client'
+                    name='refrance'
                     value={formData.refrance}
                     onChange={handleChange}
                   />
@@ -253,13 +254,19 @@ const Client = () => {
                 <IonToast
                   isOpen={showToast}
                   onDidDismiss={() => setShowToast(false)}
-                  message="Client added successfully"
+                  message='Client added successfully'
                   duration={2000}
                 />
                 <IonToast
                   isOpen={showErrorToast}
                   onDidDismiss={() => setShowErrorToast(false)}
-                  message="All fields are required"
+                  message='All fields are required'
+                  duration={2000}
+                />
+                <IonToast
+                  isOpen={showDuplicateToast}
+                  onDidDismiss={() => setShowDuplicateToast(false)}
+                  message=' phone number already exists'
                   duration={2000}
                 />
               </IonCardContent>
@@ -269,25 +276,25 @@ const Client = () => {
       </IonContent>
       <button
         style={{
-          width: "90%",
-          height: "50px",
-          backgroundColor: "#00004d",
-          color: "white",
-          borderRadius: "10px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          position: "fixed",
-          bottom: "10px",
-          right: "20px",
-          cursor: "pointer",
-          zIndex: "100",
+          width: '90%',
+          height: '50px',
+          backgroundColor: '#00004d',
+          color: 'white',
+          borderRadius: '10px',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          position: 'fixed',
+          bottom: '10px',
+          right: '20px',
+          cursor: 'pointer',
+          zIndex: '100'
         }}
         onClick={handleSubmit}
       >
         Add Client
       </button>
     </IonPage>
-  );
-};
+  )
+}
 
-export default Client;
+export default Client

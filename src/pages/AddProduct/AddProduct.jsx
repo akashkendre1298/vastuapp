@@ -16,10 +16,12 @@ import {
   IonBackButton,
   IonImg,
 } from "@ionic/react";
+import { useLocation } from "react-router-dom";
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import "./AddProduct.css";
 
 const AddProduct = () => {
+  const location = useLocation();
   const [selectedCase, setSelectedCase] = useState("");
   const [caseData, setCaseData] = useState([]);
   const [productName, setProductName] = useState([]);
@@ -30,11 +32,8 @@ const AddProduct = () => {
 
   const [yantraName, setYantraName] = useState([]);
 
-
-
   const [selectedProductNames, setselectedProductNames] = useState([]);
   const [selectedYantraNames, setSelectedYantraNames] = useState([]);
-
 
   const handleProductSelection = (selectedValues) => {
     setselectedProductNames(selectedValues);
@@ -46,9 +45,15 @@ const AddProduct = () => {
     console.log("Selected cases:", selectedValues);
   };
 
-
-
   useEffect(() => {
+    // If navigated from ViewProduct, set selected case and caseData
+    if (location.state && location.state.selectedCase) {
+      setSelectedCase(location.state.selectedCase);
+    }
+    if (location.state && location.state.caseData) {
+      setCaseData(location.state.caseData);
+    }
+
     // Fetch case data from API
     fetch("https://backend.piyushshivkumarshhri.com/api/cases")
       .then((response) => response.json())
@@ -64,11 +69,9 @@ const AddProduct = () => {
         console.error("Error fetching cases:", error);
       });
 
-
     fetch("https://backend.piyushshivkumarshhri.com/api/master/products")
       .then((response) => response.json())
       .then((data) => {
-
         if (data && Array.isArray(data)) {
           // Set case data
           setProductName(data);
@@ -93,9 +96,7 @@ const AddProduct = () => {
       .catch((error) => {
         console.error("Error fetching cases:", error);
       });
-
-  }, []);
-
+  }, [location.state]);
 
   const handleCaseSelection = (selectedCaseLabel) => {
     setSelectedCase(selectedCaseLabel);
@@ -124,7 +125,7 @@ const AddProduct = () => {
         yantraName: selectedYantraNames,
         // productCategory: categoryName,
         priority,
-        purchased: false
+        purchased: false,
       };
 
       // Send a POST request to save the product data
@@ -176,9 +177,9 @@ const AddProduct = () => {
           <IonLabel position="floating">Choose Case</IonLabel>
           <IonSelect
             interface="popover"
-            // placeholder="Choose Case"
             value={selectedCase}
             onIonChange={(e) => handleCaseSelection(e.detail.value)}
+            searchbar // Enable searchbar for IonSelect
           >
             {caseData.map((item, index) => (
               <IonSelectOption key={index} value={item.caseLabel}>
@@ -214,6 +215,7 @@ const AddProduct = () => {
             interface="popover"
             value={selectedProductNames}
             onIonChange={(e) => handleProductSelection(e.detail.value)}
+            searchbar // Enable searchbar for IonSelect
           >
             {productName.map((item, index) => (
               <IonSelectOption key={index} value={item.name}>
@@ -238,7 +240,6 @@ const AddProduct = () => {
             ))}
           </IonSelect>
         </IonItem>
-
 
         <div
           style={{
