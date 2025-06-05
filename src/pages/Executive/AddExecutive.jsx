@@ -13,6 +13,8 @@ import {
 } from "@ionic/react";
 import "./AddExecutive.css";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddExecutive = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +26,6 @@ const AddExecutive = () => {
     city: "",
     password: "",
   });
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,8 +35,38 @@ const AddExecutive = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const { firstName, lastName, email, phoneNumber } = formData;
+
+    // Basic validation
+    if (!firstName || !lastName || !phoneNumber || !email) {
+      toast.error("All fields are required");
+      return;
+    }
+
     try {
+      // Check for duplicate phone number
       const response = await fetch(
+        "https://backend.piyushshivkumarshhri.com/api/executives",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      const phoneExists = data.some(
+        (executive) => executive.phoneNumber === phoneNumber
+      );
+
+      if (phoneExists) {
+        toast.error("Phone number already exists");
+        return;
+      }
+
+      // If no duplicates, proceed to add the executive
+      const addResponse = await fetch(
         "https://backend.piyushshivkumarshhri.com/api/executives",
         {
           method: "POST",
@@ -46,8 +77,8 @@ const AddExecutive = () => {
         }
       );
 
-      if (response.ok) {
-        // console.log("Executive added successfully");
+      if (addResponse.ok) {
+        toast.success("Executive added successfully");
         setFormData({
           firstName: "",
           lastName: "",
@@ -57,17 +88,11 @@ const AddExecutive = () => {
           city: "",
           password: "",
         });
-        setSuccessMessage("Executive added successfully!");
-
-        // Clear the success message after 3 seconds
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 3000);
       } else {
-        console.error("Failed to add executive");
+        toast.error("Failed to add executive");
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Failed to add executive");
     }
   };
 
@@ -96,17 +121,23 @@ const AddExecutive = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonCardHeader className="add-executive-card-header">
-                {/* <IonCardTitle>Add Executive</IonCardTitle> */}
-              </IonCardHeader>
               <IonCardContent className="add-executive-card-content">
-                <form onSubmit={handleSubmit} style={{ marginBottom: "30px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1>Add Executive</h1>
+                </div>
+                <form onSubmit={handleSubmit}>
                   <div style={{ paddingBottom: "10px" }}>
                     {/* <IonLabel position="stacked">First Name</IonLabel> */}
                   </div>
                   <IonItem className="add-executive-item">
                     <IonInput
-                      placeholder="firstName"
+                      placeholder="First Name"
                       className="add-executive-input"
                       name="firstName"
                       value={formData.firstName}
@@ -120,7 +151,7 @@ const AddExecutive = () => {
                   </div>
                   <IonItem className="add-executive-item">
                     <IonInput
-                      placeholder="lastName"
+                      placeholder="Last Name"
                       className="add-executive-input"
                       name="lastName"
                       value={formData.lastName}
@@ -204,34 +235,30 @@ const AddExecutive = () => {
                     />
                   </IonItem>
                 </form>
-
-                {successMessage && (
-                  <div className="success-message">{successMessage}</div>
-                )}
               </IonCardContent>
             </IonCol>
           </IonRow>
         </IonGrid>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <button
-            style={{
-              width: "90%",
-              height: "50px",
-              backgroundColor: "#00004d",
-              color: "white",
-              borderRadius: "10px",
-              fontSize: "16px",
-              fontWeight: "bold",
-              position: "fixed",
-              bottom: "10px",
-              right: "20px",
-              cursor: "pointer",
-              zIndex: "100",
-            }}
-          >
-            Add Executive
-          </button>
+        <div
+          style={{
+            zIndex: 1,
+            margin: "0 25px",
+            justifyContent: "center",
+          }}
+        >
+          <button className="add-executive-btn">Add Executive</button>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </IonContent>
     </IonPage>
   );

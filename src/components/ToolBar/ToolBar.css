@@ -11,7 +11,6 @@ ion-toolbar {
   --padding-bottom: 20px;
 }
 .full-screen-loader {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -20,10 +19,8 @@ ion-toolbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Make sure loader appears above other elements */
 }
 .loading-overlay {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -32,5 +29,4 @@ ion-toolbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Make sure it's above other elements */
 }

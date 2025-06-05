@@ -19,7 +19,8 @@ const UpComingMeetings = () => {
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [expandedMeetingId, setExpandedMeetingId] = useState(null);
+  const [expandedTodayMeetingId, setExpandedTodayMeetingId] = useState(null);
+  const [expandedUpcomingMeetingId, setExpandedUpcomingMeetingId] = useState(null);
 
   useEffect(() => {
     const fetchMeetings = async () => {
@@ -74,8 +75,12 @@ const UpComingMeetings = () => {
     filterMeetings(meetings, newDate);
   };
 
-  const handleMeetingClick = (meetingId) => {
-    setExpandedMeetingId((prevId) => (prevId === meetingId ? null : meetingId));
+  const handleTodayMeetingClick = (meetingId) => {
+    setExpandedTodayMeetingId((prevId) => (prevId === meetingId ? null : meetingId));
+  };
+
+  const handleUpcomingMeetingClick = (meetingId) => {
+    setExpandedUpcomingMeetingId((prevId) => (prevId === meetingId ? null : meetingId));
   };
 
   return (
@@ -88,53 +93,50 @@ const UpComingMeetings = () => {
           <div>
             <h2>Today's Meetings</h2>
           </div>
-          <IonList>
-            {todaysMeetings.length > 0 ? (
-              todaysMeetings.map((meeting) => (
-                <IonItem
-                  key={meeting._id}
-                  onClick={() => handleMeetingClick(meeting._id)}
-                >
-                  <IonLabel>
-                    <div
-                      style={{
-                        backgroundColor: "white",
-                        border: "1px solid black",
-                        padding: "10px",
-                        borderRadius: "10px",
-                        marginBottom: "10px",
-                        cursor: "pointer",
-                      }}
-                    >
-
-                      <h3>{meeting.meetingTitle}</h3>
-                      <p>{parseDate(meeting.date).toDateString()}</p>
-                    </div>
-                    {expandedMeetingId === meeting._id && (
-                      <div className="meeting-details">
-                        <p>
-                          <strong>Executive Name:</strong>{" "}
-                          {meeting.executiveName}
-                        </p>
-                        <p>
-                          <strong>Executive Email:</strong>{" "}
-                          {meeting.executivesEmail}
-                        </p>
-                        <p>
-                          <strong>Meeting Mode:</strong> {meeting.meetingMode}
-                        </p>
-                        <p>
-                          <strong>Details:</strong> {meeting.details}
-                        </p>
+          <div style={{ maxHeight: '150px', overflowY: 'auto',  background: '#e2dee9', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+            <IonList>
+              {todaysMeetings.length > 0 ? (
+                todaysMeetings.map((meeting) => (
+                  <IonItem
+                    key={meeting._id}
+                    onClick={() => handleTodayMeetingClick(meeting._id)}
+                  >
+                    <IonLabel>
+                      <div
+                        style={{
+                          backgroundColor: "white",
+                          border: "1px solid black",
+                          padding: "10px",
+                          borderRadius: "10px",
+                          marginBottom: "10px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <h3>{meeting.meetingTitle}</h3>
+                        <p>{parseDate(meeting.date).toDateString()}</p>
                       </div>
-                    )}
-                  </IonLabel>
-                </IonItem>
-              ))
-            ) : (
-              <IonItem>No meetings today</IonItem>
-            )}
-          </IonList>
+                      {expandedTodayMeetingId === meeting._id && (
+                        <div className="meeting-details">
+                          <p>
+                            <strong>Client Name:</strong>{" "}
+                            {meeting.clientName}
+                          </p>
+                          <p>
+                            <strong>Meeting Mode:</strong> {meeting.meetingMode}
+                          </p>
+                          <p>
+                            <strong>Details:</strong> {meeting.details}
+                          </p>
+                        </div>
+                      )}
+                    </IonLabel>
+                  </IonItem>
+                ))
+              ) : (
+                <IonItem>No meetings today</IonItem>
+              )}
+            </IonList>
+          </div>
         </div>
 
         <div
@@ -142,7 +144,7 @@ const UpComingMeetings = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            margin: "14px 14px 0 14px",
+            margin: "0 14px 0 14px",
           }}
         >
           <div>
@@ -158,62 +160,62 @@ const UpComingMeetings = () => {
           </div>
         </div>
 
-        <IonList style={{ marginBottom: "70px" }}>
-          {filteredMeetings.length > 0 ? (
-            filteredMeetings.map((meeting) => (
-              <IonItem
-                key={meeting._id}
-                onClick={() => handleMeetingClick(meeting._id)}
-              >
-                <IonLabel>
-                  <div
-                    style={{
-                      backgroundColor: "white",
-                      border: "1px solid black",
-                      padding: "10px",
-                      borderRadius: "10px",
-                      marginBottom: "10px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <div className="upComingMeetingContent">
-                      <div>
-                    <h3>{meeting.meetingTitle}</h3>
-                    <p>{parseDate(meeting.date).toDateString()}</p>
+        <div style={{ maxHeight: '150px', overflowY: 'auto', margin: '14px 0 0 0', background: '#e2dee9', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+          <IonList style={{ background: 'transparent' }}>
+            {filteredMeetings.length > 0 ? (
+              filteredMeetings.map((meeting) => (
+                <IonItem
+                  key={meeting._id}
+                  onClick={() => handleUpcomingMeetingClick(meeting._id)}
+                >
+                  <IonLabel>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        border: "1px solid black",
+                        padding: "10px",
+                        borderRadius: "10px",
+                        marginBottom: "10px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div className="upComingMeetingContent">
+                        <div>
+                          <p>{parseDate(meeting.date).toDateString()}</p>
+                        </div>
+                        <div>
+                          <RiArrowDownSLine size={20}/>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                    <RiArrowDownSLine size={20}/>
-                    </div>
-                    </div>
-                  </div>
-                  {expandedMeetingId === meeting._id && (
-                    <div className="meeting-details">
-                      <p>
-                        <strong>Executive Name:</strong> {meeting.executiveName}
-                      </p>
-                      <p>
-                        <strong>Executive Email:</strong>{" "}
-                        {meeting.executivesEmail}
-                      </p>
-                      <p>
-                        <strong>Meeting Mode:</strong> {meeting.meetingMode}
-                      </p>
-                      <p>
-                        <strong>Details:</strong> {meeting.details}
-                      </p>
-                    </div>
-                  )}
-                </IonLabel>
-              </IonItem>
-            ))
-          ) : (
-            <IonItem>No upcoming meetings</IonItem>
-          )}
-        </IonList>
+                    {expandedUpcomingMeetingId === meeting._id && (
+                      <div className="meeting-details">
+                        <p>
+                          <strong>Client Name:</strong> {meeting.clientName}
+                        </p>
+                        <p>
+                          <strong>Meeting Mode:</strong> {meeting.meetingMode}
+                        </p>
+                        <p>
+                          <strong>Details:</strong> {meeting.details}
+                        </p>
+                      </div>
+                    )}
+                  </IonLabel>
+                </IonItem>
+              ))
+            ) : (
+              <IonItem>No upcoming meetings</IonItem>
+            )}
+          </IonList>
+        </div>
 
-        <div>
+        <div style={{
+            zIndex: 1,
+            margin :"0 25px",
+            justifyContent: "center" }}>
           <Link to="/bottomtabs/addmeetings">
-            <button className="add-meeting-btn">Add Meeting</button>
+            <button className="add-executive-btn">Add Meeting</button>
           </Link>
         </div>
       </IonContent>

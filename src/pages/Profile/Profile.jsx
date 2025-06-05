@@ -11,11 +11,12 @@ import {
   IonIcon,
   IonLoading,
   IonText,
-  IonToast,
   IonAlert,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { pencil, lockClosed, logOut, eye, eyeOff } from "ionicons/icons"; // Import icons for eye and eyeOff
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Profile.css";
 
 const ProfilePage = () => {
@@ -33,10 +34,7 @@ const ProfilePage = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [showToast, setShowToast] = useState(false);
-  const [showPasswordToast, setShowPasswordToast] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const [errorToast, setErrorToast] = useState(false); // Added for error handling
   const history = useHistory();
 
   useEffect(() => {
@@ -93,14 +91,9 @@ const ProfilePage = () => {
       );
       setUser(formData);
       setIsEditing(false);
-      setShowToast(true); // Show success message
-
-      // Hide toast after 2 seconds
-      setTimeout(() => {
-        setShowToast(false);
-      }, 2000);
+      toast.success("Profile updated successfully!");
     } catch (err) {
-      setErrorToast(true); // Show error toast
+      toast.error("Error updating profile");
     }
   };
 
@@ -120,13 +113,8 @@ const ProfilePage = () => {
         requestData
       );
       if (response.data.message === "Password successfully changed") {
-        setShowPasswordToast(true); // Show success message
+        toast.success("Password changed successfully!");
         setIsChangingPassword(false);
-
-        // Hide toast after 2 seconds
-        setTimeout(() => {
-          setShowPasswordToast(false);
-        }, 2000);
       } else {
         setPasswordError(
           response.data.message ||
@@ -353,32 +341,17 @@ const ProfilePage = () => {
           </form>
         )}
 
-        <IonToast
-          isOpen={showToast}
-          message="Profile updated successfully!"
-          duration={2000}
-          color="success"
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
         />
-        <IonToast
-          isOpen={showPasswordToast}
-          message="Password changed successfully!"
-          duration={2000}
-          color="success"
-        />
-        <IonToast
-          isOpen={errorToast}
-          message="Failed to update profile. Please try again."
-          duration={2000}
-          color="danger"
-        />
-        {passwordError && (
-          <IonAlert
-            isOpen={!!passwordError}
-            message={passwordError}
-            buttons={["OK"]}
-            onDidDismiss={() => setPasswordError("")}
-          />
-        )}
       </IonContent>
     </IonPage>
   );

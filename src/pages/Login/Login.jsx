@@ -6,19 +6,18 @@ import {
   IonButton,
   IonLabel,
   IonItem,
-  IonToast,
   IonIcon,
 } from "@ionic/react";
 import { eye, eyeOff } from "ionicons/icons"; // Import icons for eye and eyeOff
 import logo from "../../Assets/pandit_shivkumar_logo.png";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
-  const [error, setError] = useState("");
-  const [toastMessage, setToastMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const LoginPage = () => {
 
   const handleSubmit = async () => {
     if (!email || !password) {
-      setError("Both email and password are required.");
+      toast.error("Both email and password are required.");
       return;
     }
 
@@ -63,12 +62,10 @@ const LoginPage = () => {
         // Redirect the user to the dashboard or home page
         history.push("/bottomtabs/home");
       } else {
-        console.error("Failed to log in");
-        setError("Invalid email or password. Please try again.");
+        toast.error("Invalid email or password. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error);
-      setError("Network error. Please check your internet connection.");
+      toast.error("Network error. Please check your internet connection.");
     }
   };
 
@@ -120,7 +117,6 @@ const LoginPage = () => {
             />
           </div>
         </div>
-        {error && <p className="error-message">{error}</p>}
         <a
           className="forgot-password"
           onClick={() => history.push("/forgot-password")}
@@ -134,12 +130,16 @@ const LoginPage = () => {
           Don't have an account? <a href="/signup">Sign Up</a>
         </p>
       </div>
-
-      <IonToast
-        isOpen={!!toastMessage}
-        message={toastMessage}
-        duration={2000}
-        onDidDismiss={() => setToastMessage("")}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
     </div>
   );

@@ -9,17 +9,17 @@ import {
   IonTextarea,
   IonItem,
   IonInput,
-  IonToast,
 } from "@ionic/react";
 import { useParams, Link } from "react-router-dom";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./ParticularCases.css";
 
 const ParticularCase = () => {
   const [caseDetails, setCaseDetails] = useState({}); // Initialize as empty object
   const [status, setStatus] = useState(""); // State for status
   const [error, setError] = useState(null); // Initialize error state
-  const [showSuccess, setShowSuccess] = useState(false); // State for success message
   const [showFeedback, setShowFeedback] = useState(false); // State for feedback popup
   const [rating, setRating] = useState(""); // State for rating
   const [feedback, setFeedback] = useState(""); // State for feedback
@@ -69,13 +69,13 @@ const ParticularCase = () => {
           ...prevDetails,
           status: newStatus,
         }));
-        setShowSuccess(true); // Show success message
+        toast.success("Status updated successfully!");
         if (newStatus === "closed") {
           setShowFeedback(true); // Show feedback popup if status is closed
         }
       })
       .catch((error) => {
-        console.error("Error updating status:", error);
+        toast.error("Error updating status");
         setError(error); // Set error state if an error occurs
       });
   };
@@ -93,13 +93,6 @@ const ParticularCase = () => {
       <IonContent style={{ backgroundColor: "#e2dee9" }}>
         {/* Display error message if there's an error */}
         {error && <div>Error: {error.message}</div>}
-        {/* Display success message */}
-        <IonToast
-          isOpen={showSuccess}
-          onDidDismiss={() => setShowSuccess(false)}
-          message={"Status updated successfully!"}
-          duration={2000}
-        />
         {/* Display feedback popup */}
         <IonAlert
           isOpen={showFeedback}
@@ -165,7 +158,7 @@ const ParticularCase = () => {
             <p>
               {/* <b>First Meeting Date:</b> {caseDetails.firstMeetingDate} */}
             </p>
-            
+
             <p>
               <b>Status:</b>
               <IonSelect
@@ -182,11 +175,15 @@ const ParticularCase = () => {
           </IonLabel>
         </div>
         <Link
-          to="/bottomtabs/viewproduct"
+          to={{
+            pathname: "/bottomtabs/addproduct",
+            state: { selectedCase: caseDetails.caseLabel }
+          }}
           className="recommended-products-button"
         >
           Recommend Products
         </Link>
+        <ToastContainer   position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       </IonContent>
     </IonPage>
   );

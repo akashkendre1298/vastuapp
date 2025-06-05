@@ -8,9 +8,10 @@ import {
   IonInput,
   IonSelect,
   IonSelectOption,
-  IonToast,
 } from "@ionic/react";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./AddCases.css";
 
 const AddCasePage = () => {
@@ -20,8 +21,6 @@ const AddCasePage = () => {
   const [executives, setExecutives] = useState([]);
   const [selectedExecutive, setSelectedExecutive] = useState("");
   const [issue, setIssue] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [showErrorToast, setShowErrorToast] = useState(false);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -63,10 +62,9 @@ const AddCasePage = () => {
   const handleAddCase = async () => {
     // Validate input fields
     if (!caseName || !selectedClient || !selectedExecutive || !issue) {
-      setShowErrorToast(true);
+      toast.error("All fields are required");
       return;
     }
-
     try {
       // Get the selected client and executive details
       const selectedClientObj = clients.find(
@@ -101,26 +99,17 @@ const AddCasePage = () => {
           body: JSON.stringify(caseData),
         }
       );
-
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.status}`);
+      if (response.ok) {
+        toast.success("Case added successfully!");
+        setCaseName("");
+        setSelectedClient("");
+        setSelectedExecutive("");
+        setIssue("");
+      } else {
+        toast.error("Failed to add case");
       }
-
-      const responseData = await response.json();
-      console.log("Response from server:", responseData);
-
-      // Case added successfully
-      // console.log("Case added successfully");
-      setShowToast(true);
-
-      // Clear all fields
-      setCaseName("");
-      setSelectedClient("");
-      setSelectedExecutive("");
-      setIssue("");
     } catch (error) {
-      console.error("Error adding case:", error);
-      // Handle errors appropriately (e.g., display an error message to the user)
+      toast.error("Failed to add case");
     }
   };
 
@@ -129,27 +118,15 @@ const AddCasePage = () => {
       <IonHeader>
         <ToolBar />
       </IonHeader>
-      <IonContent style={{ backgroundColor: "#e2dee9" }}>
-        <IonToast
-          isOpen={showToast}
-          onDidDismiss={() => setShowToast(false)}
-          message="Case added successfully!"
-          duration={2000}
-        />
-        <IonToast
-          isOpen={showErrorToast}
-          onDidDismiss={() => setShowErrorToast(false)}
-          message="All fields are required!"
-          duration={2000}
-        />
-        <div style={{ padding: "10px", marginTop: "25px", height: "80vh" }}>
+      <IonContent className="view-cases-content" style={{ backgroundColor: "#e2dee9" }}>
+        <div style={{ padding: "10px", marginTop: "25px" }}>
           <div>
             {/* <IonLabel position="floating" style={{ paddingLeft: "10px" }}>
               Case Name
             </IonLabel> */}
             <IonItem
               className="add-executive-item"
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: "10px", marginBottom: "10px" }}
             >
               <IonInput
                 value={caseName}
@@ -161,7 +138,10 @@ const AddCasePage = () => {
           </div>
           <div>
             <IonLabel position="floating"></IonLabel>
-            <IonItem className="add-executive-item">
+            <IonItem
+              className="add-executive-item"
+              style={{ marginBottom: "10px" }}
+            >
               <IonLabel position="floating">Client Name</IonLabel>
               <IonSelect
                 value={selectedClient}
@@ -251,6 +231,18 @@ const AddCasePage = () => {
             Add Case
           </button>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          style={{ zIndex: 2147483647, position: 'fixed', top: 0, left: 0, width: '100%', pointerEvents: 'none' }}
+        />
       </IonContent>
     </IonPage>
   );

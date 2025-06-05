@@ -1,19 +1,8 @@
-.ion-padding {
-  padding-bottom: 70px; /* Adjust padding to avoid overlap with the fixed button */
-}
+.add-executive-item-product{
+  margin-bottom: 5px;
 
-.btn-div {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #e2dee9;
-  padding: 10px;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
-
 .save-product-button {
   background-color: #00004d;
   color: white;

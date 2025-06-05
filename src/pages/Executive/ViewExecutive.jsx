@@ -58,18 +58,27 @@ const ViewExecutive = () => {
         <div>
           <SearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
         </div>
-        <div style={{ marginBottom: "60px" }}>
+        <div
+          style={{
+            maxHeight: "350px",
+            overflowY: "auto",
+            // marginBottom: "30px",
+            background: "#e2dee9",
+            borderRadius: "10px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          }}
+        >
           {filteredExecutives.length > 0 && (
-            <IonList>
+            <IonList style={{ background: "transparent" }}>
               {filteredExecutives
                 .slice() // Create a shallow copy of the array
                 .reverse() // Reverse the array order
-                .map((executive, index) => (
+                .map((executive) => (
                   <IonRouterLink
+                    key={executive._id}
                     routerLink={`/bottomtabs/individualclients/${executive._id}`}
                   >
                     <IonItem
-                      key={index}
                       button
                       style={{
                         borderRadius: "10px",
@@ -109,12 +118,10 @@ const ViewExecutive = () => {
 
         <div
           style={{
-            position: "fixed",
-            bottom: 5,
-            width: "90%",
+
             zIndex: 1,
-            marginTop: "20px",
-            marginLeft: "18px",
+            margin :"0 25px",
+            justifyContent: "center",
           }}
         >
           <Link to="/bottomtabs/addexecutive">

@@ -73,45 +73,59 @@ const ViewCasesPage = () => {
           />
         </IonRefresher>
 
-        <IonList inset={true} style={{ marginBottom: "70px" }}>
-          {filteredCases.length > 0 ? (
-            filteredCases
-              .slice() // Create a shallow copy to avoid mutating the original array
-              .reverse() // Reverse the array order
-              .map((caseItem) => (
-                <IonRouterLink
-                  key={caseItem.id}
-                  routerLink={`/bottomtabs/particularCase/${caseItem.id}`}
-                >
-                  <IonItem button style={{ borderRadius: "10px" }}>
-                    <IonLabel
-                      style={{
-                        padding: "14px",
-                        backgroundColor: "#FFFFFF",
-                        color: "black",
-                        borderRadius: "14px",
-                      }}
-                    >
-                      <div className="caseItemContent">
-                        <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
-                          {caseItem.label}
-                        </h2>
-                        <MdKeyboardArrowRight size={20} />
-                      </div>
-                    </IonLabel>
-                  </IonItem>
-                </IonRouterLink>
-              ))
-          ) : (
-            <IonItem>
-              <IonLabel>No cases found</IonLabel>
-            </IonItem>
-          )}
-        </IonList>
+        <div
+          style={{
+            maxHeight: "350px",
+            overflowY: "auto",
+            // marginBottom: "30px",
+            background: "#e2dee9",
+            borderRadius: "10px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          }}
+        >
+          <IonList inset={true} style={{ background: "transparent" }}>
+            {filteredCases.length > 0 ? (
+              filteredCases
+                .slice() // Create a shallow copy to avoid mutating the original array
+                .reverse() // Reverse the array order
+                .map((caseItem) => (
+                  <IonRouterLink
+                    key={caseItem.id}
+                    routerLink={`/bottomtabs/particularCase/${caseItem.id}`}
+                  >
+                    <IonItem button style={{ borderRadius: "10px" }}>
+                      <IonLabel
+                        style={{
+                          padding: "14px",
+                          backgroundColor: "#FFFFFF",
+                          color: "black",
+                          borderRadius: "14px",
+                        }}
+                      >
+                        <div className="caseItemContent">
+                          <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
+                            {caseItem.label}
+                          </h2>
+                          <MdKeyboardArrowRight size={20} />
+                        </div>
+                      </IonLabel>
+                    </IonItem>
+                  </IonRouterLink>
+                ))
+            ) : (
+              <IonItem>
+                <IonLabel>No cases found</IonLabel>
+              </IonItem>
+            )}
+          </IonList>
+        </div>
 
-        <div>
+        <div style={{
+            zIndex: 1,
+            margin :"0 25px",
+            justifyContent: "center" }}>
           <Link to="/bottomtabs/addcases">
-            <button className="add-case-btn">Add Case</button>
+            <button className="add-executive-btn">Add Case</button>
           </Link>
         </div>
       </IonContent>

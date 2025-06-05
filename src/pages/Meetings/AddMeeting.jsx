@@ -11,46 +11,37 @@ import {
   IonSelectOption,
   IonButton,
   IonInput,
-  IonToast,
   IonGrid,
   IonRow,
   IonCol,
 } from "@ionic/react";
 import ToolBar from "../../components/ToolBar/ToolBar";
+import useDebounce from '../../utils/useDebounce';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./AddMeeting.css";
 
 const AddMeeting = () => {
-  const [executives, setExecutives] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [clientSearch, setClientSearch] = useState("");
+  const debouncedClientSearch = useDebounce(clientSearch, 300);
+  const [showClientDropdown, setShowClientDropdown] = useState(false);
   const [formData, setFormData] = useState({
     meetingTitle: "",
-    executiveName: "",
-    executiveID: "",
-    executivesEmail: "",
+    clientID: "",
+    clientName: "",
     meetingMode: "",
     date: new Date().toISOString().split("T")[0], // Default to today's date in YYYY-MM-DD format
     details: "",
   });
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
-    fetchExecutives();
+    // Fetch clients for dropdown
+    fetch("https://backend.piyushshivkumarshhri.com/api/clients")
+      .then(res => res.json())
+      .then(data => setClients(data.data || []))
+      .catch(() => setClients([]));
   }, []);
-
-  const fetchExecutives = async () => {
-    try {
-      const response = await fetch(
-        "https://backend.piyushshivkumarshhri.com/api/executives"
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch executives");
-      }
-      const data = await response.json();
-      setExecutives(data);
-    } catch (error) {
-      console.error("Error fetching executives:", error);
-    }
-  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -69,13 +60,12 @@ const AddMeeting = () => {
       selectedDate.setHours(0, 0, 0, 0);
 
       if (selectedDate < today) {
-        setToastMessage("Please select a valid date (today or future).");
-        setShowToast(true);
+        toast.error("Please select a valid date (today or future).");
         return;
       }
 
       if (!formData.details) {
-        alert("Details are required");
+        toast.error("Details are required");
         return;
       }
 
@@ -97,27 +87,22 @@ const AddMeeting = () => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(
-          `Failed to add meeting: ${response.status} ${errorText}`
-        );
+        toast.error(`Failed to add meeting: ${response.status} ${errorText}`);
+        return;
       }
 
       setFormData({
         meetingTitle: "",
-        executiveName: "",
-        executiveID: "",
-        executivesEmail: "",
+        clientID: "",
+        clientName: "",
         meetingMode: "",
         date: new Date().toISOString().split("T")[0], // Reset to today's date
         details: "",
       });
 
-      setToastMessage("Meeting added successfully!");
-      setShowToast(true);
+      toast.success("Meeting added successfully!");
     } catch (error) {
-      console.error("Error adding meeting:", error);
-      setToastMessage("Failed to add meeting");
-      setShowToast(true);
+      toast.error("Failed to add meeting");
     }
   };
 
@@ -129,26 +114,20 @@ const AddMeeting = () => {
     }));
   };
 
-  const handleExecutiveChange = (e) => {
-    const selectedExecutiveID = e.detail.value;
-    const selectedExecutiveData = executives.find(
-      (executive) => executive._id === selectedExecutiveID
-    );
-    if (selectedExecutiveData) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        executiveID: selectedExecutiveID,
-        executiveName: `${selectedExecutiveData.firstName} ${selectedExecutiveData.lastName}`,
-        executivesEmail: selectedExecutiveData.email,
-      }));
-    }
+  const handleClientSelection = (client) => {
+    setFormData(prev => ({
+      ...prev,
+      clientID: client._id,
+      clientName: `${client.firstName} ${client.lastName}`
+    }));
+    setShowClientDropdown(false);
   };
 
   return (
     <IonPage>
-      <IonHeader>
+
         <ToolBar />
-      </IonHeader>
+
       <IonContent
         className="ion-padding"
         style={{ backgroundColor: "#e2dee9" }}
@@ -157,7 +136,7 @@ const AddMeeting = () => {
           <IonRow>
             <IonCol>
               <div>
-                <IonItem
+                {/* <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
                 >
@@ -167,44 +146,55 @@ const AddMeeting = () => {
                     onIonChange={handleChange}
                     placeholder="Meeting Aim"
                   ></IonInput>
-                </IonItem>
+                </IonItem> */}
 
                 <IonItem
                   className="add-executive-item"
                   style={{ border: "1px solid black", marginBottom: "25px" }}
                 >
-                  <IonLabel position="floating">Executive Name</IonLabel>
-                  <IonSelect
-                    name="executiveID"
-                    value={formData.executiveID}
-                    onIonChange={handleExecutiveChange}
-                    interface="popover"
-                  >
-                    {executives
-                      .slice() // Create a shallow copy to avoid mutating the original array
-                      .reverse()
-                      .map((executive) => (
-                        <IonSelectOption
-                          key={executive._id}
-                          value={executive._id}
-                        >
-                          {`${executive.firstName} ${executive.lastName}`}
-                        </IonSelectOption>
-                      ))}
-                  </IonSelect>
-                </IonItem>
-
-                <IonItem
-                  className="add-executive-item"
-                  style={{ border: "1px solid black", marginBottom: "25px" }}
-                >
-                  <IonInput
-                    type="email"
-                    name="executivesEmail"
-                    placeholder="Executive Email"
-                    value={formData.executivesEmail}
-                    disabled
-                  ></IonInput>
+                  {/* Accordion for Client Selection */}
+                  <div style={{ width: '100%' }}>
+                    <div
+                      style={{ cursor: 'pointer', fontWeight: 600, fontSize: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0' }}
+                      onClick={() => setShowClientDropdown(v => !v)}
+                    >
+                      <span>{formData.clientName ? formData.clientName : 'Choose Client'}</span>
+                      <span>{showClientDropdown ? '▲' : '▼'}</span>
+                    </div>
+                    {showClientDropdown && (
+                      <div style={{ maxHeight: 250, overflowY: 'auto', marginTop: 8, border: '1px solid #eee', borderRadius: 8, background: '#fafaff' }}>
+                        <div style={{ padding: '8px 8px 0px 8px' }}>
+                          <input
+                            type="text"
+                            value={clientSearch}
+                            onChange={e => setClientSearch(e.target.value)}
+                            placeholder="Search clients..."
+                            style={{ width: '100%', padding: 6, borderRadius: 4, border: '1px solid #ccc', background: '#fff' }}
+                          />
+                        </div>
+                        {clients.length === 0 && (
+                          <div style={{ padding: 12, color: '#888' }}>No clients found</div>
+                        )}
+                        {clients.filter(client =>
+                          !debouncedClientSearch || `${client.firstName} ${client.lastName}`.toLowerCase().includes(debouncedClientSearch.toLowerCase())
+                        ).map((client, idx, arr) => (
+                          <div
+                            key={client._id || idx}
+                            style={{
+                              padding: '12px 16px',
+                              borderBottom: idx !== arr.length - 1 ? '1px solid #eee' : 'none',
+                              background: formData.clientID === client._id ? '#e2dee9' : 'transparent',
+                              cursor: 'pointer',
+                              fontWeight: formData.clientID === client._id ? 700 : 400
+                            }}
+                            onClick={() => handleClientSelection(client)}
+                          >
+                            {client.firstName} {client.lastName}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </IonItem>
 
                 <div className="date-div-meeting">
@@ -276,20 +266,44 @@ const AddMeeting = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
-        <IonToast
-          isOpen={showToast}
-          onDidDismiss={() => setShowToast(false)}
-          message={toastMessage}
-          duration={2000}
-        />
+
+<div
+  style={{
+    zIndex: 1,
+    margin: '0 10px',
+    justifyContent: 'center'
+  }}
+>
+  <button
+    // expand="full"
+    onClick={handleAddMeeting}
+    className='add-executive-btn
+'
+    // style={{ position: "fixed", bottom: 0, left: 0, width: "100%" }}
+  >
+    Add Meeting
+  </button>
+</div>
+
+<ToastContainer
+  position="top-center"
+  autoClose={2000}
+  top={100}
+  hideProgressBar={false}
+  newestOnTop={false}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+  style={{ zIndex: 9999 }}
+/>
+
       </IonContent>
-      <button
-        expand="full"
-        onClick={handleAddMeeting}
-        className="add-meeting-btn"
-      >
-        Add Meeting
-      </button>
+
+
+
+
     </IonPage>
   );
 };

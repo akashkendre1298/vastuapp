@@ -1,4 +1,3 @@
-
 //@ts-nocheck
 import React, { useState, useEffect } from "react";
 import {
@@ -7,10 +6,11 @@ import {
   IonButton,
   IonLabel,
   IonItem,
-  IonToast,
   IonContent,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./ForgotPasswordPage.css";
 
 const ForgotPasswordPage = () => {
@@ -18,7 +18,6 @@ const ForgotPasswordPage = () => {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [toastMessage, setToastMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const ForgotPasswordPage = () => {
 
   const handleSendOtp = async () => {
     if (!forgotPasswordEmail) {
-      setToastMessage("Please enter your registered email.");
+      toast.error("Please enter your registered email.");
       return;
     }
 
@@ -48,19 +47,18 @@ const ForgotPasswordPage = () => {
       );
 
       if (response.ok) {
-        setToastMessage("OTP sent successfully. Please check your email.");
+        toast.success("OTP sent successfully. Please check your email.");
       } else {
-        throw new Error("Failed to send OTP");
+        toast.error("Failed to send OTP");
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
-      setToastMessage("Failed to send OTP. Please try again.");
+      toast.error("Failed to send OTP. Please try again.");
     }
   };
 
   const handleResetPassword = async () => {
     if (newPassword !== confirmNewPassword) {
-      setToastMessage("New passwords do not match");
+      toast.error("New passwords do not match");
       return;
     }
 
@@ -81,16 +79,15 @@ const ForgotPasswordPage = () => {
       );
 
       if (response.ok) {
-        setToastMessage("Password reset successfully. Redirecting to login...");
+        toast.success("Password reset successfully. Redirecting to login...");
         setTimeout(() => {
           history.push("/login");
         }, 2000);
       } else {
-        throw new Error("Failed to reset password");
+        toast.error("Failed to reset password");
       }
     } catch (error) {
-      console.error("Error resetting password:", error);
-      setToastMessage("Failed to reset password. Please try again.");
+      toast.error("Failed to reset password. Please try again.");
     }
   };
 
@@ -188,16 +185,20 @@ const ForgotPasswordPage = () => {
               <button className="cancel-button" onClick={handleCancel}>
                 Cancel
               </button>
-
-              <IonToast
-                isOpen={!!toastMessage}
-                message={toastMessage}
-                duration={2000}
-                onDidDismiss={() => setToastMessage("")}
-              />
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </IonContent>
     </IonPage>
   );

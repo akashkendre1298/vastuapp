@@ -3,7 +3,7 @@ ion-content {
 }
 
 .view-executive-page {
-  padding: 25px;
+  /* padding: 25px; */
   background-color: #e2dee9;
 }
 ion-searchbar.custom {
@@ -29,7 +29,7 @@ ion-searchbar.custom {
   height: 50px;
   width: 100%;
   background-color: #00004d;
-  margin-top: 40px;
+  margin-top: 8px;
   margin-bottom: 20px;
 }
 
