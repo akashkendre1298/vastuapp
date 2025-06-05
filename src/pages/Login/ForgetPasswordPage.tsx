@@ -97,6 +97,23 @@ const ForgotPasswordPage = () => {
 
   return (
     <IonPage className="forgot-password-page">
+
+      <div style={{
+        display: 'flex', justifyContent: 'center',
+        alignItems: 'center', padding: '10px 0'
+      }}>
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
       <IonContent
         style={{
           backgroundColor: "#e2dee9",
@@ -188,17 +205,7 @@ const ForgotPasswordPage = () => {
             </div>
           </div>
         </div>
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+
       </IonContent>
     </IonPage>
   );

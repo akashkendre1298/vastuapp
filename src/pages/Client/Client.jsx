@@ -11,8 +11,8 @@ import {
 } from '@ionic/react'
 import './Client.css'
 import ToolBar from '../../components/ToolBar/ToolBar'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Client = () => {
   const [showToast, setShowToast] = useState(false)
@@ -34,24 +34,34 @@ const Client = () => {
   }
 
   const handleSubmit = async () => {
-    const { firstName, lastName, phoneNumber, address, city, refrance, email } = formData;
-    if (!firstName || !lastName || !phoneNumber || !address || !city || !refrance) {
-      toast.error('All fields are required');
-      return;
+    const { firstName, lastName, phoneNumber, address, city, refrance, email } =
+      formData
+    if (
+      !firstName ||
+      !lastName ||
+      !phoneNumber ||
+      !address ||
+      !city ||
+      !refrance
+    ) {
+      toast.error('All fields are required')
+      return
     }
     try {
       // Check if phone number already exists (handle both string and number types)
-      const checkResponse = await fetch('https://backend.piyushshivkumarshhri.com/api/clients');
-      const clients = await checkResponse.json();
+      const checkResponse = await fetch(
+        'https://backend.piyushshivkumarshhri.com/api/clients'
+      )
+      const clients = await checkResponse.json()
       if (clients && Array.isArray(clients.data)) {
         const phoneExists = clients.data.some(client => {
-          const clientPhone = String(client.phoneNumber).trim();
-          const inputPhone = String(phoneNumber).trim();
-          return clientPhone === inputPhone;
-        });
+          const clientPhone = String(client.phoneNumber).trim()
+          const inputPhone = String(phoneNumber).trim()
+          return clientPhone === inputPhone
+        })
         if (phoneExists) {
-          toast.error('Phone number already exists');
-          return;
+          toast.error('Phone number already exists')
+          return
         }
       }
       // Proceed to add client
@@ -64,32 +74,56 @@ const Client = () => {
           },
           body: JSON.stringify(formData)
         }
-      );
+      )
       if (response.ok) {
-        toast.success('Client added successfully');
+        toast.success('Client added successfully')
         setFormData({
           firstName: '',
           lastName: '',
           phoneNumber: '',
           address: '',
           city: '',
-          refrance: '',
-        });
+          refrance: ''
+        })
       } else {
-        const errorData = await response.json().catch(() => null);
-        if (errorData && errorData.message && errorData.message.includes('phone')) {
-          toast.error('Phone number already exists');
+        const errorData = await response.json().catch(() => null)
+        if (
+          errorData &&
+          errorData.message &&
+          errorData.message.includes('phone')
+        ) {
+          toast.error('Phone number already exists')
         } else {
-          toast.error('All fields are required');
+          toast.error('All fields are required')
         }
       }
     } catch (error) {
-      toast.error('All fields are required');
+      toast.error('All fields are required')
     }
   }
 
   return (
     <IonPage>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '10px 0'
+        }}
+      >
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
       <ToolBar />
 
       <IonContent
@@ -99,21 +133,23 @@ const Client = () => {
           backgroundColor: '#e2dee9'
         }}
       >
-      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <h1>
-          Add Client
-        </h1>
-      </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <h1>Add Client</h1>
+        </div>
         <IonGrid>
           <IonRow>
             <IonCol>
               <IonCardContent className='add-executive-card-content'>
-
                 <IonItem
                   className='add-executive-item'
                   style={{
-                    border: '1px solid black',
-
+                    border: '1px solid black'
                   }}
                 >
                   <input
@@ -151,7 +187,6 @@ const Client = () => {
                     pattern='[A-Za-z ]*'
                   />
                 </IonItem>
-
 
                 {/* <IonItem className="add-executive-item">
                   <input
@@ -214,16 +249,17 @@ const Client = () => {
                 <div style={{ paddingBottom: '10px' }}>
                   {/* <IonLabel position="stacked">City</IonLabel> */}
                 </div>
-                <IonItem className='add-executive-item' style={{marginBottom: '10px'
-}}>
+                <IonItem
+                  className='add-executive-item'
+                  style={{ marginBottom: '10px' }}
+                >
                   <input
                     style={{
                       width: '100%',
                       backgroundColor: 'white',
                       color: 'black',
                       border: 'none',
-                      outline: 'none',
-
+                      outline: 'none'
                     }}
                     placeholder='City'
                     name='city'
@@ -232,10 +268,7 @@ const Client = () => {
                     pattern='[A-Za-z ]*'
                   />
                 </IonItem>
-                <IonItem
-                  className='add-executive-item'
-
-                >
+                <IonItem className='add-executive-item'>
                   <input
                     style={{
                       width: '100%',
@@ -250,12 +283,10 @@ const Client = () => {
                     onChange={handleChange}
                   />
                 </IonItem>
-
               </IonCardContent>
             </IonCol>
           </IonRow>
         </IonGrid>
-        <ToastContainer   position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
       </IonContent>
       <button
         style={{
@@ -269,7 +300,7 @@ const Client = () => {
           position: 'fixed',
           bottom: '10px',
           right: '20px',
-          cursor: 'pointer',
+          cursor: 'pointer'
           // zIndex: '100'
         }}
         onClick={handleSubmit}

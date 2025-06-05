@@ -17,9 +17,9 @@ import {
 import { useLocation } from 'react-router-dom'
 import logo from '../../Assets/pandit_shivkumar_logo.png'
 import './AddProduct.css'
-import useDebounce from '../../utils/useDebounce';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import useDebounce from '../../utils/useDebounce'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const AddProduct = () => {
   const location = useLocation()
@@ -39,15 +39,15 @@ const AddProduct = () => {
   const [yantraQuantities, setYantraQuantities] = useState({})
 
   // Accordion state
-  const [showProducts, setShowProducts] = useState(false);
-  const [showYantras, setShowYantras] = useState(false);
+  const [showProducts, setShowProducts] = useState(false)
+  const [showYantras, setShowYantras] = useState(false)
   // Search state
-  const [productSearch, setProductSearch] = useState("");
-  const [yantraSearch, setYantraSearch] = useState("");
+  const [productSearch, setProductSearch] = useState('')
+  const [yantraSearch, setYantraSearch] = useState('')
   // Accordion for case selection
-  const [showCaseDropdown, setShowCaseDropdown] = useState(false);
-  const [caseSearch, setCaseSearch] = useState("");
-  const debouncedCaseSearch = useDebounce(caseSearch, 300);
+  const [showCaseDropdown, setShowCaseDropdown] = useState(false)
+  const [caseSearch, setCaseSearch] = useState('')
+  const debouncedCaseSearch = useDebounce(caseSearch, 300)
 
   const handleProductSelection = selectedValues => {
     setselectedProductNames(selectedValues)
@@ -62,9 +62,9 @@ const AddProduct = () => {
   useEffect(() => {
     // If navigated from ViewProduct with a selected case, set it on first mount
     if (location.state && location.state.selectedCase) {
-      setSelectedCase(location.state.selectedCase);
+      setSelectedCase(location.state.selectedCase)
     } else {
-      setSelectedCase("");
+      setSelectedCase('')
     }
     // Always fetch case data from API
     fetch('https://backend.piyushshivkumarshhri.com/api/cases')
@@ -105,7 +105,7 @@ const AddProduct = () => {
       .catch(error => {
         console.error('Error fetching cases:', error)
       })
-  }, [location.state]);
+  }, [location.state])
 
   const handleCaseSelection = selectedCaseLabel => {
     setSelectedCase(selectedCaseLabel)
@@ -143,31 +143,31 @@ const AddProduct = () => {
     const filteredProducts = Object.entries(productQuantities)
       .filter(([k, v]) => v > 0)
       .map(([name, qty]) => {
-        const prod = productName.find(p => p.name === name);
+        const prod = productName.find(p => p.name === name)
         return {
           product_name: name,
           product_quantity: qty,
           _id: prod && prod._id ? prod._id : undefined
-        };
-      });
+        }
+      })
     const filteredYantras = Object.entries(yantraQuantities)
       .filter(([k, v]) => v > 0)
       .map(([name, qty]) => {
-        const yantra = yantraName.find(y => y.name === name);
+        const yantra = yantraName.find(y => y.name === name)
         return {
           yantra_name: name,
           yantra_quantity: qty,
           _id: yantra && yantra._id ? yantra._id : undefined
-        };
-      });
-    const productNameArr = filteredProducts.map(p => p.product_name);
-    const productQtyArr = filteredProducts.map(p => p.product_quantity);
-    const yantraNameArr = filteredYantras.map(y => y.yantra_name);
-    const yantraQtyArr = filteredYantras.map(y => y.yantra_quantity);
+        }
+      })
+    const productNameArr = filteredProducts.map(p => p.product_name)
+    const productQtyArr = filteredProducts.map(p => p.product_quantity)
+    const yantraNameArr = filteredYantras.map(y => y.yantra_name)
+    const yantraQtyArr = filteredYantras.map(y => y.yantra_quantity)
 
     if (!selectedCase || filteredProducts.length === 0) {
-      toast.error('Please fill in all required fields.');
-      return;
+      toast.error('Please fill in all required fields.')
+      return
     }
     const selectedCaseItem = caseData.find(
       item => item.caseLabel === selectedCase
@@ -200,16 +200,36 @@ const AddProduct = () => {
           setSelectedYantraNames([])
           setCategoryName('')
           setPriority(false)
-          toast.success('Product added successfully!');
+          toast.success('Product added successfully!')
         })
         .catch(error => {
-          toast.error('Error saving product');
+          toast.error('Error saving product')
         })
     }
   }
 
   return (
     <IonPage>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '10px 0'
+        }}
+      >
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot='start'>
@@ -230,51 +250,90 @@ const AddProduct = () => {
       >
         <div style={{ paddingBottom: '10px' }}></div>
         {/* Accordion for Case Selection */}
-        <div style={{ margin: '14px 0', background: 'white', borderRadius: '14px', padding: '10px' }}>
+        <div
+          style={{
+            margin: '14px 0',
+            background: 'white',
+            borderRadius: '14px',
+            padding: '10px'
+          }}
+        >
           <div
-            style={{ cursor: 'pointer', fontWeight: 600, fontSize: 18, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+            style={{
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: 18,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
             onClick={() => setShowCaseDropdown(v => !v)}
           >
             <span>{selectedCase ? selectedCase : 'Choose Case'}</span>
             <span>{showCaseDropdown ? '▲' : '▼'}</span>
           </div>
           {showCaseDropdown && (
-            <div style={{ maxHeight: 250, overflowY: 'auto', marginTop: 8, border: '1px solid #eee', borderRadius: 8, background: '#fafaff' }}>
+            <div
+              style={{
+                maxHeight: 250,
+                overflowY: 'auto',
+                marginTop: 8,
+                border: '1px solid #eee',
+                borderRadius: 8,
+                background: '#fafaff'
+              }}
+            >
               {/* Search bar for cases inside accordion */}
               <div style={{ padding: '8px 8px 0px 8px' }}>
                 <input
-                  type="text"
+                  type='text'
                   value={caseSearch}
                   onChange={e => setCaseSearch(e.target.value)}
-                  placeholder="Search cases..."
-                  style={{ width: '100%', padding: 6, borderRadius: 4, border: '1px solid #ccc', background: '#fff' }}
+                  placeholder='Search cases...'
+                  style={{
+                    width: '100%',
+                    padding: 6,
+                    borderRadius: 4,
+                    border: '1px solid #ccc',
+                    background: '#fff'
+                  }}
                 />
               </div>
               {/* Filtered case list */}
               {caseData.length === 0 && (
                 <div style={{ padding: 12, color: '#888' }}>No cases found</div>
               )}
-              {caseData.filter(item =>
-                !debouncedCaseSearch || item.caseLabel.toLowerCase().includes(debouncedCaseSearch.toLowerCase())
-              ).map((item, idx, arr) => (
-                <div
-                  key={item._id || idx}
-                  style={{
-                    padding: '12px 16px',
-                    borderBottom: idx !== arr.length - 1 ? '1px solid #eee' : 'none',
-                    background: selectedCase === item.caseLabel ? '#e2dee9' : 'transparent',
-                    cursor: 'pointer',
-                    fontWeight: selectedCase === item.caseLabel ? 700 : 400
-                  }}
-                  onClick={() => {
-                    setShowCaseDropdown(false);
-                    handleCaseSelection(item.caseLabel);
-                    setCaseSearch("");
-                  }}
-                >
-                  {item.caseLabel}
-                </div>
-              ))}
+              {caseData
+                .filter(
+                  item =>
+                    !debouncedCaseSearch ||
+                    item.caseLabel
+                      .toLowerCase()
+                      .includes(debouncedCaseSearch.toLowerCase())
+                )
+                .map((item, idx, arr) => (
+                  <div
+                    key={item._id || idx}
+                    style={{
+                      padding: '12px 16px',
+                      borderBottom:
+                        idx !== arr.length - 1 ? '1px solid #eee' : 'none',
+                      background:
+                        selectedCase === item.caseLabel
+                          ? '#e2dee9'
+                          : 'transparent',
+                      cursor: 'pointer',
+                      fontWeight: selectedCase === item.caseLabel ? 700 : 400
+                    }}
+                    onClick={() => {
+                      setShowCaseDropdown(false)
+                      handleCaseSelection(item.caseLabel)
+                      setCaseSearch('')
+                    }}
+                  >
+                    {item.caseLabel}
+                  </div>
+                ))}
             </div>
           )}
         </div>
@@ -326,47 +385,74 @@ const AddProduct = () => {
             <span>{showProducts ? '▲' : '▼'}</span>
           </div>
           {showProducts && (
-            <div style={{ padding: '8px 0', height:'250px',overflowY: 'auto',backgroundColor: '#f6f6f6' }}>
-              <div style={{padding: '0 16px 8px 16px'}}>
+            <div
+              style={{
+                padding: '8px 0',
+                height: '250px',
+                overflowY: 'auto',
+                backgroundColor: '#f6f6f6'
+              }}
+            >
+              <div style={{ padding: '0 16px 8px 16px' }}>
                 <input
-                  type="text"
-                  placeholder="Search products..."
+                  type='text'
+                  placeholder='Search products...'
                   value={productSearch}
                   onChange={e => setProductSearch(e.target.value)}
-                  style={{width: '100%', padding: '6px 8px', borderRadius: 4, border: '1px solid #ccc', backgroundColor: '#fff'}}
+                  style={{
+                    width: '100%',
+                    padding: '6px 8px',
+                    borderRadius: 4,
+                    border: '1px solid #ccc',
+                    backgroundColor: '#fff'
+                  }}
                 />
               </div>
-              {productName.filter(item => item.name.toLowerCase().includes(productSearch.toLowerCase())).map((item, idx) => (
-                <IonItem
-                  key={item.name}
-                  className='add-executive-item-product'
-                  style={{ alignItems: 'center' }}
-                >
-                  <IonLabel style={{ flex: 1 }}>{item.name}</IonLabel>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
+              {productName
+                .filter(item =>
+                  item.name.toLowerCase().includes(productSearch.toLowerCase())
+                )
+                .map((item, idx) => (
+                  <IonItem
+                    key={item.name}
+                    className='add-executive-item-product'
+                    style={{ alignItems: 'center' }}
                   >
-                    <button
-                      onClick={() => handleProductQty(item.name, -1)}
-                      style={{ width: 24, height: 24,backgroundColor:'red', color: 'white' }}
-                      disabled={!productQuantities[item.name]}
+                    <IonLabel style={{ flex: 1 }}>{item.name}</IonLabel>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
                     >
-                      -
-                    </button>
-                    <span>{productQuantities[item.name] || 0}</span>
-                    <button
-                      onClick={() => handleProductQty(item.name, 1)}
-                      style={{ width: 24, height: 24,backgroundColor:'green', color: 'white' }}
-                    >
-                      +
-                    </button>
-                  </div>
-                </IonItem>
-              ))}
+                      <button
+                        onClick={() => handleProductQty(item.name, -1)}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: 'red',
+                          color: 'white'
+                        }}
+                        disabled={!productQuantities[item.name]}
+                      >
+                        -
+                      </button>
+                      <span>{productQuantities[item.name] || 0}</span>
+                      <button
+                        onClick={() => handleProductQty(item.name, 1)}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: 'green',
+                          color: 'white'
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </IonItem>
+                ))}
             </div>
           )}
         </div>
@@ -398,48 +484,74 @@ const AddProduct = () => {
             <span>{showYantras ? '▲' : '▼'}</span>
           </div>
           {showYantras && (
-            <div style={{ padding: '8px 0' , height:'200px',overflowY: 'auto',backgroundColor: '#f6f6f6'  }}>
-              <div style={{padding: '0 16px 8px 16px'}}>
+            <div
+              style={{
+                padding: '8px 0',
+                height: '200px',
+                overflowY: 'auto',
+                backgroundColor: '#f6f6f6'
+              }}
+            >
+              <div style={{ padding: '0 16px 8px 16px' }}>
                 <input
-                  type="text"
-                  placeholder="Search yantra..."
+                  type='text'
+                  placeholder='Search yantra...'
                   value={yantraSearch}
-lonChange={e => setYantraSearch(e.target.value)}
-                  style={{width: '100%', padding: '6px 8px', borderRadius: 4, border: '1px solid #ccc',backgroundColor: '#fff'
-}}
+                  lonChange={e => setYantraSearch(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '6px 8px',
+                    borderRadius: 4,
+                    border: '1px solid #ccc',
+                    backgroundColor: '#fff'
+                  }}
                 />
               </div>
-              {yantraName.filter(item => item.name.toLowerCase().includes(yantraSearch.toLowerCase())).map((item, idx) => (
-                <IonItem
-                  key={item.name}
-                  className='add-executive-item-product'
-                  style={{  alignItems: 'center'  }}
-                >
-                  <IonLabel style={{ flex: 1 }}>{item.name}</IonLabel>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
+              {yantraName
+                .filter(item =>
+                  item.name.toLowerCase().includes(yantraSearch.toLowerCase())
+                )
+                .map((item, idx) => (
+                  <IonItem
+                    key={item.name}
+                    className='add-executive-item-product'
+                    style={{ alignItems: 'center' }}
                   >
-                    <button
-                      onClick={() => handleYantraQty(item.name, -1)}
-                      style={{ width: 24, height: 24, backgroundColor:'red', color: 'white' }}
-                      disabled={!yantraQuantities[item.name]}
+                    <IonLabel style={{ flex: 1 }}>{item.name}</IonLabel>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
                     >
-                      -
-                    </button>
-                    <span>{yantraQuantities[item.name] || 0}</span>
-                    <button
-                      onClick={() => handleYantraQty(item.name, 1)}
-                      style={{ width: 24, height: 24, backgroundColor:'green', color: 'white'}}
-                    >
-                      +
-                    </button>
-                  </div>
-                </IonItem>
-              ))}
+                      <button
+                        onClick={() => handleYantraQty(item.name, -1)}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: 'red',
+                          color: 'white'
+                        }}
+                        disabled={!yantraQuantities[item.name]}
+                      >
+                        -
+                      </button>
+                      <span>{yantraQuantities[item.name] || 0}</span>
+                      <button
+                        onClick={() => handleYantraQty(item.name, 1)}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          backgroundColor: 'green',
+                          color: 'white'
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </IonItem>
+                ))}
             </div>
           )}
         </div>
@@ -482,18 +594,18 @@ lonChange={e => setYantraSearch(e.target.value)}
           </div>
         )}
 
-        <div className='btn-div'
-
-style={{
+        <div
+          className='btn-div'
+          style={{
             zIndex: 1,
-            margin :"10px 0px",
-            justifyContent: "center" }}
+            margin: '10px 0px',
+            justifyContent: 'center'
+          }}
         >
           <button className='add-executive-btn' onClick={handleSaveProduct}>
             Save Product
           </button>
         </div>
-        <ToastContainer   position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       </IonContent>
     </IonPage>
   )
