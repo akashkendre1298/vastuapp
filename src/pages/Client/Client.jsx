@@ -109,7 +109,7 @@ const Client = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '10px 0'
+
         }}
       >
         <ToastContainer
